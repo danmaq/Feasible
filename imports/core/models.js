@@ -12,13 +12,19 @@ class Account {
         this._step = step;
         this._mul = mul;
     }
-    pair() {
+
+    /** Pair. */
+    get pair() {
         return this._pair;
     }
-    step() {
+
+    /** Step rate (PIPS). */
+    get step() {
         return this._step;
     }
-    mul() {
+
+    /** Initial multiply rate. */
+    get mul() {
         return this._mul;
     }
 }
