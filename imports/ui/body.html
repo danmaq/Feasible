@@ -9,6 +9,27 @@
                 <label for="initialRate">Initial rate:</label>
                 <input type="number" id="initialRate" min="0.05" max="32767" step="0.05" />
             </li>
+            <li>
+                <label for="spread">Spread:</label>
+                <input type="number" id="spread" class="preference" step="0.1" data-bind="value:spread" />
+            </li>
+            <li>
+                <label for="stepSize">Step size:</label>
+                <input type="number" id="stepSize" class="preference" step="0.05" min="0.05" max="100" data-bind="value:stepSize" />
+            </li>
+            <li>
+                <label for="unit">Unit:</label>
+                <input type="number" id="unit" class="preference" step="100" min="100" max="100000" data-bind="value:unit" />
+            </li>
+            <li>
+                <label for="lotUnit">Lot (x Unit):</label>
+                <input type="number" id="lotUnit" class="preference" step="0.01" min="0.01" max="1000" data-bind="value:lotUnit" />
+            </li>
+            <li>
+                <label for="lot">Lot:</label>
+                <input type="number" id="lot" class="preference" readonly="readonly" data-bind="value:lot" /> *Automatic set
+            </li>
+            <li><button id="start" class="start" disabled="disabled" data-bind="enabled:valid">Start or Reset</button></li>
         </ul>
     </section>
 </body>
