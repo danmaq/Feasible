@@ -11,25 +11,43 @@
             </li>
             <li>
                 <label for="spread">Spread:</label>
-                <input type="number" id="spread" class="preference" step="0.1" data-bind="value:spread" />
+                <input type="number" id="spread" class="preference" step="0.1" />
             </li>
             <li>
                 <label for="stepSize">Step size:</label>
-                <input type="number" id="stepSize" class="preference" step="0.05" min="0.05" max="100" data-bind="value:stepSize" />
+                <input type="number" id="stepSize" class="preference" step="0.05" min="0.05" max="100" />
             </li>
             <li>
                 <label for="unit">Unit:</label>
-                <input type="number" id="unit" class="preference" step="100" min="100" max="100000" data-bind="value:unit" />
+                <input type="number" id="unit" class="preference" step="100" min="100" max="100000" />
             </li>
             <li>
                 <label for="lotUnit">Lot (x Unit):</label>
-                <input type="number" id="lotUnit" class="preference" step="0.01" min="0.01" max="1000" data-bind="value:lotUnit" />
+                <input type="number" id="lotUnit" class="preference" step="0.01" min="0.01" max="1000" />
             </li>
             <li>
                 <label for="lot">Lot:</label>
-                <input type="number" id="lot" class="preference" readonly="readonly" data-bind="value:lot" /> *Automatic set
+                <input type="number" id="lot" class="preference" readonly="readonly" /> *Automatic set
             </li>
-            <li><button id="start" class="start" disabled="disabled" data-bind="enabled:valid">Start or Reset</button></li>
+            <li><button id="start" class="start" disabled="{{invalidate}}">Start or Reset</button></li>
         </ul>
+    </section>
+    <section>
+        <h2>Instruction ({{> instructionsLength}})</h2>
+        <ol>
+            {{#each instructions}} {{> instruction}} {{/instructions}}
+        </ol>
+    </section>
+    <section>
+        <h2>Positions ({{> positionsLength}})</h2>
+        <ol>
+            {{#each positions}} {{> position}} {{/positions}}
+        </ol>
+    </section>
+    <section>
+        <h2>Orders ({{> ordersLength}})</h2>
+        <ol>
+            {{#each orders}} {{> order}} {{/orders}}
+        </ol>
     </section>
 </body>
