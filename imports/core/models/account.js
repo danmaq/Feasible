@@ -1,5 +1,7 @@
 'use strict';
 
+import { Pair } from '../enums/pair.js'
+
 /** Account data. */
 class Account {
     /**
@@ -8,7 +10,7 @@ class Account {
      * @param step Step range of next action.
      * @param mul Initial multiply rate.
      */
-    constructor(pair, step, mul) {
+    constructor(pair = Pair.USDJPY, step = 1.0, mul = 2) {
         this._pair = pair;
         this._step = step;
         this._mul = mul;
