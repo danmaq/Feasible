@@ -1,22 +1,45 @@
 'use strict';
 
-/** Order modek */
-class Order {
+import { Exchange } from '../enums/exchange.js'
+import { Trade } from '../enums/trade.js'
+import { Rate } from './rate.js'
+
+/** Order model. */
+export class Order {
     /**
      * Initialize new object.
-     * @param rate Rate instance.
+     * @param exchange Exchange type.
+     * @param trade Limit trade type.
+     * @param price Limit price.
      * @param quantity Ordered quantity.
-     * @param exType Exchange type.
+     * @param takeProfit Take profit.
      */
-    constructor(rate, quantity, exType) {
-        this._rate = rate;
+    constructor(
+        exchange = Exchange.Buy,
+        trade = Trade.Order,
+        price = 0,
+        quantity = 1,
+        takeProfit = NaN) {
+        this._exchange = exchange;
+        this._trade = trade;
+        this._price = price;
         this._quantity = quantity;
-        this._exType = exType;
+        this._takeProfit = takeProfit;
     }
 
-    /** Rate instance. */
-    get rate() {
-        return this._rate;
+    /** Exchange type. */
+    get exchange() {
+        return this._exchange;
+    }
+
+    /** Limit trade type. */
+    get trade() {
+        return this._trade;
+    }
+
+    /** Limit price. */
+    get price() {
+        return this._price;
     }
 
     /** Ordered quantity. */
@@ -24,8 +47,8 @@ class Order {
         return this._quantity;
     }
 
-    /** Exchange type. */
-    get exchangeType() {
-        return this._exType;
+    /** Take profit. */
+    get takeProfit() {
+        return this._takeProfit;
     }
 }

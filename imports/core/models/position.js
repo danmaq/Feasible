@@ -3,7 +3,8 @@
 import { Exchange } from '../enums/exchange.js'
 import { Rate } from './rate.js'
 
-class Position {
+/** Position model. */
+export class Position {
     /**
      * Initialize new object.
      * @param rate Rate at ordered.
@@ -37,15 +38,17 @@ class Position {
         return this._exchange;
     }
 
-    /** Exchange type. */
+    /** Take profit. */
     get takeProfit() {
         return this._takeProfit;
     }
 
+    /** Get gain. */
     gain(rate = new Rate()) {
         return this.rate.gain(rate, this.exchange) * this.quantity;
     }
 
+    /** Can be take profit. */
     isProfit(rate = new Rate()) {
         const ex = this.exchange;
         const sp = this.rate.stopPoint(ex);
