@@ -47,6 +47,9 @@ class Position {
     }
 
     isProfit(rate = new Rate()) {
-
+        const ex = this.exchange;
+        const sp = this.rate.stopPoint(ex);
+        const tp = this.takeProfit;
+        return ex === Exchange.Buy ? sp >= tp : sp <= tp;
     }
 }
