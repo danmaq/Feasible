@@ -3,7 +3,7 @@
 import { Pair } from '../enums/pair.js'
 
 /** Account data. */
-class Account {
+export class Account {
     /**
      * Initialize new object.
      * @param pair Currency pair (see Pair module)

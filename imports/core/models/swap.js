@@ -3,7 +3,7 @@
 import { Exchange } from '../enums/exchange.js'
 
 /** Swap point data. */
-class Swap {
+export class Swap {
     /**
      * Initialize new object.
      * @param long Long swap.

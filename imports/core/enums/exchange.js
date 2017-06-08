@@ -3,6 +3,6 @@
 /** Exchange type. */
 export const Exchange =
     Object.freeze({
-        Buy: 0,
-        Sell: 1,
+        Buy: 1,
+        Sell: -1,
     });

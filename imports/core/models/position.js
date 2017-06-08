@@ -6,25 +6,25 @@ import { Rate } from './rate.js'
 class Position {
     /**
      * Initialize new object.
-     * @param price Price at ordered.
+     * @param rate Rate at ordered.
      * @param quantity Ordered quantity.
      * @param exchange Exchange type.
      * @param takeProfit Take profit.
      */
     constructor(
-        price = 0,
+        rate = new Rate(),
         quantity = 1,
         exchange = Exchange.Buy,
         takeProfit = Number.NaN) {
-        this._price = price;
+        this._rate = rate;
         this._quantity = quantity;
         this._exchange = exchange;
         this._takeProfit = takeProfit;
     }
 
-    /** Price at ordered. */
-    get price() {
-        return this._price;
+    /** Rate at ordered. */
+    get rate() {
+        return this._rate;
     }
 
     /** Ordered quantity. */
@@ -43,6 +43,10 @@ class Position {
     }
 
     gain(rate = new Rate()) {
-        const stopPoint = Number(rate.getStopPoint(this.exchange));
+        return this.rate.gain(rate, this.exchange) * this.quantity;
+    }
+
+    isProfit(rate = new Rate()) {
+
     }
 }

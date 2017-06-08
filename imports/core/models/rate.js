@@ -4,7 +4,7 @@ import { Exchange } from '../enums/exchange.js'
 import { Pair } from '../enums/pair.js'
 
 /** Exchange rate data. */
-class Rate {
+export class Rate {
     /**
      * Initialize new object.
      * @param pair Currency pair (See: Pair module).
@@ -12,7 +12,8 @@ class Rate {
      * @param ask Ask point.
      * @param bid Bid point.
      */
-    constructor(pair = Pair.USDJPY, tick = new Date(), ask = 0, bid = 0) {
+    constructor(
+        pair = Pair.USDJPY, tick = new Date(), ask = 0, bid = 0) {
         this._pair = pair;
         this._tick = tick;
         this._ask = ask;
@@ -46,12 +47,19 @@ class Rate {
     }
 
     /** Get point by exchange type. */
-    getOrderPoint(exchange = Exchange.Buy) {
+    orderPoint(exchange = Exchange.Buy) {
         return exchange === Exchange.Buy ? this.ask : this.bid;
     }
 
     /** Get stop point by exchange type. */
-    getStopPoint(exchange = Exchange.Buy) {
+    stopPoint(exchange = Exchange.Buy) {
         return exchange === Exchange.Buy ? this.bid : this.ask;
+    }
+
+    /** Get gap between rate. */
+    gain(rate = new Rate(), exchange = Exchange.Buy) {
+        const order = this.orderPoint(exchange);
+        const stop = rate.stopPoint(exchange);
+        return (order - stop) * exchange;
     }
 }
