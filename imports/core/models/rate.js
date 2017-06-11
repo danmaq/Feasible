@@ -47,17 +47,17 @@ export class Rate {
     }
 
     /** Get point by exchange type. */
-    orderPoint(exchange = Exchange.Buy) {
-        return exchange === Exchange.Buy ? this.ask : this.bid;
+    orderPoint(exchange = Exchange.BUY) {
+        return exchange === Exchange.BUY ? this.ask : this.bid;
     }
 
     /** Get stop point by exchange type. */
-    stopPoint(exchange = Exchange.Buy) {
-        return exchange === Exchange.Buy ? this.bid : this.ask;
+    stopPoint(exchange = Exchange.BUY) {
+        return exchange === Exchange.BUY ? this.bid : this.ask;
     }
 
     /** Get gap between rate. */
-    gain(rate = new Rate(), exchange = Exchange.Buy) {
+    gain(rate = new Rate(), exchange = Exchange.BUY) {
         const order = this.orderPoint(exchange);
         const stop = rate.stopPoint(exchange);
         return (order - stop) * exchange;

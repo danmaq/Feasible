@@ -15,7 +15,7 @@ export class Position {
     constructor(
         rate = new Rate(),
         quantity = 1,
-        exchange = Exchange.Buy,
+        exchange = Exchange.BUY,
         takeProfit = Number.NaN) {
         this._rate = rate;
         this._quantity = quantity;
@@ -53,6 +53,6 @@ export class Position {
         const ex = this.exchange;
         const sp = this.rate.stopPoint(ex);
         const tp = this.takeProfit;
-        return ex === Exchange.Buy ? sp >= tp : sp <= tp;
+        return ex === Exchange.BUY ? sp >= tp : sp <= tp;
     }
 }

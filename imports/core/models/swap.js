@@ -25,7 +25,7 @@ export class Swap {
     }
 
     /** Get swap point. */
-    point(exchange = Exchange.Buy) {
-        return exchange === Exchange.Buy ? this.long : this.short;
+    point(exchange = Exchange.BUY) {
+        return exchange === Exchange.BUY ? this.long : this.short;
     }
 }

@@ -1,8 +1,8 @@
 'use strict';
 
 /** Exchange type. */
-export const Exchange =
+export const Limit =
     Object.freeze({
-        BUY: 1,
-        SELL: -1,
+        STOP: 1,
+        LIMIT: -1,
     });
