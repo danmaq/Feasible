@@ -2,6 +2,7 @@
 
 import { Exchange } from '../enums/exchange.js'
 import { Pair } from '../enums/pair.js'
+import { Swap } from './swap.js'
 
 /** Exchange rate data. */
 export class Rate {
@@ -11,13 +12,19 @@ export class Rate {
      * @param tick Timestamp.
      * @param ask Ask point.
      * @param bid Bid point.
+     * @param swap Swap point.
      */
     constructor(
-        pair = Pair.USDJPY, tick = new Date(), ask = 0, bid = 0) {
+        pair = Pair.USDJPY,
+        tick = new Date(),
+        ask = 0,
+        bid = 0,
+        swap = new Swap()) {
         this._pair = pair;
         this._tick = tick;
         this._ask = ask;
         this._bid = bid;
+        this._swap = swap;
         this._spread = ask - bid;
     }
 
@@ -39,6 +46,11 @@ export class Rate {
     /** Bid point. */
     get bid() {
         return this._bid;
+    }
+
+    /** Swap point. */
+    get swap() {
+        return this._swap;
     }
 
     /** Spread point. */

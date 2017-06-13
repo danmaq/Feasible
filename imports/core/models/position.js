@@ -45,6 +45,8 @@ export class Position {
 
     /** Get gain. */
     gain(rate = new Rate()) {
+        var traded = this.rate.tick;
+        // TODO: Swap
         return this.rate.gain(rate, this.exchange) * this.quantity;
     }
 
