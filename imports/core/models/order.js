@@ -17,7 +17,7 @@ export class Order {
      */
     constructor(
         exchange = Exchange.BUY,
-        limit = Limit.LIMIT,
+        limit = Limit.NONE,
         price = 0,
         quantity = 1,
         takeProfit = NaN) {
@@ -54,8 +54,11 @@ export class Order {
     }
 
     available(rate = new Rate()) {
-        const ex = this.exchange;
         const limit = this.limit;
+        if (limit === Limit.NONE) {
+            return true;
+        }
+        const ex = this.exchange;
         const lt = (a, b) => a <= b;
         const gt = (a, b) => a >= b;
         const cmp =

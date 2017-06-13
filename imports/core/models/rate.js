@@ -58,6 +58,21 @@ export class Rate {
         return this._spread;
     }
 
+    /**
+     * Load from de-serialized object.
+     * @param raw Raw object.
+     * @return Rate object.
+     */
+    static
+    load(raw = new Object()) {
+        return new Rate(
+            raw["pair"],
+            raw["tick"],
+            raw["ask"],
+            raw["bid"],
+            Swap.load(raw["swap"]));
+    }
+
     /** Get point by exchange type. */
     orderPoint(exchange = Exchange.BUY) {
         return exchange === Exchange.BUY ? this.ask : this.bid;

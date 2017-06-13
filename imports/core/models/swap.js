@@ -24,6 +24,16 @@ export class Swap {
         return this._short;
     }
 
+    /**
+     * Load from de-serialized object.
+     * @param raw Raw object.
+     * @return Swap object.
+     */
+    static
+    load(raw = new Object()) {
+        return new Swap(raw["long"], raw["short"]);
+    }
+
     /** Get swap point. */
     point(exchange = Exchange.BUY) {
         return exchange === Exchange.BUY ? this.long : this.short;

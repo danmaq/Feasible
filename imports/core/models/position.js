@@ -43,6 +43,19 @@ export class Position {
         return this._takeProfit;
     }
 
+    /**
+     * Load from de-serialized object.
+     * @param raw Raw object.
+     * @return Position object.
+     */
+    static load(raw = new Object()) {
+        return new Position(
+            Rate.load(raw["rate"]),
+            raw["quantity"],
+            raw["exchange"],
+            raw["takeProfit"]);
+    }
+
     /** Get gain. */
     gain(rate = new Rate()) {
         var traded = this.rate.tick;
