@@ -73,17 +73,30 @@ export class Rate {
             Swap.load(raw["swap"]));
     }
 
-    /** Get point by exchange type. */
+    /**
+     * Get point by exchange type.
+     * @param exchange Exchange type.
+     * @return Point at order.
+     */
     orderPoint(exchange = Exchange.BUY) {
         return exchange === Exchange.BUY ? this.ask : this.bid;
     }
 
-    /** Get stop point by exchange type. */
+    /**
+     * Get stop point by exchange type.
+     * @param exchange Exchange type.
+     * @return Point at stop.
+     */
     stopPoint(exchange = Exchange.BUY) {
         return exchange === Exchange.BUY ? this.bid : this.ask;
     }
 
-    /** Get gap between rate. */
+    /**
+     * Get gap between rate.
+     * @param rate Current rate.
+     * @param exchange Exchange type.
+     * @return Gap point.
+     */
     gain(rate = new Rate(), exchange = Exchange.BUY) {
         const order = this.orderPoint(exchange);
         const stop = rate.stopPoint(exchange);

@@ -53,6 +53,11 @@ export class Order {
         return this._takeProfit;
     }
 
+    /**
+     * Get available this order.
+     * @param rate Current rate.
+     * @return If available this order, return true.
+     */
     available(rate = new Rate()) {
         const limit = this.limit;
         if (limit === Limit.NONE) {
@@ -67,6 +72,11 @@ export class Order {
         return cmp(rate.orderPoint(this.exchange), this.price);
     }
 
+    /**
+     * Export to Position object.
+     * @param rate Current rate.
+     * @return Position object.
+     */
     toPosition(rate = new Rate()) {
         return new Position(
             rate, this.quantity, this.exchange, this.takeProfit);

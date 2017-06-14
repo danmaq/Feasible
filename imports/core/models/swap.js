@@ -34,7 +34,11 @@ export class Swap {
         return new Swap(raw["long"], raw["short"]);
     }
 
-    /** Get swap point. */
+    /**
+     * Get swap point.
+     * @param exchange Exchange type.
+     * @return Swap point.
+     */
     point(exchange = Exchange.BUY) {
         return exchange === Exchange.BUY ? this.long : this.short;
     }

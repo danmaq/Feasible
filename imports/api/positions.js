@@ -19,6 +19,9 @@ if (Meteor.isServer) {
 Meteor.methods({
     'positions.insert' (position) {
         check(position, Position);
-
+        Positions.insert({
+            owner: this.userId,
+            body: position
+        });
     },
 });

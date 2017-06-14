@@ -56,14 +56,22 @@ export class Position {
             raw["takeProfit"]);
     }
 
-    /** Get gain. */
+    /**
+     * Get gain point.
+     * @param rate Current rate.
+     * @return Gain point.
+     */
     gain(rate = new Rate()) {
         var traded = this.rate.tick;
-        // TODO: Swap
+        // TODO: Swap calculation.
         return this.rate.gain(rate, this.exchange) * this.quantity;
     }
 
-    /** Can be take profit. */
+    /**
+     * Can be take profit.
+     * @param rate Current rate.
+     * @return If can be take profit, return true.
+     */
     isProfit(rate = new Rate()) {
         const ex = this.exchange;
         const sp = this.rate.stopPoint(ex);
