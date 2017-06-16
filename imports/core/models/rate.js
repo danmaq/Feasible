@@ -66,11 +66,11 @@ export class Rate {
     static
     load(raw = new Object()) {
         return new Rate(
-            raw["pair"],
-            raw["tick"],
-            raw["ask"],
-            raw["bid"],
-            Swap.load(raw["swap"]));
+            raw["_pair"],
+            raw["_tick"],
+            raw["_ask"],
+            raw["_bid"],
+            Swap.load(raw["_swap"]));
     }
 
     /**

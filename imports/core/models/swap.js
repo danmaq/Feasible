@@ -31,7 +31,7 @@ export class Swap {
      */
     static
     load(raw = new Object()) {
-        return new Swap(raw["long"], raw["short"]);
+        return new Swap(raw["_long"], raw["_short"]);
     }
 
     /**

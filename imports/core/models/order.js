@@ -60,11 +60,11 @@ export class Order {
      */
     static load(raw = new Object()) {
         return new Order(
-            raw["exchange"],
-            raw["limit"],
-            raw["price"],
-            raw["quantity"],
-            raw["takeProfit"]);
+            raw["_exchange"],
+            raw["_limit"],
+            raw["_price"],
+            raw["_quantity"],
+            raw["_takeProfit"]);
     }
 
     /**

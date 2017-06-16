@@ -2,7 +2,7 @@
 
 import { Template } from 'meteor/templating';
 
-import { Account } from '../core/models/accoount.js';
+import { Account } from '../core/models/account.js';
 import { Order } from '../core/models/order.js';
 import { Position } from '../core/models/position.js';
 import { Rate } from '../core/models/rate.js';

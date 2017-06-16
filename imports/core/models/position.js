@@ -50,10 +50,10 @@ export class Position {
      */
     static load(raw = new Object()) {
         return new Position(
-            Rate.load(raw["rate"]),
-            raw["quantity"],
-            raw["exchange"],
-            raw["takeProfit"]);
+            Rate.load(raw["_rate"]),
+            raw["_quantity"],
+            raw["_exchange"],
+            raw["_takeProfit"]);
     }
 
     /**

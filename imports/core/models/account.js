@@ -37,6 +37,6 @@ export class Account {
      * @return {Account} Account object.
      */
     static load(raw = new Object()) {
-        return new Account(raw["pair"], raw["step"], raw["mul"]);
+        return new Account(raw["_pair"], raw["_step"], raw["_mul"]);
     }
 }
