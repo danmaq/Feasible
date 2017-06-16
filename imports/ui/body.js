@@ -10,12 +10,6 @@ import { Swap } from '../core/models/swap.js';
 
 import './body.html';
 
-console.log(JSON.stringify(new Account()));
-console.log(JSON.stringify(new Order()));
-console.log(JSON.stringify(new Position()));
-console.log(JSON.stringify(new Rate()));
-console.log(JSON.stringify(new Swap()));
-
 Template.body.helpers({
 
 });

@@ -1,5 +1,3 @@
-import { Meteor } from 'meteor/meteor';
+'use strict';
 
-Meteor.startup(() => {
-  // code to run on server at startup
-});
+import '../imports/api/positions.js';
