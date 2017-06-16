@@ -7,10 +7,10 @@ import { Rate } from './rate.js'
 export class Position {
     /**
      * Initialize new object.
-     * @param rate Rate at ordered.
-     * @param quantity Ordered quantity.
-     * @param exchange Exchange type.
-     * @param takeProfit Take profit.
+     * @param {Rate} rate Rate at ordered.
+     * @param {number} quantity Ordered quantity.
+     * @param {number} exchange Exchange type.
+     * @param {number} takeProfit Take profit.
      */
     constructor(
         rate = new Rate(),
@@ -45,8 +45,8 @@ export class Position {
 
     /**
      * Load from de-serialized object.
-     * @param raw Raw object.
-     * @return Position object.
+     * @param {object} raw Raw object.
+     * @return {Position} Position object.
      */
     static load(raw = new Object()) {
         return new Position(
@@ -58,8 +58,8 @@ export class Position {
 
     /**
      * Get gain point.
-     * @param rate Current rate.
-     * @return Gain point.
+     * @param {Rate} rate Current rate.
+     * @return {number} Gain point.
      */
     gain(rate = new Rate()) {
         var traded = this.rate.tick;
@@ -69,8 +69,8 @@ export class Position {
 
     /**
      * Can be take profit.
-     * @param rate Current rate.
-     * @return If can be take profit, return true.
+     * @param {Rate} rate Current rate.
+     * @return {boolean} If can be take profit, return true.
      */
     isProfit(rate = new Rate()) {
         const ex = this.exchange;

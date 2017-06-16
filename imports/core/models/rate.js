@@ -8,11 +8,11 @@ import { Swap } from './swap.js'
 export class Rate {
     /**
      * Initialize new object.
-     * @param pair Currency pair (See: Pair module).
-     * @param tick Timestamp.
-     * @param ask Ask point.
-     * @param bid Bid point.
-     * @param swap Swap point.
+     * @param {number} pair Currency pair.
+     * @param {Date} tick Timestamp.
+     * @param {number} ask Ask point.
+     * @param {number} bid Bid point.
+     * @param {Swap} swap Swap point.
      */
     constructor(
         pair = Pair.USDJPY,
@@ -60,8 +60,8 @@ export class Rate {
 
     /**
      * Load from de-serialized object.
-     * @param raw Raw object.
-     * @return Rate object.
+     * @param {object} raw Raw object.
+     * @return {Rate} Rate object.
      */
     static
     load(raw = new Object()) {
@@ -75,8 +75,8 @@ export class Rate {
 
     /**
      * Get point by exchange type.
-     * @param exchange Exchange type.
-     * @return Point at order.
+     * @param {number} exchange Exchange type.
+     * @return {number} Point at order.
      */
     orderPoint(exchange = Exchange.BUY) {
         return exchange === Exchange.BUY ? this.ask : this.bid;
@@ -84,8 +84,8 @@ export class Rate {
 
     /**
      * Get stop point by exchange type.
-     * @param exchange Exchange type.
-     * @return Point at stop.
+     * @param {number} exchange Exchange type.
+     * @return {number} Point at stop.
      */
     stopPoint(exchange = Exchange.BUY) {
         return exchange === Exchange.BUY ? this.bid : this.ask;
@@ -93,9 +93,9 @@ export class Rate {
 
     /**
      * Get gap between rate.
-     * @param rate Current rate.
-     * @param exchange Exchange type.
-     * @return Gap point.
+     * @param {Rate} rate Current rate.
+     * @param {number} exchange Exchange type.
+     * @return {number} Gap point.
      */
     gain(rate = new Rate(), exchange = Exchange.BUY) {
         const order = this.orderPoint(exchange);

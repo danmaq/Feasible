@@ -6,8 +6,8 @@ import { Exchange } from '../enums/exchange.js'
 export class Swap {
     /**
      * Initialize new object.
-     * @param long Long swap.
-     * @param short Short swap.
+     * @param {number} long Long swap.
+     * @param {number} short Short swap.
      */
     constructor(long = 0, short = 0) {
         this._long = long;
@@ -26,8 +26,8 @@ export class Swap {
 
     /**
      * Load from de-serialized object.
-     * @param raw Raw object.
-     * @return Swap object.
+     * @param {object} raw Raw object.
+     * @return {Swap} Swap object.
      */
     static
     load(raw = new Object()) {
@@ -36,8 +36,8 @@ export class Swap {
 
     /**
      * Get swap point.
-     * @param exchange Exchange type.
-     * @return Swap point.
+     * @param {number} exchange Exchange type.
+     * @return {number} Swap point.
      */
     point(exchange = Exchange.BUY) {
         return exchange === Exchange.BUY ? this.long : this.short;

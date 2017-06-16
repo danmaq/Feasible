@@ -9,11 +9,11 @@ import { Rate } from './rate.js'
 export class Order {
     /**
      * Initialize new object.
-     * @param exchange Exchange type.
-     * @param limit Limit trade type.
-     * @param price Limit price.
-     * @param quantity Ordered quantity.
-     * @param takeProfit Take profit.
+     * @param {number} exchange Exchange type.
+     * @param {number} limit Limit trade type.
+     * @param {number} price Limit price.
+     * @param {number} quantity Ordered quantity.
+     * @param {number} takeProfit Take profit.
      */
     constructor(
         exchange = Exchange.BUY,
@@ -54,9 +54,23 @@ export class Order {
     }
 
     /**
+     * Load from de-serialized object.
+     * @param {object} raw Raw object.
+     * @return {Order} Order object.
+     */
+    static load(raw = new Object()) {
+        return new Order(
+            raw["exchange"],
+            raw["limit"],
+            raw["price"],
+            raw["quantity"],
+            raw["takeProfit"]);
+    }
+
+    /**
      * Get available this order.
-     * @param rate Current rate.
-     * @return If available this order, return true.
+     * @param {Rate} rate Current rate.
+     * @return {boolean} If available this order, return true.
      */
     available(rate = new Rate()) {
         const limit = this.limit;
@@ -74,8 +88,8 @@ export class Order {
 
     /**
      * Export to Position object.
-     * @param rate Current rate.
-     * @return Position object.
+     * @param {Rate} rate Current rate.
+     * @return {Position} Position object.
      */
     toPosition(rate = new Rate()) {
         return new Position(

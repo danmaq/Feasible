@@ -6,9 +6,9 @@ import { Pair } from '../enums/pair.js'
 export class Account {
     /**
      * Initialize new object.
-     * @param pair Currency pair (see Pair module)
-     * @param step Step range of next action.
-     * @param mul Initial multiply rate.
+     * @param {number} pair Currency pair (see Pair module)
+     * @param {number} step Step range of next action.
+     * @param {number} mul Initial multiply rate.
      */
     constructor(pair = Pair.USDJPY, step = 1.0, mul = 2) {
         this._pair = pair;
@@ -29,5 +29,14 @@ export class Account {
     /** Initial multiply rate. */
     get mul() {
         return this._mul;
+    }
+
+    /**
+     * Load from de-serialized object.
+     * @param {Object} raw Raw object.
+     * @return {Account} Account object.
+     */
+    static load(raw = new Object()) {
+        return new Account(raw["pair"], raw["step"], raw["mul"]);
     }
 }
