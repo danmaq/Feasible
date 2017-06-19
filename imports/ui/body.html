@@ -2,6 +2,7 @@
     <header>
         <h1>Feasible</h1>
     </header>
+    {{> loginButtons}} {{#if currentUser}}
     <section>
         <h2>Preference</h2>
         <ul>
@@ -32,6 +33,7 @@
             <li><button id="start" class="start" disabled="{{invalidate}}">Start or Reset</button></li>
         </ul>
     </section>
+    {{/if}}
     <section>
         <!--
         <h2>Instruction ({{> instructionsLength}})</h2>

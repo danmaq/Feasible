@@ -19,6 +19,9 @@ if (Meteor.isServer) {
 Meteor.methods({
     'positions.insert' (position) {
         check(position, Position);
+        if (!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
         Positions.insert({
             owner: this.userId,
             body: position

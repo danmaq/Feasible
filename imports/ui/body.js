@@ -1,17 +1,20 @@
 'use strict';
 
+import { Meteor } from 'meteor/meteor';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
-import { Account } from '../core/models/account.js';
-import { Order } from '../core/models/order.js';
-import { Position } from '../core/models/position.js';
-import { Rate } from '../core/models/rate.js';
-import { Swap } from '../core/models/swap.js';
+import { Positions } from '../api/positions.js';
 
 import './body.html';
 
-Template.body.helpers({
+Template.body.onCreated(function bodyOnCreated() {
+    this.state = new ReactiveDict();
+    Meteor.subscribe('positions');
+});
 
+Template.body.helpers({
+    positions() { return Positions.Find({}); }
 });
 
 Template.body.events({
