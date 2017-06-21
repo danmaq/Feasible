@@ -1,15 +1,18 @@
 'use strict';
 
 import { Meteor } from 'meteor/meteor';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
 import { Positions } from '../api/positions.js';
+// import { Position } from '../core/models/position.js';
 
 import './body.html';
 
+// console.log(new Position() === new Position());
+// console.log(new Position() == new Position());
+// console.log(Object.is(new Position(), new Position()));
+
 Template.body.onCreated(function bodyOnCreated() {
-    this.state = new ReactiveDict();
     Meteor.subscribe('positions');
 });
 

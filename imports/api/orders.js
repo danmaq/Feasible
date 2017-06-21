@@ -4,36 +4,36 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
-import { Position } from '../core/models/position.js';
+import { Order } from '../core/models/order.js';
 
-export const Positions = new Mongo.Collection('positions');
+export const Orders = new Mongo.Collection('orders');
 
 if (Meteor.isServer) {
     Meteor.publish(
-        'positions',
-        function positionsPublication() {
-            return Positions.find({ owner: this.userId });
+        'orders',
+        function ordersPublication() {
+            return Orders.find({ owner: this.userId });
         });
 }
 
 Meteor.methods({
-    'positions.insert' (position) {
-        check(position, Position);
+    'orders.insert' (order) {
+        check(order, Order);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        Positions.insert({
-            position,
+        Orders.insert({
+            order,
             createdAt: new Date(),
             owner: Meteor.userId(),
             username: Meteor.user().username
         });
     },
-    'positions.remove' (positionId) {
-        check(positionId, String);
+    'orders.remove' (orderId) {
+        check(orderId, String);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        Positions.remove(positionId);
+        Orders.remove(orderId);
     },
 });
