@@ -13,9 +13,9 @@ Template.body.onCreated(function bodyOnCreated() {
 });
 
 Template.body.helpers({
-    positions() { return Positions.Find({}); },
-    positionLength() { return Positions.find({}).count(); },
-    orders() { return Orders.Find({}); },
+    positions() { return Positions.find({}); },
+    positionsLength() { return Positions.find({}).count(); },
+    orders() { return Orders.find({}); },
     ordersLength() { return Orders.find({}).count(); },
 });
 

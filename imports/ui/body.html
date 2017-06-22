@@ -1,6 +1,6 @@
 <body>
     <header>
-        <h1>Feasible</h1>
+        <h1>Feasible (pre-alpha)</h1>
     </header>
     {{> loginButtons}} {{#if currentUser}}
     <section>
@@ -35,15 +35,15 @@
     </section>
     {{/if}}
     <section>
-        <h2>Positions ({{> positionsLength}})</h2>
+        <h2>Positions ({{positionsLength}})</h2>
         <ol>
-            {{#each positions}} {{> position}} {{/positions}}
+            {{#each positions}} {{> position}} {{/each}}
         </ol>
     </section>
     <section>
-        <h2>Orders ({{> ordersLength}})</h2>
+        <h2>Orders ({{ordersLength}})</h2>
         <ol>
-            {{#each orders}} {{> order}} {{/orders}}
+            {{#each orders}} {{> order}} {{/each}}
         </ol>
     </section>
 </body>
