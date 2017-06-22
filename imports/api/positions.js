@@ -24,9 +24,7 @@ Meteor.methods({
         }
         Positions.insert({
             position,
-            createdAt: new Date(),
-            owner: Meteor.userId(),
-            username: Meteor.user().username
+            owner: Meteor.userId()
         });
     },
     'positions.remove' (positionId) {

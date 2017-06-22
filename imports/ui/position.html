@@ -1,5 +1,6 @@
 <template name="position">
     <li>
-        <strong>{{exchange}} {{quantity}}</strong> {{price}} <strong>{{gain}}</strong>, T/P: {{takeProfit}}
+        <button class="delete">&times;</button>
+        <strong>{{position.exchange}} {{position.quantity}}</strong> {{position.price}} <strong>{{position.gain}}</strong> T/P: {{position.takeProfit}}
     </li>
 </template>
