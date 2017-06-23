@@ -18,10 +18,19 @@ Template.body.onCreated(
 Template.body.helpers({
     positions() { return Positions.find({}); },
     positionsLength() { return Positions.find({}).count(); },
+    showAddPosition() { return !instance.state.get('hideAddPosition'); },
     orders() { return Orders.find({}); },
     ordersLength() { return Orders.find({}).count(); },
 });
 
 Template.body.events({
-
+    'submit .add-position' (event) {
+        // stop propagation
+        event.preventDefault();
+    },
+    'change .hide-add-position input' (event, instance) {
+        console.log(instance);
+        console.log(event.target.checked);
+        instance.state.set('hideAddPosition', event.target.checked);
+    },
 });

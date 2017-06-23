@@ -42,6 +42,9 @@
         {{#if currentUser}}
         <form>
             <legend>Add manually</legend>
+            <label class="hide-add-position">
+                <input type="checkbox" checked="checked" />Hide
+            </label> {{#if showAddPosition}}
             <ul>
                 <li>
                     <label for="add-position-date">Ordered date/time: </label>
@@ -68,6 +71,7 @@
                 </li>
                 <li><button id="add-position" class="add-position">Add</button></li>
             </ul>
+            {{/if}}
         </form>
         {{/if}}
     </section>
