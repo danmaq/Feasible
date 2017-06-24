@@ -1,1 +1,8 @@
 /* CSS declarations go here */
+
+body {
+    background-color: #333;
+    color: #CCC;
+    font-style: 'Segoe', sans-serif;
+    font-weight: 200;
+}
