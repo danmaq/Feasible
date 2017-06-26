@@ -68,7 +68,8 @@ export const Pair =
         USDDKK: 62,
         USDSGD: 63,
         XAGUSD: 64,
-        XAUGBP: 65
+        XAUGBP: 65,
+        __length: 66
     });
 
 /** Extension of currency pairs. */
@@ -215,5 +216,10 @@ export class PairUtil {
             default:
                 return '';
         }
+    }
+    static all() {
+        const empty = new Array(Pair.__length);
+        const tostr = PairUtil.toStr;
+        return empty.map((_, i) => ({ id: i, str: tostr(i) }));
     }
 }

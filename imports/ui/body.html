@@ -2,7 +2,23 @@
     <header>
         <h1>Feasible (pre-alpha)</h1>
     </header>
-    {{> loginButtons}} {{#if currentUser}}
+    {{> loginButtons}}
+    <section>
+        <h2>Accounts ({{accountsLength}})</h2>
+        {{#if currentUser}}
+        <form id="account">
+            <label for="pair">Pair: </label>
+            <select id="pair">
+                <option></option>
+            </select>
+            <input type="submit" value="Add account" />
+        </form>
+        {{else}}
+        <p>Let's sign-in, and view, add and remove accounts.</p>
+        {{/if}}
+    </section>
+    <!--
+    {{#if currentUser}}
     <section>
         <h2>Preference</h2>
         <ul>
@@ -12,7 +28,15 @@
             </li>
             <li>
                 <label for="spread">Spread:</label>
-                <input type="number" id="spread" class="preference" step="0.1" />
+                <input type="number" id="spread" step="0.1" />
+            </li>
+            <li>
+                <label for="spread">Swap(Long):</label>
+                <input type="number" id="swap-long" step="0.1" />
+            </li>
+            <li>
+                <label for="spread">Swap(Short):</label>
+                <input type="number" id="swap-short" step="0.1" />
             </li>
             <li>
                 <label for="stepSize">Step size:</label>
@@ -82,4 +106,5 @@
             {{#each orders}} {{> order}} {{/each}}
         </ol>
     </section>
+    -->
 </body>

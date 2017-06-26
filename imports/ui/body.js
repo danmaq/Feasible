@@ -4,11 +4,28 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
+import './body.html';
+
+Template.body.onCreated(
+    () => {
+        const state = new ReactiveDict();
+        Template.instance().state = state;
+    });
+Template.body.helpers({
+    accounts() {
+        const instance = Template.instance();
+        return Tasks.find({}, { sort: { sortBy: 1 } });
+    },
+    accountLength() { return 0; },
+});
+Template.body.events({
+    'submit #account' (event) {},
+});
+/*
 import { Positions } from '../api/positions.js';
 import { Orders } from '../api/orders.js';
 import { Rate } from '../core/models/rate.js';
 
-import './body.html';
 
 const SHOW_ADD_POSITION = 'showAddPosition';
 
@@ -47,3 +64,4 @@ Template.body.events({
         Template.instance().state.set('showAddPosition', event.target.checked);
     },
 });
+*/
