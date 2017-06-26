@@ -4,6 +4,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
+import { Pair, PairUtil } from '../core/enums/pair.js';
+
 import './body.html';
 
 Template.body.onCreated(
@@ -12,6 +14,7 @@ Template.body.onCreated(
         Template.instance().state = state;
     });
 Template.body.helpers({
+    pairs() { return PairUtil.all(); },
     accounts() {
         const instance = Template.instance();
         return Tasks.find({}, { sort: { sortBy: 1 } });
@@ -21,6 +24,7 @@ Template.body.helpers({
 Template.body.events({
     'submit #account' (event) {},
 });
+
 /*
 import { Positions } from '../api/positions.js';
 import { Orders } from '../api/orders.js';

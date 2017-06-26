@@ -9,7 +9,7 @@
         <form id="account">
             <label for="pair">Pair: </label>
             <select id="pair">
-                <option></option>
+               {{#each pairs}} {{> pair}} {{/each}}
             </select>
             <input type="submit" value="Add account" />
         </form>
@@ -17,7 +17,13 @@
         <p>Let's sign-in, and view, add and remove accounts.</p>
         {{/if}}
     </section>
-    <!--
+</body>
+
+<template name="pair">
+    <option value="{{id}}">{{name}}</value>
+</template>
+
+<!--
     {{#if currentUser}}
     <section>
         <h2>Preference</h2>
@@ -107,4 +113,3 @@
         </ol>
     </section>
     -->
-</body>

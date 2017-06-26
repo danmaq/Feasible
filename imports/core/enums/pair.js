@@ -220,6 +220,6 @@ export class PairUtil {
     static all() {
         const empty = new Array(Pair.__length);
         const tostr = PairUtil.toStr;
-        return empty.map((_, i) => ({ id: i, str: tostr(i) }));
+        return empty.map((_, i) => ({ id: i, name: tostr(i) }));
     }
 }
