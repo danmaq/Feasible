@@ -5,24 +5,40 @@
     {{> loginButtons}}
     <section>
         <h2>Accounts ({{accountsLength}})</h2>
-        {{#if currentUser}}
-        <form id="account">
-            <label for="pair">Pair: </label>
-            <select id="pair">
-               {{#each pairs}} {{> pair}} {{/each}}
-            </select>
-            <input type="submit" value="Add account" />
-        </form>
-        {{else}}
+        {{#if currentUser}} {{> addAccount}} {{else}}
         <p>Let's sign-in, and view, add and remove accounts.</p>
         {{/if}}
     </section>
 </body>
 
-<template name="pair">
-    <option value="{{id}}">{{name}}</value>
-</template>
+<template name="addAccount">
+        <form id="account">
+            <ul>
+                <li>
+                    <label for="pair">Pair: </label>
+                    <select id="pair">
+                    {{#each pairs}}
+                        <option value="{{key}}">{{value}}</option>
+                    {{/each}}
+                    </select>
+                </li>
+                <li>
+                    <label for="lot">Lot unit: </label>
+                    <input id="lot" type="number" value="10000" step="100" min="100" max="1000000" />
+                </li>
+                <li>
+                    <label for="mul">Initial multiply for lot: </label>
+                    <input id="mul" type="number" value="0.01" step="0.01" min="0.01" max="32767" />
+                </li>
+                <li>
+                    <label for="step">Step range to next action: </label>
+                    <input id="step" type="number" value="0.5" step="0.05" min="0.05" max="32767" />
+                </li>
+                <li><input type="submit" value="Add account" /></li>
+            </ul>
+        </form>
 
+</template>
 <!--
     {{#if currentUser}}
     <section>

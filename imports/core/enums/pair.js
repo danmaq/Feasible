@@ -217,9 +217,19 @@ export class PairUtil {
                 return '';
         }
     }
-    static all() {
-        const empty = new Array(Pair.__length);
-        const tostr = PairUtil.toStr;
-        return empty.map((_, i) => ({ id: i, name: tostr(i) }));
+    static * iter() {
+        for (let i of PairUtil.iteri()) {
+            yield PairUtil.toStr(i);
+        }
+    }
+    static * iteri() {
+        for (let i = 0; i < Pair.__length; i++) {
+            yield i;
+        }
+    }
+    static * iterkv() {
+        for (let i of PairUtil.iteri()) {
+            yield { key: i, value: PairUtil.toStr(i) };
+        }
     }
 }

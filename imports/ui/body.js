@@ -14,7 +14,7 @@ Template.body.onCreated(
         Template.instance().state = state;
     });
 Template.body.helpers({
-    pairs() { return PairUtil.all(); },
+    pairs() { return Array.from(PairUtil.iterkv()); },
     accounts() {
         const instance = Template.instance();
         return Tasks.find({}, { sort: { sortBy: 1 } });
