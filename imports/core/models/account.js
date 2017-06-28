@@ -7,13 +7,22 @@ export class Account {
     /**
      * Initialize new object.
      * @param {number} pair Currency pair (see Pair module)
-     * @param {number} step Step range of next action.
+     * @param {number} lot Lot unit.
      * @param {number} mul Initial multiply rate.
+     * @param {number} step Step range of next action.
+     * @param {number} martingale Martingale rate.
      */
-    constructor(pair = Pair.USDJPY, step = 1.0, mul = 2) {
+    constructor(
+        pair = Pair.USDJPY,
+        lot = 10000,
+        mul = 0.01,
+        step = 1.0,
+        martingale = 2) {
         this._pair = pair;
-        this._step = step;
+        this._lot = lot;
         this._mul = mul;
+        this._step = step;
+        this._martingale = martingale;
     }
 
     /** Currency pair. */
@@ -21,14 +30,24 @@ export class Account {
         return this._pair;
     }
 
-    /** Step range of next action (PIPS). */
-    get step() {
-        return this._step;
+    /** Lot unit. */
+    get lot() {
+        return this._lot;
     }
 
     /** Initial multiply rate. */
     get mul() {
         return this._mul;
+    }
+
+    /** Step range of next action (PIPS). */
+    get step() {
+        return this._step;
+    }
+
+    /** Martingale rate. */
+    get martingale() {
+        return this._martingale;
     }
 
     /**
@@ -37,6 +56,11 @@ export class Account {
      * @return {Account} Account object.
      */
     static load(raw = new Object()) {
-        return new Account(raw["_pair"], raw["_step"], raw["_mul"]);
+        return new Account(
+            raw["_pair"],
+            raw["_lot"],
+            raw["_mul"],
+            raw["_step"],
+            raw["_martingale"]);
     }
 }
