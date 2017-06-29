@@ -17,11 +17,16 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'accounts.insert' (account) {
-        check(account, Account);
+    'accounts.insert' (pair, lot, mul, step, martin) {
+        check(pair, Number);
+        check(lot, Number);
+        check(mul, Number);
+        check(step, Number);
+        check(martin, Number);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
+        const account = new Account(pair, lot, mul, step, martin);
         Accounts.insert({
             account,
             sortBy: account.pair,

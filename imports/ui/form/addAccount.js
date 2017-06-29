@@ -1,9 +1,12 @@
 'use strict'
 
 import { Template } from 'meteor/templating';
+import { Meteor } from 'meteor/meteor';
+
+import { Accounts } from '../../api/accounts.js';
 
 import { PairUtil } from '../../core/enums/pair.js';
-import { Accounts } from '../../api/accounts.js';
+import { Account } from '../../core/models/account.js';
 
 import './addAccount.html';
 
@@ -19,7 +22,7 @@ Template.addAccount.events({
         const lot = Number.parseInt(target['lot'].value);
         const mul = Number.parseFloat(target['mul'].value);
         const step = Number.parseFloat(target['step'].value);
-        const martingale = Number.parseFloat(target['martingale'].value);
-        console.log(pair, lot, mul, step);
+        const martin = Number.parseFloat(target['martingale'].value);
+        Meteor.call('accounts.insert', pair, lot, mul, step, martin);
     },
 });
