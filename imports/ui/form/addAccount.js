@@ -18,14 +18,14 @@ const DEFAULT_MARTINGALE = 2;
 
 Template.addAccount.onCreated(() => {});
 Template.addAccount.helpers({
-    lot: () => DEFAULT_LOT,
-    multiply: () => DEFAULT_MULTIPLY,
-    step: () => DEFAULT_STEP,
-    martingale: () => DEFAULT_MARTINGALE,
-    pairs: () => Array.from(PairUtil.iterkv()),
+    "lot": () => DEFAULT_LOT,
+    "multiply": () => DEFAULT_MULTIPLY,
+    "step": () => DEFAULT_STEP,
+    "martingale": () => DEFAULT_MARTINGALE,
+    "pairs": () => Array.from(PairUtil.iterkv()),
 });
 Template.addAccount.events({
-    'submit #add-account' (event) {
+    "submit #add-account": event => {
         event.preventDefault();
         const target = event.target;
         const pair = Number.parseInt(target['pair'].value);
@@ -34,6 +34,5 @@ Template.addAccount.events({
         const step = Number.parseFloat(target['step'].value);
         const martin = Number.parseFloat(target['martingale'].value);
         Meteor.call('accounts.insert', pair, lot, mul, step, martin);
-        
     },
 });

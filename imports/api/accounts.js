@@ -17,7 +17,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'accounts.insert' (pair, lot, mul, step, martin) {
+    "accounts.insert": (pair, lot, mul, step, martin) => {
         check(pair, Number);
         check(lot, Number);
         check(mul, Number);
@@ -33,7 +33,7 @@ Meteor.methods({
             owner: Meteor.userId()
         });
     },
-    'accounts.remove' (accountId) {
+    "accounts.remove": (accountId) => {
         check(accountId, String);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');

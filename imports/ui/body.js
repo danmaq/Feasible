@@ -4,6 +4,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
+import { Accounts } from '../api/accounts.js';
+
 import './body.html';
 import './form/addAccount.js';
 
@@ -13,11 +15,8 @@ Template.body.onCreated(
         Template.instance().state = state;
     });
 Template.body.helpers({
-    accounts() {
-        const instance = Template.instance();
-        return Tasks.find({}, { sort: { sortBy: 1 } });
-    },
-    accountLength() { return 0; },
+    "accounts": () => Accounts.find({}, { "sort": { "sortBy": 1 } }),
+    "accountLength": () => Accounts.find().count(),
 });
 Template.body.events({});
 

@@ -4,8 +4,8 @@
     </header>
     {{> loginButtons}}
     <section>
-        <h2>Accounts ({{accountsLength}})</h2>
-        {{#if currentUser}} {{#if accountsLength}}
+        <h2>Accounts ({{accountLength}})</h2>
+        {{#if currentUser}} {{#if accountLength}}
         <ul>{{#each accounts}} {{/each}}</ul>
         {{else}} {{> addAccount}} {{/if}} {{else}}
         <p>Let's sign-in, and view, add and remove accounts.</p>
