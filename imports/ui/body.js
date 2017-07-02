@@ -7,6 +7,7 @@ import { Template } from 'meteor/templating';
 import { Accounts } from '../api/accounts.js';
 
 import './body.html';
+import './account.js';
 import './form/addAccount.js';
 
 Template.body.onCreated(

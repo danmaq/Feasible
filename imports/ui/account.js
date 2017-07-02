@@ -1,13 +1,14 @@
 'use strict';
 
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import './account.html';
 
-Template.body.helpers({
+Template.account.helpers({});
 
-});
-
-Template.body.events({
-    'click .delete' () {},
+Template.account.events({
+    "click .fe-delete" (event) {
+        Meteor.call('accounts.remove', this._id);
+    },
 });
