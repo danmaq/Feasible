@@ -13,6 +13,7 @@ Template.body.onCreated(
     () => {
         const state = new ReactiveDict();
         Template.instance().state = state;
+        Meteor.subscribe('accounts');
     });
 Template.body.helpers({
     "accounts": () => Accounts.find({}, { "sort": { "sortBy": 1 } }),

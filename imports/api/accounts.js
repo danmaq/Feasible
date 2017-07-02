@@ -28,9 +28,9 @@ Meteor.methods({
         }
         const account = new Account(pair, lot, mul, step, martin);
         Accounts.insert({
-            account,
-            sortBy: account.pair,
-            owner: Meteor.userId()
+            "body": account,
+            "sortBy": account.pair,
+            "owner": Meteor.userId()
         });
     },
     "accounts.remove": (accountId) => {
