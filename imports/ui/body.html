@@ -15,30 +15,41 @@
             </div>
         </div>
     </nav>
-    {{#if currentUser}}
-    <section class="container">
-        <h1>
-            Accounts <span class="badge">{{accountLength}}</span> {{#if accountLength}}
-            <span class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">+ <i class="caret"></i></button>
-                <div class="dropdown-menu">{{> addAccount}}</div>
-            </span> {{/if}}
-        </h1>
-        {{#if accountLength}}
-        <ul class="list-group">{{#each accounts}} {{> account}} {{/each}}</ul>
-        {{else}} {{> addAccount}} {{/if}}
-    </section>
-    {{else}}
-    <header class="jumbotron">
-        <h1 class="jumbotron-h1">Feasible (pre-alpha)</h1>
-        <p>Let's sign-in, and add, show, and remove accounts.</p>
-    </header>
-    {{/if}}
+    {{#if currentUser}} {{> accounts}} {{else}} {{> lp}} {{/if}}
     <hr />
     <address class="text-center">
         &copy;2017 @danmaq &lt;<a href="https://twitter.com/danmaq" target="_blank">https://twitter.com/danmaq</a>&gt;
     </address>
 </body>
+
+<template name="lp">
+    <header class="jumbotron">
+        <div class="container">
+            <h1 class="jumbotron-h1">Feasible (pre-alpha)</h1>
+            <p>"Feasible" is experimental expert adviser web app for forex.</p>
+        </div>
+    </header>
+    <section class="container">
+        <div class="panel panel-default">
+            <h2 class="panel-heading">Strategy of EA</h2>
+            <div class="panel-body">
+                <ul>
+                    <li>Cross order</li>
+                    <li>Martingale</li>
+                    <li>Averaging down</li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <h2 class="panel-heading">Other feature</h2>
+            <div class="panel-body">
+                <ul>
+                    <li>Web base app. (Loose coupling to MT4)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</template>
 <!--
     {{#if currentUser}}
     <section>
