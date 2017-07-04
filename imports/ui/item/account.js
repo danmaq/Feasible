@@ -3,8 +3,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { PairUtil } from '../core/enums/pair.js';
-import { Account } from '../core/models/account.js';
+import { PairUtil } from '../../core/enums/pair.js';
+import { Account } from '../../core/models/account.js';
 
 import './account.html';
 

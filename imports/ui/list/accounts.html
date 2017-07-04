@@ -1,0 +1,20 @@
+<template name="accounts">
+        <section class="container">
+        <h2>Accounts <span class="badge">{{accountLength}}</span></h2>
+        {{#if accountLength}}
+        <div class="panel-group" id="add-account-container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#add-account-container" href="#add-account-content">Add accounts <i class="caret"></i></a>
+                    </h3>
+                </div>
+                <div id="add-account-content" class="panel-collapse collapse">
+                    {{> addAccount}}
+                </div>
+            </div>
+        </div>
+        <ul class="list-group">{{#each accounts}} {{> account}} {{/each}}</ul>
+        {{else}} {{> addAccount}} {{/if}}
+    </section>
+</template>

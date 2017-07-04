@@ -1,25 +1,13 @@
 'use strict';
 
 import { Meteor } from 'meteor/meteor';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 
-import { Accounts } from '../api/accounts.js';
-
 import './body.html';
-import './account.js';
-import './form/addAccount.js';
+import './list/accounts.js';
 
-Template.body.onCreated(
-    () => {
-        const state = new ReactiveDict();
-        Template.instance().state = state;
-        Meteor.subscribe('accounts');
-    });
-Template.body.helpers({
-    "accounts": () => Accounts.find({}, { "sort": { "sortBy": 1 } }),
-    "accountLength": () => Accounts.find().count(),
-});
+Template.body.onCreated(() => {});
+Template.body.helpers({});
 Template.body.events({});
 
 /*

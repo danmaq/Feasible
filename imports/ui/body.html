@@ -15,26 +15,7 @@
             </div>
         </div>
     </nav>
-    {{#if currentUser}}
-    <section class="container">
-        <h1>Accounts <span class="badge">{{accountLength}}</span></h1>
-        {{#if accountLength}}
-        <div class="panel-group" id="add-account-container">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#add-account-container" href="#add-account-content">Add accounts <i class="caret"></i></a>
-                    </h3>
-                </div>
-                <div id="add-account-content">
-                    {{> addAccount}}
-                </div>
-            </div>
-        </div>
-        <ul class="list-group">{{#each accounts}} {{> account}} {{/each}}</ul>
-        {{else}} {{> addAccount}} {{/if}}
-    </section>
-    {{else}} {{> lp}} {{/if}}
+    {{#if currentUser}} {{> accounts}} {{else}} {{> lp}} {{/if}}
     <hr />
     <address class="text-center">
         &copy;2017 @danmaq &lt;<a href="https://twitter.com/danmaq" target="_blank">https://twitter.com/danmaq</a>&gt;
