@@ -24,9 +24,31 @@
 
 <template name="lp">
     <header class="jumbotron">
-        <h1 class="jumbotron-h1">Feasible (pre-alpha)</h1>
-        <p>Let's sign-in, and add, show, and remove accounts.</p>
+        <div class="container">
+            <h1 class="jumbotron-h1">Feasible (pre-alpha)</h1>
+            <p>"Feasible" is experimental expert adviser web app for forex.</p>
+        </div>
     </header>
+    <section class="container">
+        <div class="panel panel-default">
+            <h2 class="panel-heading">Strategy of EA</h2>
+            <div class="panel-body">
+                <ul>
+                    <li>Cross order</li>
+                    <li>Martingale</li>
+                    <li>Averaging down</li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <h2 class="panel-heading">Other feature</h2>
+            <div class="panel-body">
+                <ul>
+                    <li>Web base app. (Loose coupling to MT4)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 </template>
 <!--
     {{#if currentUser}}
