@@ -3,8 +3,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+import { Pair } from '../core/enums/pair.js';
+
 import './body.html';
 import './list/accounts.js';
+
+console.log(Object.keys(Pair));
 
 Template.body.onCreated(() => {});
 Template.body.helpers({});

@@ -6,8 +6,8 @@ import { Template } from 'meteor/templating';
 import { Accounts } from '../../api/accounts.js';
 
 import './accounts.html';
-import '../item/account.js';
-import '../form/addAccount.js';
+import './account.js';
+import './addAccount.js';
 
 Template.accounts.onCreated(() => Meteor.subscribe('accounts'));
 Template.accounts.helpers({
