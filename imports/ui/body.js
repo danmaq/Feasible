@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import './body.html';
-import './list/accounts.js';
+import './account/accounts.js';
 
 Template.body.onCreated(() => {});
 Template.body.helpers({});
