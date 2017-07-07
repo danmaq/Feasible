@@ -5,6 +5,7 @@ import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
 import { Account } from '../core/models/account.js';
+import { Swap } from '../core/models/swap.js';
 
 export const Accounts = new Mongo.Collection('accounts');
 
@@ -17,8 +18,10 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    "accounts.insert": (pair, lot, mul, step, martin) => {
+    "accounts.insert": (pair, swapLong, swapShort, lot, mul, step, martin) => {
         check(pair, Number);
+        check(swapLong, Number);
+        check(swapShort, Number);
         check(lot, Number);
         check(mul, Number);
         check(step, Number);
@@ -26,7 +29,8 @@ Meteor.methods({
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        const account = new Account(pair, lot, mul, step, martin);
+        const swap = new Swap(swapLong, swapShort);
+        const account = new Account(pair, swap, lot, mul, step, martin);
         Accounts.insert({
             "body": account,
             "sortBy": account.pair,

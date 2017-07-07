@@ -7,6 +7,8 @@ export const Exchange =
         SELL: -1,
     });
 
+const exchangeStr = Object.freeze(Object.keys(Exchange));
+
 /** Extension of exchange type. */
 export class ExchangeUtil {
     /**

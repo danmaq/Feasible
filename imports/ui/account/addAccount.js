@@ -29,6 +29,8 @@ Template.addAccount.events({
         event.preventDefault();
         const target = event.target;
         const pair = Number.parseInt(target['pair'].value);
+        const swapLong = Number.parseInt(target['swap-long'].value);
+        const swapShort = Number.parseInt(target['swap-short'].value);
         const lot = Number.parseInt(target['lot'].value);
         const mul = Number.parseFloat(target['mul'].value);
         const step = Number.parseFloat(target['step'].value);
