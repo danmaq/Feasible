@@ -1,12 +1,12 @@
 <template name="accounts">
-        <section class="container">
+    <section class="container">
         <h2>Accounts <span class="badge">{{accountLength}}</span></h2>
         {{#if accountLength}}
         <div class="panel-group" id="add-account-container">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#add-account-container" href="#add-account-content">Add accounts <i class="caret"></i></a>
+                        <button type="button" class="btn btn-link" data-toggle="collapse" data-parent="#add-account-container" data-target="#add-account-content">Add accounts <i class="caret"></i></button>
                     </h3>
                 </div>
                 <div id="add-account-content" class="panel-collapse collapse">

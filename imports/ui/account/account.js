@@ -7,6 +7,7 @@ import { PairUtil } from '../../core/enums/pair.js';
 import { Account } from '../../core/models/account.js';
 
 import './account.html';
+import '../position/positions.js';
 
 Template.account.helpers({
     "strPair" () {

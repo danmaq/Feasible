@@ -89,11 +89,19 @@ export class PairUtil {
             yield s;
         }
     }
+
+    /**
+     * Get index iterator.
+     */
     static * iteri() {
         for (let i = 0; i < Pair.__length; i++) {
             yield i;
         }
     }
+
+    /**
+     * Get iterator. { key: number, value: string }
+     */
     static * iterkv() {
         for (let i of PairUtil.iteri()) {
             yield { key: i, value: PairUtil.toStr(i) };

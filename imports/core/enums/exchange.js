@@ -24,4 +24,13 @@ export class ExchangeUtil {
                 return '';
         }
     }
+
+    /**
+     * Get iterator. { key: number, value: string }
+     */
+    static * iterkv() {
+        for (let ex of Exchange) {
+            yield { key: ex, value: toStr(ex) };
+        }
+    }
 }
