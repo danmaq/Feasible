@@ -9,8 +9,28 @@
             <div id="add-position-content-{{accountId}}" class="panel-collapse collapse">
                 <form id="add-position-{{accountId}}">
                     <ul class="list-group">
+                        <li class="list-group-item">
+                            <label for="price">Price: </label>
+                            <input id="price" type="number" class="form-control" value="{{price}}" step="0.01" min="0" max="32767" />
+                        </li>
+                        <li class="list-group-item">
+                            <label for="quantity">Quantity: </label>
+                            <input id="quantity" type="number" class="form-control" value="{{quantity}}" step="1" min="1" max="32767" />
+                        </li>
+                        <li class="list-group-item">
+                            <label for="exchange">Exchange: </label>
+                            <select id="exchange" class="form-control">
+                            {{#each exchanges}}
+                                <option value="{{key}}">{{value}}</option>
+                            {{/each}}
+                            </select>
+                        </li>
+                        <li class="list-group-item">
+                            <label for="takeProfit">T/P: </label>
+                            <input id="takeProfit" type="number" class="form-control" value="{{takeProfit}}" step="1" min="0" max="32767" />
+                        </li>
+                        <li class="list-group-item"><button class="btn btn-default">Add</button></li>
                     </ul>
-                    The form is not implemented yet. ;p
                 </form>
             </div>
         </div>
