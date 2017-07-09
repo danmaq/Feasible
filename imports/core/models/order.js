@@ -5,6 +5,12 @@ import { Limit } from '../enums/limit.js'
 import { Position } from './position.js'
 import { Rate } from './rate.js'
 
+const DEFAULT_EXCHANGE = Exchange.BUY;
+const DEFAULT_LIMIT = Limit.NONE;
+const DEFAULT_PRICE = 0;
+const DEFAULT_QUANTITY = 1;
+const DEFAULT_TAKEPROFIT = Number.NaN;
+
 /** Order model. */
 export class Order {
     /**
@@ -16,11 +22,11 @@ export class Order {
      * @param {number} takeProfit Take profit.
      */
     constructor(
-        exchange = Exchange.BUY,
-        limit = Limit.NONE,
-        price = 0,
-        quantity = 1,
-        takeProfit = NaN) {
+        exchange = DEFAULT_EXCHANGE,
+        limit = DEFAULT_LIMIT,
+        price = DEFAULT_PRICE,
+        quantity = DEFAULT_QUANTITY,
+        takeProfit = DEFAULT_TAKEPROFIT) {
         this._exchange = exchange;
         this._limit = limit;
         this._price = price;
@@ -59,12 +65,17 @@ export class Order {
      * @return {Order} Order object.
      */
     static load(raw = new Object()) {
+        const KEY_EXCHANGE = '_exchange';
+        const KEY_LIMIT = '_limit';
+        const KEY_PRICE = '_price';
+        const KEY_QUANTITY = '_quantity';
+        const KEY_TP = '_takeProfit';
         return new Order(
-            raw["_exchange"],
-            raw["_limit"],
-            raw["_price"],
-            raw["_quantity"],
-            raw["_takeProfit"]);
+            KEY_EXCHANGE in raw ? raw[KEY_EXCHANGE] : DEFAULT_EXCHANGE,
+            KEY_LIMIT in raw ? raw[KEY_LIMIT] : DEFAULT_LIMIT,
+            KEY_PRICE in raw ? raw[KEY_PRICE] : DEFAULT_PRICE,
+            KEY_QUANTITY in raw ? raw[KEY_QUANTITY] : DEFAULT_QUANTITY,
+            KEY_TP in raw ? raw[KEY_TP] : DEFAULT_TAKEPROFIT);
     }
 
     /**

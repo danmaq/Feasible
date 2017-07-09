@@ -2,7 +2,10 @@
 
 import { Exchange } from '../enums/exchange.js'
 import { Pair } from '../enums/pair.js'
-import { Swap } from './swap.js'
+
+const DEFAULT_PAIR = Pair.USDJPY;
+const DEFAULT_ASK = 0;
+const DEFAULT_BID = 0;
 
 /** Exchange rate data. */
 export class Rate {
@@ -12,19 +15,16 @@ export class Rate {
      * @param {Date} tick Timestamp.
      * @param {number} ask Ask point.
      * @param {number} bid Bid point.
-     * @param {Swap} swap Swap point.
      */
     constructor(
-        pair = Pair.USDJPY,
+        pair = DEFAULT_PAIR,
         tick = new Date(),
-        ask = 0,
-        bid = 0,
-        swap = new Swap()) {
+        ask = DEFAULT_ASK,
+        bid = DEFAULT_BID) {
         this._pair = pair;
         this._tick = tick;
         this._ask = ask;
         this._bid = bid;
-        this._swap = swap;
         this._spread = ask - bid;
     }
 
@@ -48,11 +48,6 @@ export class Rate {
         return this._bid;
     }
 
-    /** Swap point. */
-    get swap() {
-        return this._swap;
-    }
-
     /** Spread point. */
     get spread() {
         return this._spread;
@@ -65,12 +60,15 @@ export class Rate {
      */
     static
     load(raw = new Object()) {
+        const KEY_PAIR = '_pair';
+        const KEY_TICK = '_tick';
+        const KEY_ASK = '_ask';
+        const KEY_BID = '_bid';
         return new Rate(
-            raw["_pair"],
-            raw["_tick"],
-            raw["_ask"],
-            raw["_bid"],
-            Swap.load(raw["_swap"]));
+            KEY_PAIR in raw ? raw[KEY_PAIR] : DEFAULT_PAIR,
+            KEY_TICK in raw ? raw[KEY_TICK] : DEFAULT_TICK,
+            KEY_ASK in raw ? raw[KEY_ASK] : DEFAULT_ASK,
+            KEY_BID in raw ? raw[KEY_BID] : DEFAULT_BID);
     }
 
     /**

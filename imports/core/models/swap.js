@@ -2,6 +2,9 @@
 
 import { Exchange } from '../enums/exchange.js'
 
+const DEFAULT_LONG = 0;
+const DEFAULT_SHORT = 0;
+
 /** Swap point data. */
 export class Swap {
     /**
@@ -9,7 +12,7 @@ export class Swap {
      * @param {number} long Long swap.
      * @param {number} short Short swap.
      */
-    constructor(long = 0, short = 0) {
+    constructor(long = DEFAULT_LONG, short = DEFAULT_SHORT) {
         this._long = long;
         this._short = short;
     }
@@ -29,9 +32,12 @@ export class Swap {
      * @param {object} raw Raw object.
      * @return {Swap} Swap object.
      */
-    static
-    load(raw = new Object()) {
-        return new Swap(raw["_long"], raw["_short"]);
+    static load(raw = new Object()) {
+        const KEY_LONG = '_long';
+        const KEY_SHORT = '_short';
+        return new Swap(
+            KEY_LONG in raw ? raw[KEY_LONG] : DEFAULT_LONG,
+            KEY_SHORT in raw ? raw[KEY_SHORT] : DEFAULT_SHORT);
     }
 
     /**

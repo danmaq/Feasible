@@ -3,6 +3,10 @@
 import { Exchange } from '../enums/exchange.js'
 import { Rate } from './rate.js'
 
+const DEFAULT_QUANTITY = 1;
+const DEFAULT_EXCHANGE = Exchange.BUY;
+const DEFAULT_TAKEPROFIT = Number.NaN;
+
 /** Position model. */
 export class Position {
     /**
@@ -14,9 +18,9 @@ export class Position {
      */
     constructor(
         rate = new Rate(),
-        quantity = 1,
-        exchange = Exchange.BUY,
-        takeProfit = Number.NaN) {
+        quantity = DEFAULT_QUANTITY,
+        exchange = DEFAULT_EXCHANGE,
+        takeProfit = DEFAULT_TAKEPROFIT) {
         this._rate = rate;
         this._quantity = quantity;
         this._exchange = exchange;
@@ -49,11 +53,15 @@ export class Position {
      * @return {Position} Position object.
      */
     static load(raw = new Object()) {
+        const KEY_RATE = '_rate';
+        const KEY_QUANTITY = '_quantity';
+        const KEY_EXCHANGE = '_exchange';
+        const KEY_TP = '_takeProfit';
         return new Position(
-            Rate.load(raw["_rate"]),
-            raw["_quantity"],
-            raw["_exchange"],
-            raw["_takeProfit"]);
+            KEY_RATE in raw ? raw[KEY_RATE] : new Rate(),
+            KEY_QUANTITY in raw ? raw[KEY_QUANTITY] : DEFAULT_QUANTITY,
+            KEY_EXCHANGE in raw ? raw[KEY_EXCHANGE] : DEFAULT_EXCHANGE,
+            KEY_TP in raw ? raw[KEY_TP] : DEFAULT_TAKEPROFIT);
     }
 
     /**
