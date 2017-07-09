@@ -7,8 +7,6 @@ export const Exchange =
         SELL: -1,
     });
 
-const exchangeStr = Object.freeze(Object.keys(Exchange));
-
 /** Extension of exchange type. */
 export class ExchangeUtil {
     /**
@@ -24,6 +22,15 @@ export class ExchangeUtil {
                 return 'Sell';
             default:
                 return '';
+        }
+    }
+
+    /**
+     * Get iterator. { key: number, value: string }
+     */
+    static * iterkv() {
+        for (let ex of Exchange) {
+            yield { key: ex, value: toStr(ex) };
         }
     }
 }
