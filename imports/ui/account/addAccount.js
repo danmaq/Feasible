@@ -21,7 +21,7 @@ Template.addAccount.helpers({
     "pairs": () => Array.from(PairUtil.iterkv()),
 });
 Template.addAccount.events({
-    "submit #add-account": event => {
+    "submit #fe-add-account": event => {
         event.preventDefault();
         const target = event.target;
         const pair = Number.parseInt(target['pair'].value);
