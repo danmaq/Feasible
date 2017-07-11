@@ -11,11 +11,11 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <label for="price">Price: </label>
-                            <input id="price" type="number" class="form-control" value="{{price}}" step="0.01" min="0" max="32767" />
+                            <input id="price" type="number" class="form-control" required="required" value="{{price}}" step="0.01" min="0" max="32767" />
                         </li>
                         <li class="list-group-item">
                             <label for="quantity">Quantity: </label>
-                            <input id="quantity" type="number" class="form-control" value="{{quantity}}" step="1" min="1" max="32767" />
+                            <input id="quantity" type="number" class="form-control" required="required" value="{{quantity}}" step="1" min="1" max="32767" />
                         </li>
                         <li class="list-group-item">
                             <label for="exchange">Exchange: </label>
@@ -27,9 +27,12 @@
                         </li>
                         <li class="list-group-item">
                             <label for="takeProfit">T/P: </label>
-                            <input id="takeProfit" type="number" class="form-control" value="{{takeProfit}}" step="1" min="0" max="32767" />
+                            <input id="takeProfit" type="number" class="form-control" step="1" min="0" max="32767" />
                         </li>
-                        <li class="list-group-item"><button class="btn btn-default">Add</button></li>
+                        <li class="list-group-item">
+                            <input id="accountId" type="hidden" value="{{accountId}}" />
+                            <button class="btn btn-default">Add</button>
+                        </li>
                     </ul>
                 </form>
             </div>
