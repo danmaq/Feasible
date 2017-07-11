@@ -30,14 +30,17 @@ Meteor.methods({
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        const rate = new Rate();
-        const position = new Position(rate);
-        /*
+        const account = Accounts.findOne(accountId);
+        if (!account) {
+            throw new Meteor.Error('unknown-account');
+        }
+        const rate = new Rate(account.pair, buy, sell);
+        const pos = new Position(rate, quantity, exchange, takeProfit);
         Positions.insert({
-            position,
-            owner: Meteor.userId()
+            "body": position,
+            "accountId": accountId,
+            "owner": Meteor.userId()
         });
-        */
     },
     'positions.remove' (positionId) {
         check(positionId, String);
