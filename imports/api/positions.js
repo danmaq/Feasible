@@ -35,7 +35,7 @@ Meteor.methods({
             throw new Meteor.Error('unknown-account');
         }
         const rate = new Rate(account.pair, buy, sell);
-        const pos = new Position(rate, quantity, exchange, takeProfit);
+        const position = new Position(rate, quantity, exchange, takeProfit);
         Positions.insert({
             "body": position,
             "accountId": accountId,
