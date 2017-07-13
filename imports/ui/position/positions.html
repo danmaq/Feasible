@@ -2,6 +2,8 @@
     <section class="container">
         <h3>Positions <span class="badge">{{positionLength}}</span></h3>
         {{> addPosition accountId=accountId}}
-        <p>Hi, Not implemented yet. XD</p>
+        {{#if positionLength}}
+        <ul class="list-group">{{#each positions}} {{> position}} {{/each}}</ul>
+        {{/if}}
     </section>
 </template>
