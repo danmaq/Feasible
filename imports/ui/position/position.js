@@ -10,8 +10,7 @@ import './position.html'
 
 Template.position.helpers({
     "strExchange" () {
-        const position = Position.load(this.body);
-        ExchangeUtil.toStr(position.exchange);
+        return Position.load(this.body).getStrExchange();
     }
 });
 Template.position.events({

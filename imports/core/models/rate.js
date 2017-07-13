@@ -95,7 +95,7 @@ export class Rate {
      * @param {number} exchange Exchange type.
      * @return {number} Gap point.
      */
-    gain(rate = new Rate(), exchange = Exchange.BUY) {
+    getGain(rate = new Rate(), exchange = Exchange.BUY) {
         const order = this.orderPoint(exchange);
         const stop = rate.stopPoint(exchange);
         return (order - stop) * exchange;

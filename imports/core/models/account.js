@@ -1,7 +1,7 @@
 'use strict';
 
 import { Swap } from './swap.js'
-import { Pair } from '../enums/pair.js'
+import { Pair, PairUtil } from '../enums/pair.js'
 
 const DEFAULT_PAIR = Pair.USDJPY;
 const DEFAULT_LOT = 10000;
@@ -63,6 +63,11 @@ export class Account {
     /** Martingale rate. */
     get martingale() {
         return this._martingale;
+    }
+
+    /** Get stringed currency pair. */
+    getStrPair() {
+        return PairUtil.toStr(this.pair);
     }
 
     /**

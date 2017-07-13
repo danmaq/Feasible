@@ -11,8 +11,7 @@ import '../position/positions.js';
 
 Template.account.helpers({
     "strPair" () {
-        const account = Account.load(this.body);
-        return PairUtil.toStr(account.pair);
+        return Account.load(this.body).getStrPair();
     },
 });
 

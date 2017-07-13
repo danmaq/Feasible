@@ -1,6 +1,6 @@
 'use strict';
 
-import { Exchange } from '../enums/exchange.js'
+import { Exchange, ExchangeUtil } from '../enums/exchange.js'
 import { Rate } from './rate.js'
 
 const DEFAULT_QUANTITY = 1;
@@ -47,6 +47,34 @@ export class Position {
         return this._takeProfit;
     }
 
+    /** Get stringed exchange type. */
+    getStrExchange() {
+        return ExchangeUtil.toStr(this.exchange);
+    }
+
+    /**
+     * Get gain point.
+     * @param {Rate} rate Current rate.
+     * @return {number} Gain point.
+     */
+    getGain(rate = new Rate()) {
+        var traded = this.rate.tick;
+        // TODO: Swap calculation.
+        return this.rate.getGain(rate, this.exchange) * this.quantity;
+    }
+
+    /**
+     * Can be take profit.
+     * @param {Rate} rate Current rate.
+     * @return {boolean} If can be take profit, return true.
+     */
+    isProfit(rate = new Rate()) {
+        const ex = this.exchange;
+        const sp = this.rate.stopPoint(ex);
+        const tp = this.takeProfit;
+        return ex === Exchange.BUY ? sp >= tp : sp <= tp;
+    }
+
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -62,28 +90,5 @@ export class Position {
             KEY_QUANTITY in raw ? raw[KEY_QUANTITY] : DEFAULT_QUANTITY,
             KEY_EXCHANGE in raw ? raw[KEY_EXCHANGE] : DEFAULT_EXCHANGE,
             KEY_TP in raw ? raw[KEY_TP] : DEFAULT_TAKEPROFIT);
-    }
-
-    /**
-     * Get gain point.
-     * @param {Rate} rate Current rate.
-     * @return {number} Gain point.
-     */
-    gain(rate = new Rate()) {
-        var traded = this.rate.tick;
-        // TODO: Swap calculation.
-        return this.rate.gain(rate, this.exchange) * this.quantity;
-    }
-
-    /**
-     * Can be take profit.
-     * @param {Rate} rate Current rate.
-     * @return {boolean} If can be take profit, return true.
-     */
-    isProfit(rate = new Rate()) {
-        const ex = this.exchange;
-        const sp = this.rate.stopPoint(ex);
-        const tp = this.takeProfit;
-        return ex === Exchange.BUY ? sp >= tp : sp <= tp;
     }
 }
