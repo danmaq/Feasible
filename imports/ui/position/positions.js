@@ -11,7 +11,11 @@ import './addPosition.js';
 
 Template.positions.onCreated(() => Meteor.subscribe('positions'));
 Template.positions.helpers({
-    "positions": () => Positions.find({}, {}),
-    "positionLength": () => Positions.find().count(),
+    "positions" () {
+        return Positions.find({ "accountId": this.accountId });
+    },
+    "positionLength" () {
+        return Positions.find({ "accountId": this.accountId }).count();
+    },
 });
 Template.positions.events({});

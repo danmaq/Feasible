@@ -49,4 +49,11 @@ Meteor.methods({
         }
         Positions.remove(positionId);
     },
+    'positions.removeByAccount' (accountId) {
+        check(accountId, String);
+        if (!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
+        Positions.remove({ "accountId": accountId });
+    },
 });
