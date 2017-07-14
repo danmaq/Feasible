@@ -17,6 +17,7 @@ Template.account.helpers({
 
 Template.account.events({
     "click .fe-delete" (event) {
+        Meteor.call('positions.removeByAccount', this._id);
         Meteor.call('accounts.remove', this._id);
     },
 });
