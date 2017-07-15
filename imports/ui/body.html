@@ -11,18 +11,10 @@
                 <a class="navbar-brand" href="#">Feasible EA (pre-alpha)</a>
             </div>
             <div class="collapse navbar-collapse" id="fe-navbar">
-                <p class="navbar-text">{{> loginButtons}}</p>
+                <p class="navbar-text">{{> loginButtons}} {{#if currentUser}} | <a href="/account">Dashboard</a>{{/if}}</p>
             </div>
         </div>
     </nav>
-    {{#if currentUser}} {{> accounts}} {{else}} {{> lp}} {{/if}}
-    <hr />
-    <address class="text-center">
-        &copy;2017 @danmaq &lt;<a href="https://twitter.com/danmaq" target="_blank">https://twitter.com/danmaq</a>&gt;
-    </address>
-</body>
-
-<template name="lp">
     <header class="jumbotron">
         <div class="container">
             <h1 class="jumbotron-h1">Feasible (pre-alpha)</h1>
@@ -49,94 +41,8 @@
             </div>
         </div>
     </section>
-</template>
-<!--
-    {{#if currentUser}}
-    <section>
-        <h2>Preference</h2>
-        <ul>
-            <li>
-                <label for="initialRate">Initial rate:</label>
-                <input type="number" id="initialRate" min="0.05" max="32767" step="0.05" />
-            </li>
-            <li>
-                <label for="spread">Spread:</label>
-                <input type="number" id="spread" step="0.1" />
-            </li>
-            <li>
-                <label for="spread">Swap(Long):</label>
-                <input type="number" id="swap-long" step="0.1" />
-            </li>
-            <li>
-                <label for="spread">Swap(Short):</label>
-                <input type="number" id="swap-short" step="0.1" />
-            </li>
-            <li>
-                <label for="stepSize">Step size:</label>
-                <input type="number" id="stepSize" class="preference" step="0.05" min="0.05" max="100" />
-            </li>
-            <li>
-                <label for="unit">Unit:</label>
-                <input type="number" id="unit" class="preference" step="100" min="100" max="100000" />
-            </li>
-            <li>
-                <label for="lotUnit">Lot (x Unit):</label>
-                <input type="number" id="lotUnit" class="preference" step="0.01" min="0.01" max="1000" />
-            </li>
-            <li>
-                <label for="lot">Lot:</label>
-                <input type="number" id="lot" class="preference" readonly="readonly" /> *Automatic set
-            </li>
-            <li><button id="start" class="start" disabled="{{invalidate}}">Start or Reset</button></li>
-        </ul>
-    </section>
-    {{/if}}
-    <section>
-        <h2>Positions ({{positionsLength}})</h2>
-        <ol>
-            {{#each positions}} {{> position}} {{/each}}
-        </ol>
-        {{#if currentUser}}
-        <form class="add-position">
-            <label class="show-add-position">
-                <input type="checkbox" />Add manually?
-            </label> {{#if showAddPosition}}
-            <ul>
-                <li>
-                    <label for="fap-date">Ordered date/time: </label>
-                    <input type="datetime-local" id="fap-datetime" required="required" step="600" />
-                </li>
-                <li>
-                    <label for="fap-rate">Ordered rate: </label>
-                    <input type="number" id="fap-rate" required="required" min="0.01" max="32767" step="0.01" />
-                </li>
-                <li>
-                    <label for="fap-exchange">Exchange: </label>
-                    <select id="fap-exchange">
-                        <option value="1">Buy</option>
-                        <option value="-1">Sell</option>
-                    </select>
-                </li>
-                <li>
-                    <label for="fap-quantity">Quantity: </label>
-                    <input type="number" id="fap-quantity" required="required" min="0.01" max="32767" step="0.01" />
-                </li>
-                <li>
-                    <label for="fap-takeprofit">T/P: </label>
-                    <input type="number" id="fap-takeprofit" min="0.05" max="32767" step="0.05" />
-                </li>
-                <li>
-                    <input type="submit" value="Add" />
-                </li>
-            </ul>
-            {{/if}}
-        </form>
-        {{/if}}
-    </section>
-    <section>
-        <h2>Orders ({{ordersLength}})</h2>
-        <ol>
-            {{#each orders}} {{> order}} {{/each}}
-        </ol>
-    </section>
-    -->
+    <hr />
+    <address class="text-center">
+        &copy;2017 @danmaq &lt;<a href="https://twitter.com/danmaq" target="_blank">https://twitter.com/danmaq</a>&gt;
+    </address>
+</body>

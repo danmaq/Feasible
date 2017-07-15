@@ -25,3 +25,4 @@ practicalmeteor:mocha
 twbs:bootstrap
 fourseven:scss
 fortawesome:fontawesome
+kadira:flow-router
