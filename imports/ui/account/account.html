@@ -2,10 +2,19 @@
     <li class="list-group-item panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <button class="btn btn-default fe-delete">&times;</button>
+                <button type="button" class="btn btn-default fe-delete"><i class="fa fa-trash"></i></button>
+                <button type="button" class="btn btn-default fe-modify" disabled="disabled"><i class="fa fa-pencil-square-o"></i></button>
                 <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#fe-account-{{_id}}"><strong>{{strPair}}</strong>(long/short: {{body._swap._long}}/{{body._swap._short}}) Step: {{body._step}}, Lot: {{body._lot}}x{{body._mul}}, Martingale: x{{body._martingale}} <i class="caret"></i></button>
             </h4>
         </div>
-        <div id="fe-account-{{_id}}" class="panel-collapse collapse">{{> positions accountId=_id}}</div>
+        <div id="fe-account-{{_id}}" class="panel-body panel-collapse collapse">
+            <h5>Rate</h5>
+            <div>
+                <label for="fe-ask">Ask: </label><input id="fe-ask" type="number" value="0" step="0.01" min="0" max="32767" /> / <label for="fe-bid">Bid: </label><input id="fe-bid" type="number" value="0" step="0.01" min="0" max="32767" />
+                <button type="button" class="btn btn-default fe-delete"><i class="fa fa-arrow-up"></i></button>
+                <button type="button" class="btn btn-default fe-delete"><i class="fa fa-arrow-down"></i></button>
+            </div>
+            {{> positions accountId=_id}}
+        </div>
     </li>
 </template>
