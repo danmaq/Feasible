@@ -26,3 +26,5 @@ twbs:bootstrap
 fourseven:scss
 fortawesome:fontawesome
 kadira:flow-router
+zimme:active-route
+kadira:blaze-layout
