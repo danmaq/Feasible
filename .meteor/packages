@@ -28,3 +28,4 @@ fortawesome:fontawesome
 kadira:flow-router
 zimme:active-route
 kadira:blaze-layout
+arillo:flow-router-helpers
