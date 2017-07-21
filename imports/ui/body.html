@@ -1,4 +1,8 @@
 <body>
+    {{> Template.dynamic template=main}}
+</body>
+
+<template name="nav">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -15,9 +19,12 @@
             </div>
         </div>
     </nav>
-    {{> Template.dynamic template=main}}
+</template>
+
+<template name="footer">
     <hr />
     <address class="text-center">
         &copy;2017 @danmaq &lt;<a href="https://twitter.com/danmaq" target="_blank">https://twitter.com/danmaq</a>&gt;
     </address>
-</body>
+
+</template>

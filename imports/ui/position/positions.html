@@ -1,4 +1,5 @@
 <template name="positions">
+    {{> nav}}
     <section class="container">
         <h3>Positions <span class="badge">{{positionLength}}</span></h3>
         {{> addPosition accountId=accountId}}
@@ -6,4 +7,5 @@
         <ul class="list-group">{{#each positions}} {{> position}} {{/each}}</ul>
         {{/if}}
     </section>
+    {{> footer}}
 </template>
