@@ -1,20 +1,10 @@
 <template name="accounts">
+    {{> nav}}
     <section class="container">
         <h2>Accounts <span class="badge">{{accountLength}}</span></h2>
         {{#if accountLength}}
-        <div class="panel-group" id="fe-add-account-container">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <button type="button" class="btn btn-link" data-toggle="collapse" data-parent="#fe-add-account-container" data-target="#fe-add-account-content">Add accounts <i class="caret"></i></button>
-                    </h3>
-                </div>
-                <div id="fe-add-account-content" class="panel-collapse collapse">
-                    {{> addAccount}}
-                </div>
-            </div>
-        </div>
         <ul class="list-group">{{#each accounts}} {{> account}} {{/each}}</ul>
-        {{else}} {{> addAccount}} {{/if}}
+        {{/if}} {{> addAccount}} 
     </section>
+    {{> footer}}
 </template>
