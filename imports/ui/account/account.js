@@ -20,4 +20,7 @@ Template.account.events({
         Meteor.call('positions.removeByAccount', this._id);
         Meteor.call('accounts.remove', this._id);
     },
+    "click .fe-detail" (event) {
+        console.log("detail: ", this._id);
+    },
 });
