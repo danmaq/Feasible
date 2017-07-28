@@ -37,7 +37,7 @@ Meteor.methods({
             "owner": Meteor.userId()
         });
     },
-    "accounts.remove": (accountId) => {
+    "accounts.remove": accountId => {
         check(accountId, String);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');

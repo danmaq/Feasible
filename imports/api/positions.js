@@ -20,7 +20,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'positions.insert' (accountId, buy, sell, quantity, exchange, takeProfit) {
+    'positions.insert': (accountId, buy, sell, quantity, exchange, takeProfit) => {
         check(accountId, String);
         check(buy, Number);
         check(sell, Number);
@@ -42,14 +42,14 @@ Meteor.methods({
             "owner": Meteor.userId()
         });
     },
-    'positions.remove' (positionId) {
+    'positions.remove': positionId => {
         check(positionId, String);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
         Positions.remove(positionId);
     },
-    'positions.removeByAccount' (accountId) {
+    'positions.removeByAccount': accountId => {
         check(accountId, String);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');

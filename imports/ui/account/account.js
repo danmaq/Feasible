@@ -11,10 +11,9 @@ import '../position/positions.js';
 
 const getData = () => Template.instance().data;
 const toAccount = () => Account.load(getData().body);
+
 Template.account.helpers({
-    "strPair": () => {
-        return Account.load(toAccount()).getStrPair();
-    },
+    "strPair": () => Account.load(toAccount()).getStrPair(),
 });
 
 Template.account.events({
