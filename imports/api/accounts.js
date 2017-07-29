@@ -12,7 +12,7 @@ export const Accounts = new Mongo.Collection('accounts');
 if (Meteor.isServer) {
     Meteor.publish(
         'accounts',
-        function accountsPublication() {
+        function() {
             return Accounts.find({ owner: this.userId });
         });
 }

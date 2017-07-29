@@ -20,10 +20,13 @@ Template.account.helpers({
 });
 
 Template.account.events({
-    "click .fe-delete": _ => {
+    "click .fe-delete": event => {
+        event.preventDefault();
         const data = getData();
         Meteor.call('positions.removeByAccount', data._id);
         Meteor.call('accounts.remove', data._id);
     },
-    "click .fe-modify": _ => {},
+    "click .fe-modify": event => {
+        event.preventDefault();
+    },
 });

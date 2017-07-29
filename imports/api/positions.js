@@ -14,14 +14,15 @@ export const Positions = new Mongo.Collection('positions');
 if (Meteor.isServer) {
     Meteor.publish(
         'positions',
-        function positionsPublication() {
+        function() {
             return Positions.find({ owner: this.userId });
         });
 }
 
 Meteor.methods({
-    'positions.insert': (accountId, buy, sell, quantity, exchange, takeProfit) => {
+    'positions.insert': (accountId, pair, buy, sell, quantity, exchange, takeProfit) => {
         check(accountId, String);
+        check(pair, Number);
         check(buy, Number);
         check(sell, Number);
         check(quantity, Number);
@@ -30,12 +31,7 @@ Meteor.methods({
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        const account = Accounts.findOne(accountId);
-        console.log(accountId, account);
-        if (!account) {
-            throw new Meteor.Error('unknown-account');
-        }
-        const rate = new Rate(account.pair, buy, sell);
+        const rate = new Rate(pair, buy, sell);
         const pos = new Position(rate, quantity, exchange, takeProfit);
         Positions.insert({
             "body": pos,

@@ -23,7 +23,6 @@ Template.position.helpers({
 Template.position.events({
     "click .fe-delete": event => {
         event.preventDefault();
-        const target = event.target;
-        console.log(getAccountId());
+        Meteor.call('positions.remove', getData()._id);
     },
 });

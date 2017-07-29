@@ -3,9 +3,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+import { Accounts } from '../../api/accounts.js';
 import { Positions } from '../../api/positions.js';
 
 import { ExchangeKV } from '../../core/enums/exchange.js';
+import { Account, AccountUtil } from '../../core/models/account.js';
 import { Position } from '../../core/models/position.js';
 
 import './positions.html';
@@ -20,7 +22,10 @@ const getAccountId = () => FlowRouter.getParam('accountId');
 /** Get positions list from account-id. */
 const getPositions = () => Positions.find({ "accountId": getAccountId() });
 
-Template.positions.onCreated(() => { Meteor.subscribe('positions') });
+Template.positions.onCreated(() => {
+    Meteor.subscribe('accounts');
+    Meteor.subscribe('positions');
+});
 Template.positions.helpers({
     "positions": () => getPositions(),
     "positionLength": () => getPositions().count(),
@@ -36,9 +41,15 @@ Template.positions.events({
         const quantity = Number.parseInt(target['quantity'].value);
         const exchange = Number.parseInt(target['exchange'].value);
         const tp = Number.parseFloat(target['takeProfit'].value);
+        const accountId = getAccountId();
+        const accountRaw = Accounts.findOne(accountId);
+        if (!accountRaw) {
+            throw new Meteor.Error('unknown-account');
+        }
         Meteor.call(
             'positions.insert',
-            getAccountId(),
+            accountId,
+            AccountUtil.load(accountRaw.body).pair,
             price,
             price,
             quantity,
