@@ -31,6 +31,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         const account = Accounts.findOne(accountId);
+        console.log(accountId, account);
         if (!account) {
             throw new Meteor.Error('unknown-account');
         }
