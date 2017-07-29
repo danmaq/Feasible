@@ -2,6 +2,7 @@
 
 import { Exchange } from '../enums/exchange.js'
 import { Pair } from '../enums/pair.js'
+import { Utils } from '../utils.js'
 
 const DEFAULT_PAIR = Pair.USDJPY;
 const DEFAULT_ASK = 0;
@@ -25,7 +26,6 @@ export class Rate {
         this._tick = tick;
         this._ask = ask;
         this._bid = bid;
-        this._spread = ask - bid;
     }
 
     /** Currency pair. */
@@ -48,56 +48,63 @@ export class Rate {
         return this._bid;
     }
 
-    /** Spread point. */
-    get spread() {
-        return this._spread;
+    /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {Rate} Rate object.
+     */
+    clone(override = new Object()) {
+        return new Rate(
+            Utils.getValue('pair', override, this.pair),
+            Utils.getValue('tick', override, this.tick),
+            Utils.getValue('ask', override, this.ask),
+            Utils.getValue('bid', override, this.bid));
     }
+}
 
+/** Extension of Exchange rate data. */
+export class RateUtil {
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
      * @return {Rate} Rate object.
      */
-    static
-    load(raw = new Object()) {
-        const KEY_PAIR = '_pair';
-        const KEY_TICK = '_tick';
-        const KEY_ASK = '_ask';
-        const KEY_BID = '_bid';
-        return new Rate(
-            KEY_PAIR in raw ? raw[KEY_PAIR] : DEFAULT_PAIR,
-            KEY_TICK in raw ? raw[KEY_TICK] : DEFAULT_TICK,
-            KEY_ASK in raw ? raw[KEY_ASK] : DEFAULT_ASK,
-            KEY_BID in raw ? raw[KEY_BID] : DEFAULT_BID);
+    static load(raw = new Object()) {
+        return new Rate().clone(raw);
     }
 
     /**
      * Get point by exchange type.
+     * @param {Rate} source Current rate.
      * @param {number} exchange Exchange type.
      * @return {number} Point at order.
      */
-    orderPoint(exchange = Exchange.BUY) {
-        return exchange === Exchange.BUY ? this.ask : this.bid;
+    static orderPoint(source = new Rate(), exchange = Exchange.BUY) {
+        return exchange === Exchange.BUY ? source.ask : source.bid;
     }
 
     /**
      * Get stop point by exchange type.
+     * @param {Rate} source Current rate.
      * @param {number} exchange Exchange type.
      * @return {number} Point at stop.
      */
-    stopPoint(exchange = Exchange.BUY) {
-        return exchange === Exchange.BUY ? this.bid : this.ask;
+    static stopPoint(source = new Rate(), exchange = Exchange.BUY) {
+        return exchange === Exchange.BUY ? source.bid : source.ask;
     }
 
     /**
      * Get gap between rate.
-     * @param {Rate} rate Current rate.
+     * @param {Rate} from Current rate.
+     * @param {Rate} to Current rate.
      * @param {number} exchange Exchange type.
      * @return {number} Gap point.
      */
-    getGain(rate = new Rate(), exchange = Exchange.BUY) {
-        const order = this.orderPoint(exchange);
-        const stop = rate.stopPoint(exchange);
+    static gain(
+        from = new Rate(), to = new Rate(), exchange = Exchange.BUY) {
+        const order = RateUtil.orderPoint(from, exchange);
+        const stop = RateUtil.stopPoint(to, exchange);
         return (order - stop) * exchange;
     }
+
 }

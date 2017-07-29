@@ -11,9 +11,14 @@ import { Position } from '../../core/models/position.js';
 import './positions.html';
 import './position.js';
 
-const getAccountId = () => FlowRouter.getParam('accountId');
-const getPositions = () => Positions.find({ "accountId": getAccountId() });
+/** Default position instance. */
 const DEFAULT_POSITION = new Position();
+
+/** Get account-id from router. */
+const getAccountId = () => FlowRouter.getParam('accountId');
+
+/** Get positions list from account-id. */
+const getPositions = () => Positions.find({ "accountId": getAccountId() });
 
 Template.positions.onCreated(() => { Meteor.subscribe('positions') });
 Template.positions.helpers({
@@ -24,7 +29,7 @@ Template.positions.helpers({
     "exchanges": () => ExchangeKV,
 });
 Template.positions.events({
-    "submit .fe-add-position": event => {
+    "submit #fe-add-position": event => {
         event.preventDefault();
         const target = event.target;
         const price = Number.parseFloat(target['price'].value);

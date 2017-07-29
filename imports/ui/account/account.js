@@ -4,23 +4,26 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { PairUtil } from '../../core/enums/pair.js';
-import { Account } from '../../core/models/account.js';
+import { Account, AccountUtil } from '../../core/models/account.js';
 
 import './account.html';
 import '../position/positions.js';
 
+/** Get template data. */
 const getData = () => Template.instance().data;
-const toAccount = () => Account.load(getData().body);
+
+/** Get Account data from template data. */
+const getAccount = () => AccountUtil.load(getData().body);
 
 Template.account.helpers({
-    "strPair": () => Account.load(toAccount()).getStrPair(),
+    "strPair": () => AccountUtil.getStrPair(getAccount()),
 });
 
 Template.account.events({
-    "click .fe-delete": e => {
+    "click .fe-delete": _ => {
         const data = getData();
         Meteor.call('positions.removeByAccount', data._id);
         Meteor.call('accounts.remove', data._id);
     },
-    "click .fe-detail": e => console.log("detail: ", getData()._id),
+    "click .fe-modify": _ => {},
 });

@@ -1,6 +1,7 @@
 'use strict';
 
 import { Exchange } from '../enums/exchange.js'
+import { Utils } from '../utils.js'
 
 const DEFAULT_LONG = 0;
 const DEFAULT_SHORT = 0;
@@ -28,24 +29,35 @@ export class Swap {
     }
 
     /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {Swap} Swap object.
+     */
+    clone(override = new Object()) {
+        return new Swap(
+            Utils.getValue('long', override, this.long),
+            Utils.getValue('short', override, this.short));
+    }
+}
+
+/** Extension of Swap point data. */
+export class SwapUtil {
+    /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
      * @return {Swap} Swap object.
      */
     static load(raw = new Object()) {
-        const KEY_LONG = '_long';
-        const KEY_SHORT = '_short';
-        return new Swap(
-            KEY_LONG in raw ? raw[KEY_LONG] : DEFAULT_LONG,
-            KEY_SHORT in raw ? raw[KEY_SHORT] : DEFAULT_SHORT);
+        return new Swap().clone(raw);
     }
 
     /**
      * Get swap point.
+     * @param {Swap} source Source object.
      * @param {number} exchange Exchange type.
      * @return {number} Swap point.
      */
-    point(exchange = Exchange.BUY) {
-        return exchange === Exchange.BUY ? this.long : this.short;
+    static point(source = new Swap(), exchange = Exchange.BUY) {
+        return exchange === Exchange.BUY ? source.long : source.short;
     }
 }

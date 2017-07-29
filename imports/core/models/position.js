@@ -1,7 +1,8 @@
 'use strict';
 
 import { Exchange, ExchangeUtil } from '../enums/exchange.js'
-import { Rate } from './rate.js'
+import { Rate, RateUtil } from './rate.js'
+import { Utils } from '../utils.js'
 
 const DEFAULT_QUANTITY = 1;
 const DEFAULT_EXCHANGE = Exchange.BUY;
@@ -47,20 +48,51 @@ export class Position {
         return this._takeProfit;
     }
 
-    /** Get stringed exchange type. */
-    getStrExchange() {
-        return ExchangeUtil.toStr(this.exchange);
+    /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {Position} Position object.
+     */
+    clone(override = new Object()) {
+        return new Rate(
+            Utils.getValue('rate', override, this.rate.clone()),
+            Utils.getValue('quantity', override, this.quantity),
+            Utils.getValue('exchange', override, this.exchange),
+            Utils.getValue('takeProfit', override, this.takeProfit));
+    }
+}
+
+/** Extension of Position model. */
+export class PositionUtil {
+    /**
+     * Load from de-serialized object.
+     * @param {object} raw Raw object.
+     * @return {Position} Position object.
+     */
+    static load(raw = new Object()) {
+        return new Position().clone(raw);
+    }
+
+    /**
+     * Get stringed exchange type.
+     * @param {Position} source Source object.
+     * @return {string} Stringed exchange type.
+     */
+    static strExchange(source = new Position()) {
+        return ExchangeUtil.toStr(source.exchange);
     }
 
     /**
      * Get gain point.
+     * @param {Position} source Source object.
      * @param {Rate} rate Current rate.
      * @return {number} Gain point.
      */
-    getGain(rate = new Rate()) {
-        var traded = this.rate.tick;
+    static gain(source = new Position(), rate = new Rate()) {
+        const traded = source.rate.tick;
         // TODO: Swap calculation.
-        return this.rate.getGain(rate, this.exchange) * this.quantity;
+        const ex = source.exchange;
+        return RateUtil.gain(source.rate, rate, ex) * source.quantity;
     }
 
     /**
@@ -68,27 +100,10 @@ export class Position {
      * @param {Rate} rate Current rate.
      * @return {boolean} If can be take profit, return true.
      */
-    isProfit(rate = new Rate()) {
-        const ex = this.exchange;
-        const sp = this.rate.stopPoint(ex);
-        const tp = this.takeProfit;
+    static profit(source = new Position(), rate = new Rate()) {
+        const ex = source.exchange;
+        const sp = RateUtil.stopPoint(source.rate, ex);
+        const tp = source.takeProfit;
         return ex === Exchange.BUY ? sp >= tp : sp <= tp;
-    }
-
-    /**
-     * Load from de-serialized object.
-     * @param {object} raw Raw object.
-     * @return {Position} Position object.
-     */
-    static load(raw = new Object()) {
-        const KEY_RATE = '_rate';
-        const KEY_QUANTITY = '_quantity';
-        const KEY_EXCHANGE = '_exchange';
-        const KEY_TP = '_takeProfit';
-        return new Position(
-            KEY_RATE in raw ? raw[KEY_RATE] : new Rate(),
-            KEY_QUANTITY in raw ? raw[KEY_QUANTITY] : DEFAULT_QUANTITY,
-            KEY_EXCHANGE in raw ? raw[KEY_EXCHANGE] : DEFAULT_EXCHANGE,
-            KEY_TP in raw ? raw[KEY_TP] : DEFAULT_TAKEPROFIT);
     }
 }

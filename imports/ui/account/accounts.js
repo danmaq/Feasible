@@ -11,6 +11,7 @@ import { Account } from '../../core/models/account.js';
 import './accounts.html';
 import './account.js';
 
+/** Default account instance. */
 const DEFAULT_ACCOUNT = new Account();
 
 Template.accounts.onCreated(() => Meteor.subscribe('accounts'));
