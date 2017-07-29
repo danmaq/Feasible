@@ -8,11 +8,16 @@ import { Position } from '../../core/models/position.js';
 
 import './position.html'
 
+const getData = () => Template.instance().data;
+const getAccountId = () => FlowRouter.getParam('accountId');
+
 Template.position.helpers({
-    "strExchange" () {
-        return Position.load(this.body).getStrExchange();
-    }
+    "strExchange": () => Position.load(getData().body).getStrExchange(),
 });
 Template.position.events({
-    "click .fe-delete" (event) {},
+    "click .fe-delete": event => {
+        event.preventDefault();
+        const target = event.target;
+        console.log(getAccountId());
+    },
 });
