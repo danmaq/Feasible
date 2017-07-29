@@ -12,7 +12,7 @@ export const Accounts = new Mongo.Collection('accounts');
 if (Meteor.isServer) {
     Meteor.publish(
         'accounts',
-        function accountsPublication() {
+        function() {
             return Accounts.find({ owner: this.userId });
         });
 }
@@ -37,7 +37,7 @@ Meteor.methods({
             "owner": Meteor.userId()
         });
     },
-    "accounts.remove": (accountId) => {
+    "accounts.remove": accountId => {
         check(accountId, String);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');

@@ -7,7 +7,15 @@ export const Exchange =
         SELL: -1,
     });
 
-/** Extension of exchange type. */
+/** Key and value of exchange type. */
+export const ExchangeKV =
+    Object.freeze(
+        [
+            { key: Exchange.BUY, value: "Buy" },
+            { key: Exchange.SELL, value: "Sell" },
+        ]);
+
+/** Extension of Exchange type. */
 export class ExchangeUtil {
     /**
      * Get stringed value.
@@ -22,15 +30,6 @@ export class ExchangeUtil {
                 return 'Sell';
             default:
                 return '';
-        }
-    }
-
-    /**
-     * Get iterator. { key: number, value: string }
-     */
-    static * iterkv() {
-        for (let ex of Exchange) {
-            yield { key: ex, value: toStr(ex) };
         }
     }
 }

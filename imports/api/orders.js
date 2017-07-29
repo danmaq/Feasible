@@ -11,7 +11,7 @@ export const Orders = new Mongo.Collection('orders');
 if (Meteor.isServer) {
     Meteor.publish(
         'orders',
-        function ordersPublication() {
+        function() {
             return Orders.find({ owner: this.userId });
         });
 }

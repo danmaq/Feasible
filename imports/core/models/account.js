@@ -1,7 +1,8 @@
 'use strict';
 
 import { Swap } from './swap.js'
-import { Pair } from '../enums/pair.js'
+import { Pair, PairUtil } from '../enums/pair.js'
+import { Utils } from '../utils.js'
 
 const DEFAULT_PAIR = Pair.USDJPY;
 const DEFAULT_LOT = 10000;
@@ -66,23 +67,34 @@ export class Account {
     }
 
     /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {Account} Account object.
+     */
+    clone(override = new Object()) {
+        return new Account(
+            Utils.getValue('pair', override, this.pair),
+            Utils.getValue('swap', override, this.swap.clone()),
+            Utils.getValue('lot', override, this.lot),
+            Utils.getValue('mul', override, this.mul),
+            Utils.getValue('step', override, this.step),
+            Utils.getValue('martingale', override, this.martingale));
+    }
+}
+
+/** Extension of Account data. */
+export class AccountUtil {
+    /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
      * @return {Account} Account object.
      */
     static load(raw = new Object()) {
-        const KEY_PAIR = '_pair';
-        const KEY_SWAP = '_swap';
-        const KEY_LOT = '_lot';
-        const KEY_MUL = '_mul';
-        const KEY_STEP = '_step';
-        const KEY_MARTIN = '_martingale';
-        return new Account(
-            KEY_PAIR in raw ? raw[KEY_PAIR] : DEFAULT_PAIR,
-            KEY_SWAP in raw ? Swap.load(raw[KEY_SWAP]) : new Swap(),
-            KEY_LOT in raw ? raw[KEY_LOT] : DEFAULT_LOT,
-            KEY_MUL in raw ? raw[KEY_MUL] : DEFAULT_MUL,
-            KEY_STEP in raw ? raw[KEY_STEP] : DEFAULT_STEP,
-            KEY_MARTIN in raw ? raw[KEY_MARTIN] : DEFAULT_MARTINGALE);
+        return new Account().clone(raw);
+    }
+
+    /** Get stringed currency pair. */
+    static getStrPair(account = new Account()) {
+        return PairUtil.toStr(account.pair);
     }
 }
