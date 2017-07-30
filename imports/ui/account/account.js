@@ -7,7 +7,6 @@ import { PairUtil } from '../../core/enums/pair.js';
 import { Account, AccountUtil } from '../../core/models/account.js';
 
 import './account.html';
-import '../position/positions.js';
 
 /** Get template data. */
 const getData = () => Template.instance().data;

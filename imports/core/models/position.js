@@ -55,7 +55,7 @@ export class Position {
      */
     clone(override = new Object()) {
         return new Rate(
-            Utils.getValue('rate', override, this.rate.clone()),
+            RateUtil.load(Utils.getValue('rate', override, this.rate)),
             Utils.getValue('quantity', override, this.quantity),
             Utils.getValue('exchange', override, this.exchange),
             Utils.getValue('takeProfit', override, this.takeProfit));

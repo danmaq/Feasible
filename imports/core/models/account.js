@@ -1,6 +1,7 @@
 'use strict';
 
-import { Swap } from './swap.js'
+import { Swap, SwapUtil } from './swap.js'
+import { Rate, RateUtil } from './rate.js'
 import { Pair, PairUtil } from '../enums/pair.js'
 import { Utils } from '../utils.js'
 
@@ -15,6 +16,7 @@ export class Account {
     /**
      * Initialize new object.
      * @param {number} pair Currency pair (see Pair module)
+     * @param {Rate} rate Exchange rate data.
      * @param {Swap} swap Swap point to exchange.
      * @param {number} lot Lot unit.
      * @param {number} mul Initial multiply rate.
@@ -23,12 +25,14 @@ export class Account {
      */
     constructor(
         pair = DEFAULT_PAIR,
+        rate = new Rate(),
         swap = new Swap(),
         lot = DEFAULT_LOT,
         mul = DEFAULT_MUL,
         step = DEFAULT_STEP,
         martingale = DEFAULT_MARTINGALE) {
         this._pair = pair;
+        this._rate = rate;
         this._swap = swap;
         this._lot = lot;
         this._mul = mul;
@@ -39,6 +43,11 @@ export class Account {
     /** Currency pair. */
     get pair() {
         return this._pair;
+    }
+
+    /** Exchange rate data. */
+    get rate() {
+        return this._rate;
     }
 
     /** Swap point. */
@@ -74,7 +83,8 @@ export class Account {
     clone(override = new Object()) {
         return new Account(
             Utils.getValue('pair', override, this.pair),
-            Utils.getValue('swap', override, this.swap.clone()),
+            RateUtil.load(Utils.getValue('rate', override, this.rate)),
+            SwapUtil.load(Utils.getValue('swap', override, this.swap)),
             Utils.getValue('lot', override, this.lot),
             Utils.getValue('mul', override, this.mul),
             Utils.getValue('step', override, this.step),

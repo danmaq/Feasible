@@ -5,6 +5,7 @@ import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
 import { Account } from '../core/models/account.js';
+import { Rate } from '../core/models/rate.js';
 import { Swap } from '../core/models/swap.js';
 
 export const Accounts = new Mongo.Collection('accounts');
@@ -30,7 +31,8 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         const swap = new Swap(swapLong, swapShort);
-        const account = new Account(pair, swap, lot, mul, step, martin);
+        const rate = new Rate();
+        const account = new Account(pair, rate, swap, lot, mul, step, martin);
         Accounts.insert({
             "body": account,
             "sortBy": account.pair,
