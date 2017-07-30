@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
-import { Account } from '../core/models/account.js';
+import { Account, AccountUtil } from '../core/models/account.js';
 import { Rate } from '../core/models/rate.js';
 import { Swap } from '../core/models/swap.js';
 
@@ -45,5 +45,25 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         Accounts.remove(accountId);
+    },
+    "accounts.updateRate": (accountId, ask, bid) => {
+        check(accountId, String);
+        check(ask, Number);
+        check(bid, Number);
+        if (!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
+        const accountRaw = Accounts.findOne(accountId);
+        if (!accountRaw) {
+            throw new Meteor.Error('unknown-account');
+        }
+        const account = AccountUtil.load(accountRaw.body);
+        const rate = account.rate.clone({ "ask": ask, "bid": bid });
+        const cloned = account.clone({ "rate": rate });
+        Accounts.update(accountId, {
+            "body": cloned,
+            "sortBy": cloned.pair,
+            "owner": Meteor.userId()
+        });
     },
 });

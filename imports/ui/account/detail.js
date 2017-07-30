@@ -56,6 +56,9 @@ Template.accountDetail.events({
     },
     "submit #fe-mod-account-rate": event => {
         event.preventDefault();
-        console.log("DESIDE");
+        const target = event.target;
+        const ask = Number.parseFloat(target['ask'].value);
+        const bid = Number.parseFloat(target['bid'].value);
+        Meteor.call('accounts.updateRate', getAccountId(), ask, bid);
     },
 });
