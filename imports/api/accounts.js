@@ -8,6 +8,7 @@ import { Account, AccountUtil } from '../core/models/account.js';
 import { Rate } from '../core/models/rate.js';
 import { Swap } from '../core/models/swap.js';
 
+/** Accounts collection. */
 export const Accounts = new Mongo.Collection('accounts');
 
 if (Meteor.isServer) {
@@ -17,6 +18,14 @@ if (Meteor.isServer) {
             return Accounts.find({ owner: this.userId });
         });
 }
+
+/** Create record for collection. */
+const createRecord =
+    (account = new Account()) => ({
+        "body": account,
+        "sortBy": account.pair,
+        "owner": Meteor.userId()
+    });
 
 Meteor.methods({
     "accounts.insert": (pair, swapLong, swapShort, lot, mul, step, martin) => {
@@ -33,11 +42,7 @@ Meteor.methods({
         const swap = new Swap(swapLong, swapShort);
         const rate = new Rate();
         const account = new Account(pair, rate, swap, lot, mul, step, martin);
-        Accounts.insert({
-            "body": account,
-            "sortBy": account.pair,
-            "owner": Meteor.userId()
-        });
+        Accounts.insert(createRecord(account));
     },
     "accounts.remove": accountId => {
         check(accountId, String);
@@ -60,10 +65,6 @@ Meteor.methods({
         const account = AccountUtil.load(accountRaw.body);
         const rate = account.rate.clone({ "ask": ask, "bid": bid });
         const cloned = account.clone({ "rate": rate });
-        Accounts.update(accountId, {
-            "body": cloned,
-            "sortBy": cloned.pair,
-            "owner": Meteor.userId()
-        });
+        Accounts.update(accountId, createRecord(cloned));
     },
 });
