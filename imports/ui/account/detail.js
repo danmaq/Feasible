@@ -34,3 +34,15 @@ Template.accountDetail.helpers({
     "account": getAccount,
     "strPair": () => PairUtil.toStr(getAccount().pair),
 });
+Template.accountDetail.events({
+    "click #fe-mod-account-rate #fe-rate-up": event => {
+        event.preventDefault();
+        const target = event.target;
+        console.log("UP");
+    },
+    "click #fe-mod-account-rate #fe-rate-down": event => {
+        event.preventDefault();
+        const target = event.target;
+        console.log("DOWN");
+    },
+});
