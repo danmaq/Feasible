@@ -1,0 +1,34 @@
+<template name="accountDetail">
+    {{> nav}}
+    <section class="container">
+        <h3>{{strPair}} account detail</h3>
+        <dl>
+            <dt>Swap (Long/Short)</dt>
+            <dd>{{account._swap._long}} / {{account._swap._short}}</dd>
+            <dt>Lot</dt>
+            <dd>{{account._lot}}</dd>
+            <dt>Initial quantity</dt>
+            <dd>{{account._mul}}</dd>
+            <dt>Step range</dt>
+            <dd>{{account._step}}</dd>
+            <dt>Martingale</dt>
+            <dd>x {{account._martingale}}</dd>
+        </dl>
+        <h4>Ask / Bid</h4>
+        <form id="fe-mod-account-rate" class="form-horizontal">
+            <div class="form-group">
+                <div class="form-inline">
+                    <input id="ask" type="number" value="{{account._rate._ask}}" required="required" class="form-control" /> / 
+                    <input id="bid" type="number" value="{{account._rate._bid}}" required="required" class="form-control" />
+                    <span class="">
+                        <button type="button" class="btn btn-default"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                        <button class="btn btn-primary">Deside</button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </section>
+    {{> positions}}
+    {{> footer}}
+</template>
