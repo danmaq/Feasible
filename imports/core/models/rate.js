@@ -4,8 +4,13 @@ import { Exchange } from '../enums/exchange.js'
 import { Pair } from '../enums/pair.js'
 import { Utils } from '../utils.js'
 
+/** Default currency pair value. */
 const DEFAULT_PAIR = Pair.USDJPY;
+
+/** Default ask point value. */
 const DEFAULT_ASK = 0;
+
+/** Default bid point value. */
 const DEFAULT_BID = 0;
 
 /** Exchange rate data. */
@@ -53,7 +58,7 @@ export class Rate {
      * @param {object} override Override object.
      * @return {Rate} Rate object.
      */
-    clone(override = new Object()) {
+    clone(override = {}) {
         return new Rate(
             Utils.getValue('pair', override, this.pair),
             Utils.getValue('tick', override, this.tick),
@@ -69,7 +74,7 @@ export class RateUtil {
      * @param {object} raw Raw object.
      * @return {Rate} Rate object.
      */
-    static load(raw = new Object()) {
+    static load(raw = {}) {
         return new Rate().clone(raw);
     }
 

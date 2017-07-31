@@ -4,8 +4,13 @@ import { Exchange, ExchangeUtil } from '../enums/exchange.js'
 import { Rate, RateUtil } from './rate.js'
 import { Utils } from '../utils.js'
 
+/** Default ordered quantity value. */
 const DEFAULT_QUANTITY = 1;
+
+/** Default exchange type value. */
 const DEFAULT_EXCHANGE = Exchange.BUY;
+
+/** Default take profit value. */
 const DEFAULT_TAKEPROFIT = Number.NaN;
 
 /** Position model. */
@@ -53,7 +58,7 @@ export class Position {
      * @param {object} override Override object.
      * @return {Position} Position object.
      */
-    clone(override = new Object()) {
+    clone(override = {}) {
         return new Rate(
             RateUtil.load(Utils.getValue('rate', override, this.rate)),
             Utils.getValue('quantity', override, this.quantity),
@@ -69,7 +74,7 @@ export class PositionUtil {
      * @param {object} raw Raw object.
      * @return {Position} Position object.
      */
-    static load(raw = new Object()) {
+    static load(raw = {}) {
         return new Position().clone(raw);
     }
 

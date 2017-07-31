@@ -5,10 +5,19 @@ import { Limit } from '../enums/limit.js'
 import { Position } from './position.js'
 import { Rate, RateUtil } from './rate.js'
 
+/** Default exchange type value. */
 const DEFAULT_EXCHANGE = Exchange.BUY;
+
+/** Default limit trade type value. */
 const DEFAULT_LIMIT = Limit.NONE;
+
+/** Default limit price value. */
 const DEFAULT_PRICE = 0;
+
+/** Default ordered quantity value. */
 const DEFAULT_QUANTITY = 1;
+
+/** Default take profit value. */
 const DEFAULT_TAKEPROFIT = Number.NaN;
 
 /** Order model. */
@@ -64,7 +73,7 @@ export class Order {
      * @param {object} override Override object.
      * @return {Order} Order object.
      */
-    clone(override = new Object()) {
+    clone(override = {}) {
         return new Order(
             Utils.getValue('exchange', override, this.exchange),
             Utils.getValue('limit', override, this.limit),
@@ -81,7 +90,7 @@ export class OrderUtil {
      * @param {object} raw Raw object.
      * @return {Order} Order object.
      */
-    static load(raw = new Object()) {
+    static load(raw = {}) {
         return new Order().clone(raw);
     }
 

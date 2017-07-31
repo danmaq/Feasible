@@ -29,9 +29,9 @@ Template.positions.onCreated(() => {
 Template.positions.helpers({
     "positions": () => getPositions(),
     "positionLength": () => getPositions().count(),
-    "price": () => DEFAULT_POSITION.rate,
-    "quantity": () => DEFAULT_POSITION.quantity,
-    "exchanges": () => ExchangeKV,
+    "price": DEFAULT_POSITION.rate,
+    "quantity": DEFAULT_POSITION.quantity,
+    "exchanges": ExchangeKV,
 });
 Template.positions.events({
     "submit #fe-add-position": event => {

@@ -69,6 +69,7 @@ export const Pair =
         USDSGD: 63,
         XAGUSD: 64,
         XAUGBP: 65,
+        /** Don't use this value. */
         __length: 66
     });
 
