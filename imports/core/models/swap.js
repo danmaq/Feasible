@@ -3,7 +3,10 @@
 import { Exchange } from '../enums/exchange.js'
 import { Utils } from '../utils.js'
 
+/** Default long swap value. */
 const DEFAULT_LONG = 0;
+
+/** Default short swap value. */
 const DEFAULT_SHORT = 0;
 
 /** Swap point data. */
@@ -33,7 +36,7 @@ export class Swap {
      * @param {object} override Override object.
      * @return {Swap} Swap object.
      */
-    clone(override = new Object()) {
+    clone(override = {}) {
         return new Swap(
             Utils.getValue('long', override, this.long),
             Utils.getValue('short', override, this.short));
@@ -47,7 +50,7 @@ export class SwapUtil {
      * @param {object} raw Raw object.
      * @return {Swap} Swap object.
      */
-    static load(raw = new Object()) {
+    static load(raw = {}) {
         return new Swap().clone(raw);
     }
 

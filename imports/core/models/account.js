@@ -5,10 +5,19 @@ import { Rate, RateUtil } from './rate.js'
 import { Pair, PairUtil } from '../enums/pair.js'
 import { Utils } from '../utils.js'
 
+/** Default currency pair value. */
 const DEFAULT_PAIR = Pair.USDJPY;
+
+/** Default lot unit value. */
 const DEFAULT_LOT = 10000;
+
+/** Default initial multiply rate value. */
 const DEFAULT_MUL = 0.01;
+
+/** Default Step range value of next action. */
 const DEFAULT_STEP = 1.0;
+
+/** Default martingale rate value. */
 const DEFAULT_MARTINGALE = 2;
 
 /** Account data. */
@@ -80,7 +89,7 @@ export class Account {
      * @param {object} override Override object.
      * @return {Account} Account object.
      */
-    clone(override = new Object()) {
+    clone(override = {}) {
         return new Account(
             Utils.getValue('pair', override, this.pair),
             RateUtil.load(Utils.getValue('rate', override, this.rate)),
@@ -99,7 +108,7 @@ export class AccountUtil {
      * @param {object} raw Raw object.
      * @return {Account} Account object.
      */
-    static load(raw = new Object()) {
+    static load(raw = {}) {
         return new Account().clone(raw);
     }
 
