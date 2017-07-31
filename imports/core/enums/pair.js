@@ -84,26 +84,12 @@ export class PairUtil {
     static toStr(pair = Pair.USDJPY) {
         return pair in pairStr ? pairStr[pair] : '';
     }
-    static * iter() {
-        for (let s of pairStr) {
-            yield s;
-        }
-    }
-
-    /**
-     * Get index iterator.
-     */
-    static * iteri() {
-        for (let i = 0; i < Pair.__length; i++) {
-            yield i;
-        }
-    }
 
     /**
      * Get iterator. { key: number, value: string }
      */
     static * iterkv() {
-        for (let i of PairUtil.iteri()) {
+        for (let i = 0; i < Pair.__length; i++) {
             yield { key: i, value: PairUtil.toStr(i) };
         }
     }
