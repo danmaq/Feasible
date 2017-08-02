@@ -1,9 +1,9 @@
 'use strict';
 
-import { Exchange } from '../enums/exchange.js'
-import { Limit } from '../enums/limit.js'
-import { Position } from './position.js'
-import { Rate, RateUtil } from './rate.js'
+import { Exchange } from '../enums/exchange.js';
+import { Limit } from '../enums/limit.js';
+import { Position } from './position.js';
+import { Rate, RateUtil } from './rate.js';
 
 /** Default exchange type value. */
 const DEFAULT_EXCHANGE = Exchange.BUY;

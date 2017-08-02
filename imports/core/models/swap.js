@@ -1,7 +1,7 @@
 'use strict';
 
-import { Exchange } from '../enums/exchange.js'
-import { Utils } from '../utils.js'
+import { Exchange } from '../enums/exchange.js';
+import { Utils } from '../utils.js';
 
 /** Default long swap value. */
 const DEFAULT_LONG = 0;

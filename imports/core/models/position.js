@@ -1,8 +1,8 @@
 'use strict';
 
-import { Exchange, ExchangeUtil } from '../enums/exchange.js'
-import { Rate, RateUtil } from './rate.js'
-import { Utils } from '../utils.js'
+import { Exchange, ExchangeUtil } from '../enums/exchange.js';
+import { Rate, RateUtil } from './rate.js';
+import { Utils } from '../utils.js';
 
 /** Default ordered quantity value. */
 const DEFAULT_QUANTITY = 1;

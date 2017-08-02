@@ -13,10 +13,7 @@ export const Accounts = new Mongo.Collection('accounts');
 
 if (Meteor.isServer) {
     Meteor.publish(
-        'accounts',
-        function() {
-            return Accounts.find({ owner: this.userId });
-        });
+        'accounts', () => Accounts.find({ "owner": Meteor.userId() }));
 }
 
 /** Create record for collection. */

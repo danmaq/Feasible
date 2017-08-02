@@ -1,8 +1,8 @@
 'use strict';
 
-import { Exchange } from '../enums/exchange.js'
-import { Pair } from '../enums/pair.js'
-import { Utils } from '../utils.js'
+import { Exchange } from '../enums/exchange.js';
+import { Pair } from '../enums/pair.js';
+import { Utils } from '../utils.js';
 
 /** Default currency pair value. */
 const DEFAULT_PAIR = Pair.USDJPY;

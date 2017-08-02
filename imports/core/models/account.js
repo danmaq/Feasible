@@ -1,9 +1,9 @@
 'use strict';
 
-import { Swap, SwapUtil } from './swap.js'
-import { Rate, RateUtil } from './rate.js'
-import { Pair, PairUtil } from '../enums/pair.js'
-import { Utils } from '../utils.js'
+import { Swap, SwapUtil } from './swap.js';
+import { Rate, RateUtil } from './rate.js';
+import { Pair, PairUtil } from '../enums/pair.js';
+import { Utils } from '../utils.js';
 
 /** Default currency pair value. */
 const DEFAULT_PAIR = Pair.USDJPY;
