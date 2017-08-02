@@ -4,12 +4,15 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
+import { Operation } from '../core/enums/operation.js';
+
 /** Directions collection. */
 export const Directions = new Mongo.Collection('directions');
 
 if (Meteor.isServer) {
     Meteor.publish(
-        'directions', () => Directions.find({ owner: Meteor.userId() }));
+        'directions',
+        () => Directions.find({ owner: Meteor.userId() }));
 }
 
 Meteor.methods({

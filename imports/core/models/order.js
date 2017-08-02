@@ -29,18 +29,21 @@ export class Order {
      * @param {number} price Limit price.
      * @param {number} quantity Ordered quantity.
      * @param {number} takeProfit Take profit.
+     * @param {boolean} preOrder pre-order.
      */
     constructor(
         exchange = DEFAULT_EXCHANGE,
         limit = DEFAULT_LIMIT,
         price = DEFAULT_PRICE,
         quantity = DEFAULT_QUANTITY,
-        takeProfit = DEFAULT_TAKEPROFIT) {
+        takeProfit = DEFAULT_TAKEPROFIT,
+        preOrder = false) {
         this._exchange = exchange;
         this._limit = limit;
         this._price = price;
         this._quantity = quantity;
         this._takeProfit = takeProfit;
+        this._preOrder = preOrder;
     }
 
     /** Exchange type. */
@@ -68,6 +71,11 @@ export class Order {
         return this._takeProfit;
     }
 
+    /** Pre-order. */
+    get preOrder() {
+        return this._preOrder;
+    }
+
     /**
      * Clone object.
      * @param {object} override Override object.
@@ -79,7 +87,8 @@ export class Order {
             Utils.getValue('limit', override, this.limit),
             Utils.getValue('price', override, this.price),
             Utils.getValue('quantity', override, this.quantity),
-            Utils.getValue('takeProfit', override, this.takeProfit));
+            Utils.getValue('takeProfit', override, this.takeProfit),
+            Utils.getValue('preOrder', override, this.preOrder));
     }
 }
 

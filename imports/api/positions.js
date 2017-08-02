@@ -13,7 +13,8 @@ export const Positions = new Mongo.Collection('positions');
 
 if (Meteor.isServer) {
     Meteor.publish(
-        'positions', () => Positions.find({ "owner": Meteor.userId() }));
+        'positions',
+        () => Positions.find({ "owner": Meteor.userId() }));
 }
 
 Meteor.methods({
