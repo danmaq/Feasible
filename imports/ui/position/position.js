@@ -6,7 +6,7 @@ import { Template } from 'meteor/templating';
 import { ExchangeUtil } from '../../core/enums/exchange.js';
 import { Position, PositionUtil } from '../../core/models/position.js';
 
-import './position.html'
+import './position.html';
 
 /** Get template data. */
 const getData = () => Template.instance().data;

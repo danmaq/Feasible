@@ -9,7 +9,8 @@ import { PairUtil } from '../../core/enums/pair.js';
 import { Account, AccountUtil } from '../../core/models/account.js';
 
 import './detail.html';
-import '../position/positions.js'
+import '../direction/directions.js';
+import '../position/positions.js';
 
 /** Cached account data. */
 let account = new Account();
@@ -59,6 +60,7 @@ Template.accountDetail.events({
         const target = event.target;
         const ask = Number.parseFloat(target['ask'].value);
         const bid = Number.parseFloat(target['bid'].value);
+        Meteor.call('directions.flush', getAccountId());
         Meteor.call('accounts.updateRate', getAccountId(), ask, bid);
     },
 });

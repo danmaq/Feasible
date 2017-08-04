@@ -27,7 +27,7 @@ Template.positions.onCreated(() => {
     Meteor.subscribe('positions');
 });
 Template.positions.helpers({
-    "positions": () => getPositions(),
+    "positions": getPositions,
     "positionLength": () => getPositions().count(),
     "price": DEFAULT_POSITION.rate,
     "quantity": DEFAULT_POSITION.quantity,

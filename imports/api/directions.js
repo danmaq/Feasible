@@ -17,7 +17,8 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    "directions.insert": (operation, positionId, orderId) => {
+    "directions.insert": (accountId, operation, positionId, orderId) => {
+        check(accountId, String);
         check(operation, Number);
         check(positionId, String);
         check(orderId, String);
@@ -25,12 +26,17 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         const dir = new Direction(operation, positionId, orderId);
-        Directions.insert({ "body": dir, "owner": Meteor.userId() });
+        Directions.insert({
+            "body": dir,
+            "accountId": accountId,
+            "owner": Meteor.userId()
+        });
     },
-    "directions.flush": () => {
+    'directions.flush': accountId => {
+        check(accountId, String);
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        Directions.remove({ owner: Meteor.userId() });
+        Directions.remove({ "accountId": accountId });
     },
 });
