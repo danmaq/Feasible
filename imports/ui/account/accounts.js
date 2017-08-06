@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 
 import { Accounts } from '../../api/accounts.js';
 
-import { Pair, PairUtil } from '../../core/enums/pair.js';
+import { PairUtil } from '../../core/enums/pair.js';
 import { Account } from '../../core/models/account.js';
 
 import './accounts.html';
@@ -28,21 +28,14 @@ Template.accounts.events({
     "submit #fe-add-account": event => {
         event.preventDefault();
         const target = event.target;
-        const pair = Number.parseInt(target['pair'].value);
-        const swapLong = Number.parseFloat(target['swap-long'].value);
-        const swapShort = Number.parseFloat(target['swap-short'].value);
-        const lot = Number.parseInt(target['lot'].value);
-        const mul = Number.parseFloat(target['mul'].value);
-        const step = Number.parseFloat(target['step'].value);
-        const martin = Number.parseFloat(target['martingale'].value);
         Meteor.call(
             'accounts.insert',
-            pair,
-            swapLong,
-            swapShort,
-            lot,
-            mul,
-            step,
-            martin);
+            Number.parseInt(target['pair'].value),
+            Number.parseFloat(target['swap-long'].value),
+            Number.parseFloat(target['swap-short'].value),
+            Number.parseInt(target['lot'].value),
+            Number.parseFloat(target['mul'].value),
+            Number.parseFloat(target['step'].value),
+            Number.parseFloat(target['martingale'].value));
     },
 });
