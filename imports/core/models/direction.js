@@ -81,11 +81,4 @@ export class DirectionUtil {
     static load(raw = {}) {
         return new Direction().clone(raw);
     }
-
-    static next(
-        account = new Account(),
-        positions = [new Position()],
-        orders = [new Order()]) {
-
-    }
 }
