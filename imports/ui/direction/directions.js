@@ -21,6 +21,3 @@ Template.directions.helpers({
     "directions": getDirections,
     "directionLength": () => getDirections().count(),
 });
-Template.directions.events({
-
-});

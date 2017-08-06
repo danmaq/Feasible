@@ -1,6 +1,9 @@
 'use strict';
 
 import { Operation } from '../enums/operation.js';
+import { Account } from './account.js';
+import { Order, OrderUtil } from './order.js';
+import { Position, PositionUtil } from './position.js';
 
 /** Direction data. */
 export class Direction {
@@ -8,16 +11,22 @@ export class Direction {
      * Initialize new object.
      * @param {number} operation Operation type.
      * @param {string} positionId Position model ID.
+     * @param {Position} position New position model.
      * @param {string} orderId Order model ID.
+     * @param {Order} order New order model.
      */
     constructor(
         operation = Operation.ORDER,
         positionId = '',
+        position = new Position(),
         orderId = '',
+        order = new Position(),
     ) {
         this._operation = operation;
         this._positionId = positionId;
+        this._position = position;
         this._orderId = orderId;
+        this._order = order;
     }
 
     /** Operation type. */
@@ -30,9 +39,19 @@ export class Direction {
         return this._positionId;
     }
 
+    /** New position model. */
+    get position() {
+        return this._position;
+    }
+
     /** Order model ID. */
     get orderId() {
         return this._orderId;
+    }
+
+    /** New order model. */
+    get order() {
+        return this._order;
     }
 
     /**
@@ -45,7 +64,9 @@ export class Direction {
             new Direction(
                 Utils.getValue('operation', override, this.operation),
                 Utils.getValue('positionId', override, this.positionId),
-                Utils.getValue('orderId', override, this.orderId));
+                PositionUtil.load(Utils.getValue('position', override, this.position)),
+                Utils.getValue('orderId', override, this.orderId),
+                OrderUtil.load(Utils.getValue('order', override, this.order)));
         return result;
     }
 }
@@ -59,5 +80,12 @@ export class DirectionUtil {
      */
     static load(raw = {}) {
         return new Direction().clone(raw);
+    }
+
+    static next(
+        account = new Account(),
+        positions = [new Position()],
+        orders = [new Order()]) {
+
     }
 }
