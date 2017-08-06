@@ -3,11 +3,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { Accounts } from '../../api/accounts.js';
 import { Positions } from '../../api/positions.js';
 
 import { ExchangeKV } from '../../core/enums/exchange.js';
-import { Account, AccountUtil } from '../../core/models/account.js';
 import { Position } from '../../core/models/position.js';
 
 import './positions.html';
@@ -38,22 +36,13 @@ Template.positions.events({
         event.preventDefault();
         const target = event.target;
         const price = Number.parseFloat(target['price'].value);
-        const quantity = Number.parseInt(target['quantity'].value);
-        const exchange = Number.parseInt(target['exchange'].value);
-        const tp = Number.parseFloat(target['takeProfit'].value);
-        const accountId = getAccountId();
-        const accountRaw = Accounts.findOne(accountId);
-        if (!accountRaw) {
-            throw new Meteor.Error('unknown-account');
-        }
         Meteor.call(
             'positions.insert',
-            accountId,
-            AccountUtil.load(accountRaw.body).pair,
+            getAccountId(),
             price,
             price,
-            quantity,
-            exchange,
-            tp);
+            Number.parseInt(target['quantity'].value),
+            Number.parseInt(target['exchange'].value),
+            Number.parseFloat(target['takeProfit'].value));
     },
 });

@@ -12,8 +12,8 @@ export class Utils {
     static getValue(key = '', values = new Object(), alt = null) {
         const _key = `_${key}`;
         const result =
-            _key in values ? values[_key] :
-            key in values ? values[key] :
+            values && _key in values ? values[_key] :
+            values && key in values ? values[key] :
             alt;
         return result;
     }

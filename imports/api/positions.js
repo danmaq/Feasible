@@ -6,6 +6,7 @@ import { check } from 'meteor/check';
 
 import { Accounts } from './accounts.js';
 
+import { Account, AccountUtil } from '../core/models/account.js';
 import { Position } from '../core/models/position.js';
 import { Rate } from '../core/models/rate.js';
 
@@ -18,9 +19,8 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'positions.insert': (accountId, pair, buy, sell, quantity, exchange, takeProfit) => {
+    'positions.insert': (accountId, buy, sell, quantity, exchange, takeProfit) => {
         check(accountId, String);
-        check(pair, Number);
         check(buy, Number);
         check(sell, Number);
         check(quantity, Number);
@@ -29,7 +29,8 @@ Meteor.methods({
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        const rate = new Rate(pair, buy, sell);
+        const account = AccountUtil.load(Accounts.findOne(accountId));
+        const rate = new Rate(account.pair, buy, sell);
         const pos = new Position(rate, quantity, exchange, takeProfit);
         Positions.insert({
             "body": pos,
