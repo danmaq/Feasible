@@ -1,7 +1,7 @@
 'use strict';
 
+import { Model } from './model.js';
 import { Exchange } from '../enums/exchange.js';
-import { Utils } from '../utils.js';
 
 /** Default long swap value. */
 const DEFAULT_LONG = 0;
@@ -10,13 +10,14 @@ const DEFAULT_LONG = 0;
 const DEFAULT_SHORT = 0;
 
 /** Swap point data. */
-export class Swap {
+export class Swap extends Model {
     /**
      * Initialize new object.
      * @param {number} long Long swap.
      * @param {number} short Short swap.
      */
     constructor(long = DEFAULT_LONG, short = DEFAULT_SHORT) {
+        super();
         this._long = long;
         this._short = short;
     }
@@ -36,10 +37,12 @@ export class Swap {
      * @param {object} override Override object.
      * @return {Swap} Swap object.
      */
-    clone(override = {}) {
-        return new Swap(
-            Utils.getValue('long', override, this.long),
-            Utils.getValue('short', override, this.short));
+    innerClone(override = {}) {
+        const result =
+            new Swap(
+                this.importValue('long', override),
+                this.importValue('short', override));
+        return result;
     }
 }
 

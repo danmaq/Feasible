@@ -1,9 +1,9 @@
 'use strict';
 
-import { Swap, SwapUtil } from './swap.js';
-import { Rate, RateUtil } from './rate.js';
+import { Model } from './model.js';
 import { Pair, PairUtil } from '../enums/pair.js';
-import { Utils } from '../utils.js';
+import { Rate, RateUtil } from './rate.js';
+import { Swap, SwapUtil } from './swap.js';
 
 /** Default currency pair value. */
 const DEFAULT_PAIR = Pair.USDJPY;
@@ -21,7 +21,7 @@ const DEFAULT_STEP = 1.0;
 const DEFAULT_MARTINGALE = 2;
 
 /** Account data. */
-export class Account {
+export class Account extends Model {
     /**
      * Initialize new object.
      * @param {number} pair Currency pair (see Pair module)
@@ -40,6 +40,7 @@ export class Account {
         mul = DEFAULT_MUL,
         step = DEFAULT_STEP,
         martingale = DEFAULT_MARTINGALE) {
+        super();
         this._pair = pair;
         this._rate = rate;
         this._swap = swap;
@@ -89,15 +90,17 @@ export class Account {
      * @param {object} override Override object.
      * @return {Account} Account object.
      */
-    clone(override = {}) {
-        return new Account(
-            Utils.getValue('pair', override, this.pair),
-            RateUtil.load(Utils.getValue('rate', override, this.rate)),
-            SwapUtil.load(Utils.getValue('swap', override, this.swap)),
-            Utils.getValue('lot', override, this.lot),
-            Utils.getValue('mul', override, this.mul),
-            Utils.getValue('step', override, this.step),
-            Utils.getValue('martingale', override, this.martingale));
+    innerClone(override = {}) {
+        const result =
+            new Account(
+                this.importValue('pair', override),
+                RateUtil.load(this.importValue('rate', override)),
+                SwapUtil.load(this.importValue('swap', override)),
+                this.importValue('lot', override),
+                this.importValue('mul', override),
+                this.importValue('step', override),
+                this.importValue('martingale', override));
+        return result;
     }
 }
 

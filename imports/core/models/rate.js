@@ -1,8 +1,8 @@
 'use strict';
 
+import { Model } from './model.js';
 import { Exchange } from '../enums/exchange.js';
 import { Pair } from '../enums/pair.js';
-import { Utils } from '../utils.js';
 
 /** Default currency pair value. */
 const DEFAULT_PAIR = Pair.USDJPY;
@@ -14,7 +14,7 @@ const DEFAULT_ASK = 0;
 const DEFAULT_BID = 0;
 
 /** Exchange rate data. */
-export class Rate {
+export class Rate extends Model {
     /**
      * Initialize new object.
      * @param {number} pair Currency pair.
@@ -27,6 +27,7 @@ export class Rate {
         tick = new Date(),
         ask = DEFAULT_ASK,
         bid = DEFAULT_BID) {
+        super();
         this._pair = pair;
         this._tick = tick;
         this._ask = ask;
@@ -59,11 +60,13 @@ export class Rate {
      * @return {Rate} Rate object.
      */
     clone(override = {}) {
-        return new Rate(
-            Utils.getValue('pair', override, this.pair),
-            Utils.getValue('tick', override, this.tick),
-            Utils.getValue('ask', override, this.ask),
-            Utils.getValue('bid', override, this.bid));
+        const result =
+            new Rate(
+                this.importValue('pair', override),
+                this.importValue('tick', override),
+                this.importValue('ask', override),
+                this.importValue('bid', override));
+        return result;
     }
 }
 

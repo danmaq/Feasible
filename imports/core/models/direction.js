@@ -1,12 +1,13 @@
 'use strict';
 
+import { Model } from './model.js';
 import { Operation } from '../enums/operation.js';
 import { Account } from './account.js';
 import { Order, OrderUtil } from './order.js';
 import { Position, PositionUtil } from './position.js';
 
 /** Direction data. */
-export class Direction {
+export class Direction extends Model {
     /**
      * Initialize new object.
      * @param {number} operation Operation type.
@@ -20,8 +21,9 @@ export class Direction {
         positionId = '',
         position = new Position(),
         orderId = '',
-        order = new Position(),
+        order = new Order(),
     ) {
+        super();
         this._operation = operation;
         this._positionId = positionId;
         this._position = position;
@@ -59,7 +61,7 @@ export class Direction {
      * @param {object} override Override object.
      * @return {Direction} Direction object.
      */
-    clone(override = {}) {
+    innerClone(override = {}) {
         const result =
             new Direction(
                 Utils.getValue('operation', override, this.operation),

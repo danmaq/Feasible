@@ -1,5 +1,6 @@
 'use strict';
 
+import { Model } from './model.js';
 import { Exchange } from '../enums/exchange.js';
 import { Limit } from '../enums/limit.js';
 import { Position } from './position.js';
@@ -21,7 +22,7 @@ const DEFAULT_QUANTITY = 1;
 const DEFAULT_TAKEPROFIT = Number.NaN;
 
 /** Order model. */
-export class Order {
+export class Order extends Model {
     /**
      * Initialize new object.
      * @param {number} exchange Exchange type.
@@ -38,6 +39,7 @@ export class Order {
         quantity = DEFAULT_QUANTITY,
         takeProfit = DEFAULT_TAKEPROFIT,
         preOrder = false) {
+        super();
         this._exchange = exchange;
         this._limit = limit;
         this._price = price;
@@ -81,7 +83,7 @@ export class Order {
      * @param {object} override Override object.
      * @return {Order} Order object.
      */
-    clone(override = {}) {
+    innerClone(override = {}) {
         return new Order(
             Utils.getValue('exchange', override, this.exchange),
             Utils.getValue('limit', override, this.limit),
