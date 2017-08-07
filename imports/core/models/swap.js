@@ -44,10 +44,7 @@ export class Swap extends Model {
                 this.importValue('short', override));
         return result;
     }
-}
 
-/** Extension of Swap point data. */
-export class SwapUtil {
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -56,7 +53,10 @@ export class SwapUtil {
     static load(raw = {}) {
         return new Swap().clone(raw);
     }
+}
 
+/** Extension of Swap point data. */
+export class SwapUtil {
     /**
      * Get swap point.
      * @param {Swap} source Source object.

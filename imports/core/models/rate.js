@@ -68,10 +68,7 @@ export class Rate extends Model {
                 this.importValue('bid', override));
         return result;
     }
-}
 
-/** Extension of Exchange rate data. */
-export class RateUtil {
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -80,7 +77,10 @@ export class RateUtil {
     static load(raw = {}) {
         return new Rate().clone(raw);
     }
+}
 
+/** Extension of Exchange rate data. */
+export class RateUtil {
     /**
      * Get point by exchange type.
      * @param {Rate} source Current rate.

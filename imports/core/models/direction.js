@@ -1,10 +1,11 @@
 'use strict';
 
-import { Model } from './model.js';
 import { Operation } from '../enums/operation.js';
+
+import { Model } from './model.js';
 import { Account } from './account.js';
-import { Order, OrderUtil } from './order.js';
-import { Position, PositionUtil } from './position.js';
+import { Order } from './order.js';
+import { Position } from './position.js';
 
 /** Direction data. */
 export class Direction extends Model {
@@ -66,9 +67,9 @@ export class Direction extends Model {
             new Direction(
                 this.importValue('operation', override),
                 this.importValue('positionId', override),
-                PositionUtil.load(this.importValue('position', override)),
+                Position.load(this.importValue('position', override)),
                 this.importValue('orderId', override),
-                OrderUtil.load(this.importValue('order', override)));
+                Order.load(this.importValue('order', override)));
         return result;
     }
 }

@@ -61,16 +61,13 @@ export class Position extends Model {
     innerClone(override = {}) {
         const result =
             new Rate(
-                RateUtil.load(this.importValue('rate', override)),
+                Rate.load(this.importValue('rate', override)),
                 this.importValue('quantity', override),
                 this.importValue('exchange', override),
                 this.importValue('takeProfit', override));
         return result;
     }
-}
 
-/** Extension of Position model. */
-export class PositionUtil {
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -79,7 +76,10 @@ export class PositionUtil {
     static load(raw = {}) {
         return new Position().clone(raw);
     }
+}
 
+/** Extension of Position model. */
+export class PositionUtil {
     /**
      * Get stringed exchange type.
      * @param {Position} source Source object.

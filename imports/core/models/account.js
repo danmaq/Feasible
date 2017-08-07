@@ -1,9 +1,10 @@
 'use strict';
 
-import { Model } from './model.js';
 import { Pair, PairUtil } from '../enums/pair.js';
-import { Rate, RateUtil } from './rate.js';
-import { Swap, SwapUtil } from './swap.js';
+
+import { Model } from './model.js';
+import { Rate } from './rate.js';
+import { Swap } from './swap.js';
 
 /** Default currency pair value. */
 const DEFAULT_PAIR = Pair.USDJPY;
@@ -94,18 +95,15 @@ export class Account extends Model {
         const result =
             new Account(
                 this.importValue('pair', override),
-                RateUtil.load(this.importValue('rate', override)),
-                SwapUtil.load(this.importValue('swap', override)),
+                Rate.load(this.importValue('rate', override)),
+                Swap.load(this.importValue('swap', override)),
                 this.importValue('lot', override),
                 this.importValue('mul', override),
                 this.importValue('step', override),
                 this.importValue('martingale', override));
         return result;
     }
-}
 
-/** Extension of Account data. */
-export class AccountUtil {
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -114,9 +112,8 @@ export class AccountUtil {
     static load(raw = {}) {
         return new Account().clone(raw);
     }
+}
 
-    /** Get stringed currency pair. */
-    static getStrPair(account = new Account()) {
-        return PairUtil.toStr(account.pair);
-    }
+/** Extension of Account data. */
+export class AccountUtil {
 }

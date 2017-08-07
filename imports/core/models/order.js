@@ -92,10 +92,7 @@ export class Order extends Model {
             this.importValue('takeProfit', override),
             this.importValue('preOrder', override));
     }
-}
-
-/** Extension of Order model. */
-export class OrderUtil {
+        
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -104,6 +101,10 @@ export class OrderUtil {
     static load(raw = {}) {
         return new Order().clone(raw);
     }
+}
+
+/** Extension of Order model. */
+export class OrderUtil {
 
     /**
      * Get available this order.
