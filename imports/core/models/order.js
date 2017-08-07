@@ -6,21 +6,6 @@ import { Limit } from '../enums/limit.js';
 import { Position } from './position.js';
 import { Rate, RateUtil } from './rate.js';
 
-/** Default exchange type value. */
-const DEFAULT_EXCHANGE = Exchange.BUY;
-
-/** Default limit trade type value. */
-const DEFAULT_LIMIT = Limit.NONE;
-
-/** Default limit price value. */
-const DEFAULT_PRICE = 0;
-
-/** Default ordered quantity value. */
-const DEFAULT_QUANTITY = 1;
-
-/** Default take profit value. */
-const DEFAULT_TAKEPROFIT = Number.NaN;
-
 /** Order model. */
 export class Order extends Model {
     /**
@@ -33,11 +18,11 @@ export class Order extends Model {
      * @param {boolean} preOrder pre-order.
      */
     constructor(
-        exchange = DEFAULT_EXCHANGE,
-        limit = DEFAULT_LIMIT,
-        price = DEFAULT_PRICE,
-        quantity = DEFAULT_QUANTITY,
-        takeProfit = DEFAULT_TAKEPROFIT,
+        exchange = Exchange.BUY,
+        limit = Limit.NONE,
+        price = 0,
+        quantity = 1,
+        takeProfit = Number.NaN,
         preOrder = false) {
         super();
         this._exchange = exchange;
@@ -92,7 +77,7 @@ export class Order extends Model {
             this.importValue('takeProfit', override),
             this.importValue('preOrder', override));
     }
-        
+
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.

@@ -20,6 +20,7 @@ export class Position extends Model {
         quantity = 1,
         exchange = Exchange.BUY,
         takeProfit = Number.NaN) {
+        super();
         this._accountId = accountId;
         this._rate = rate;
         this._quantity = quantity;
@@ -65,6 +66,16 @@ export class Position extends Model {
                 this.importValue('quantity', override),
                 this.importValue('exchange', override),
                 this.importValue('takeProfit', override));
+        return result;
+    }
+
+    /**
+     * Export object data for Mongo.
+     * @return {object} data object.
+     */
+    exportWithoutId() {
+        let result = super.exportWithoutId();
+        result._rate = this.rate.exportWithoutId();
         return result;
     }
 

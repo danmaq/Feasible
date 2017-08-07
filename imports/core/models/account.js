@@ -90,6 +90,17 @@ export class Account extends Model {
     }
 
     /**
+     * Export object data for Mongo.
+     * @return {object} data object.
+     */
+    exportWithoutId() {
+        let result = super.exportWithoutId();
+        result._rate = this.rate.exportWithoutId();
+        result._swap = this.swap.exportWithoutId();
+        return result;
+    }
+
+    /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
      * @return {Account} Account object.
@@ -100,5 +111,4 @@ export class Account extends Model {
 }
 
 /** Extension of Account data. */
-export class AccountUtil {
-}
+export class AccountUtil {}

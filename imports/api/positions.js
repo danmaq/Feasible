@@ -6,50 +6,60 @@ import { check } from 'meteor/check';
 
 import { Accounts } from './accounts.js';
 
-import { Account, AccountUtil } from '../core/models/account.js';
+import { Account } from '../core/models/account.js';
 import { Position } from '../core/models/position.js';
 import { Rate } from '../core/models/rate.js';
 
+/** Positions collection. */
 export const Positions = new Mongo.Collection('positions');
 
+/** get user-ID data. */
+const getUIDData = () => ({ "owner": Meteor.userId() });
+
 if (Meteor.isServer) {
-    Meteor.publish(
-        'positions',
-        () => Positions.find({ "owner": Meteor.userId() }));
+    Meteor.publish('positions', () => Positions.find(getUIDData()));
 }
 
+/** Create record for collection. */
+const createRecord =
+    (position = new Position()) =>
+    ({...position.exportWithoutId(), ...getUIDData() });
+
+/** Check sign-in. */
+const checkSignIn =
+    () => {
+        if (!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
+    };
+
 Meteor.methods({
-    'positions.insert': (accountId, buy, sell, quantity, exchange, takeProfit) => {
+    'positions.insert': (accountId, price, quantity, exchange, takeProfit) => {
         check(accountId, String);
-        check(buy, Number);
-        check(sell, Number);
+        check(price, Number);
         check(quantity, Number);
         check(exchange, Number);
         check(takeProfit, Number);
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
-        const account = AccountUtil.load(Accounts.findOne(accountId));
-        const rate = new Rate(account.pair, buy, sell);
-        const pos = new Position(rate, quantity, exchange, takeProfit);
-        Positions.insert({
-            "body": pos,
-            "accountId": accountId,
-            "owner": Meteor.userId()
-        });
+        checkSignIn();
+        const account = Account.load(Accounts.findOne(accountId));
+        const rate = new Rate(account.pair, price, price);
+        const pos =
+            new Position(
+                accountId, rate, quantity, exchange, takeProfit);
+        Positions.insert(createRecord(pos));
     },
     'positions.remove': positionId => {
         check(positionId, String);
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
+        checkSignIn();
         Positions.remove(positionId);
     },
     'positions.removeByAccount': accountId => {
         check(accountId, String);
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
+        checkSignIn();
         Positions.remove({ "accountId": accountId });
+    },
+    'positions.removeByUser': () => {
+        checkSignIn();
+        Positions.remove(getUIDData());
     },
 });

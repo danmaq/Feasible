@@ -1,7 +1,5 @@
 'use strict'
 
-import { Utils } from '../utils.js';
-
 /** Mongo model data. */
 export class Model {
     /** Key string for Mongo. */
