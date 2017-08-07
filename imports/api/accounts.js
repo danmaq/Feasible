@@ -4,32 +4,17 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
+import { Context } from './context.js';
+
 import { Account } from '../core/models/account.js';
 import { Rate } from '../core/models/rate.js';
 import { Swap } from '../core/models/swap.js';
 
+/** API Context. */
+const ctx = new Context('accounts');
+
 /** Accounts collection. */
-export const Accounts = new Mongo.Collection('accounts');
-
-/** get user-ID data. */
-const getUIDData = () => ({ "owner": Meteor.userId() });
-
-if (Meteor.isServer) {
-    Meteor.publish('accounts', () => Accounts.find(getUIDData()));
-}
-
-/** Create record for collection. */
-const createRecord =
-    (account = new Account()) =>
-    ({...account.exportWithoutId(), ...getUIDData() });
-
-/** Check sign-in. */
-const checkSignIn =
-    () => {
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
-    };
+export const Accounts = ctx.collection;
 
 Meteor.methods({
     "accounts.insert": (pair, swapLong, swapShort, lot, mul, step, martin) => {
@@ -40,26 +25,26 @@ Meteor.methods({
         check(mul, Number);
         check(step, Number);
         check(martin, Number);
-        checkSignIn();
+        Context.checkSignIn();
         const swap = new Swap(swapLong, swapShort);
         const account =
             new Account(pair, new Rate(), swap, lot, mul, step, martin);
-        Accounts.insert(createRecord(account));
+        ctx.insertCollection(account);
     },
     "accounts.remove": accountId => {
         check(accountId, String);
-        checkSignIn();
+        Context.checkSignIn();
         Accounts.remove(accountId);
     },
     "accounts.removeUser": () => {
-        checkSignIn();
+        Context.checkSignIn();
         Accounts.remove(getUIDData());
     },
     "accounts.updateRate": (accountId, ask, bid) => {
         check(accountId, String);
         check(ask, Number);
         check(bid, Number);
-        checkSignIn();
+        Context.checkSignIn();
         const accountRaw = Accounts.findOne(accountId);
         if (!accountRaw) {
             throw new Meteor.Error('unknown-account');
@@ -67,6 +52,6 @@ Meteor.methods({
         const account = Account.load(accountRaw.body);
         const rate = account.rate.clone({ "ask": ask, "bid": bid });
         const cloned = account.clone({ "rate": rate });
-        Accounts.update(accountId, createRecord(cloned));
+        ctx.updateCollection(cloned);
     },
 });

@@ -45,7 +45,7 @@ Meteor.methods({
         const rate = new Rate(account.pair, price, price);
         const pos =
             new Position(
-                accountId, rate, quantity, exchange, takeProfit);
+                account.id, rate, quantity, exchange, takeProfit);
         Positions.insert(createRecord(pos));
     },
     'positions.remove': positionId => {
