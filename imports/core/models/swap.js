@@ -3,12 +3,6 @@
 import { Model } from './model.js';
 import { Exchange } from '../enums/exchange.js';
 
-/** Default long swap value. */
-const DEFAULT_LONG = 0;
-
-/** Default short swap value. */
-const DEFAULT_SHORT = 0;
-
 /** Swap point data. */
 export class Swap extends Model {
     /**
@@ -16,7 +10,7 @@ export class Swap extends Model {
      * @param {number} long Long swap.
      * @param {number} short Short swap.
      */
-    constructor(long = DEFAULT_LONG, short = DEFAULT_SHORT) {
+    constructor(long = 0, short = 0) {
         super();
         this._long = long;
         this._short = short;

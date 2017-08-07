@@ -6,21 +6,6 @@ import { Model } from './model.js';
 import { Rate } from './rate.js';
 import { Swap } from './swap.js';
 
-/** Default currency pair value. */
-const DEFAULT_PAIR = Pair.USDJPY;
-
-/** Default lot unit value. */
-const DEFAULT_LOT = 10000;
-
-/** Default initial multiply rate value. */
-const DEFAULT_MUL = 0.01;
-
-/** Default Step range value of next action. */
-const DEFAULT_STEP = 1.0;
-
-/** Default martingale rate value. */
-const DEFAULT_MARTINGALE = 2;
-
 /** Account data. */
 export class Account extends Model {
     /**
@@ -34,13 +19,13 @@ export class Account extends Model {
      * @param {number} martingale Martingale rate.
      */
     constructor(
-        pair = DEFAULT_PAIR,
+        pair = Pair.USDJPY,
         rate = new Rate(),
         swap = new Swap(),
-        lot = DEFAULT_LOT,
-        mul = DEFAULT_MUL,
-        step = DEFAULT_STEP,
-        martingale = DEFAULT_MARTINGALE) {
+        lot = 10000,
+        mul = 0.01,
+        step = 1.0,
+        martingale = 2) {
         super();
         this._pair = pair;
         this._rate = rate;

@@ -4,15 +4,6 @@ import { Model } from './model.js';
 import { Exchange } from '../enums/exchange.js';
 import { Pair } from '../enums/pair.js';
 
-/** Default currency pair value. */
-const DEFAULT_PAIR = Pair.USDJPY;
-
-/** Default ask point value. */
-const DEFAULT_ASK = 0;
-
-/** Default bid point value. */
-const DEFAULT_BID = 0;
-
 /** Exchange rate data. */
 export class Rate extends Model {
     /**
@@ -23,10 +14,7 @@ export class Rate extends Model {
      * @param {number} bid Bid point.
      */
     constructor(
-        pair = DEFAULT_PAIR,
-        tick = new Date(),
-        ask = DEFAULT_ASK,
-        bid = DEFAULT_BID) {
+        pair = Pair.USDJPY, tick = new Date(), ask = 0, bid = 0) {
         super();
         this._pair = pair;
         this._tick = tick;
@@ -114,5 +102,4 @@ export class RateUtil {
         const stop = RateUtil.stopPoint(to, exchange);
         return (order - stop) * exchange;
     }
-
 }

@@ -4,33 +4,32 @@ import { Model } from './model.js';
 import { Exchange, ExchangeUtil } from '../enums/exchange.js';
 import { Rate, RateUtil } from './rate.js';
 
-/** Default ordered quantity value. */
-const DEFAULT_QUANTITY = 1;
-
-/** Default exchange type value. */
-const DEFAULT_EXCHANGE = Exchange.BUY;
-
-/** Default take profit value. */
-const DEFAULT_TAKEPROFIT = Number.NaN;
-
 /** Position model. */
 export class Position extends Model {
     /**
      * Initialize new object.
+     * @param {string} accountId Key of account.
      * @param {Rate} rate Rate at ordered.
      * @param {number} quantity Ordered quantity.
      * @param {number} exchange Exchange type.
      * @param {number} takeProfit Take profit.
      */
     constructor(
+        accountId = '',
         rate = new Rate(),
-        quantity = DEFAULT_QUANTITY,
-        exchange = DEFAULT_EXCHANGE,
-        takeProfit = DEFAULT_TAKEPROFIT) {
+        quantity = 1,
+        exchange = Exchange.BUY,
+        takeProfit = Number.NaN) {
+        this._accountId = accountId;
         this._rate = rate;
         this._quantity = quantity;
         this._exchange = exchange;
         this._takeProfit = takeProfit;
+    }
+
+    /** Key of account. */
+    get accountId() {
+        return this._accountId;
     }
 
     /** Rate at ordered. */
@@ -61,6 +60,7 @@ export class Position extends Model {
     innerClone(override = {}) {
         const result =
             new Rate(
+                this.importValue('accountId', override),
                 Rate.load(this.importValue('rate', override)),
                 this.importValue('quantity', override),
                 this.importValue('exchange', override),
