@@ -85,12 +85,12 @@ export class Order extends Model {
      */
     innerClone(override = {}) {
         return new Order(
-            Utils.getValue('exchange', override, this.exchange),
-            Utils.getValue('limit', override, this.limit),
-            Utils.getValue('price', override, this.price),
-            Utils.getValue('quantity', override, this.quantity),
-            Utils.getValue('takeProfit', override, this.takeProfit),
-            Utils.getValue('preOrder', override, this.preOrder));
+            this.importValue('exchange', override),
+            this.importValue('limit', override),
+            this.importValue('price', override),
+            this.importValue('quantity', override),
+            this.importValue('takeProfit', override),
+            this.importValue('preOrder', override));
     }
 }
 

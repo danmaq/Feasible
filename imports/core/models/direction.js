@@ -64,11 +64,11 @@ export class Direction extends Model {
     innerClone(override = {}) {
         const result =
             new Direction(
-                Utils.getValue('operation', override, this.operation),
-                Utils.getValue('positionId', override, this.positionId),
-                PositionUtil.load(Utils.getValue('position', override, this.position)),
-                Utils.getValue('orderId', override, this.orderId),
-                OrderUtil.load(Utils.getValue('order', override, this.order)));
+                this.importValue('operation', override),
+                this.importValue('positionId', override),
+                PositionUtil.load(this.importValue('position', override)),
+                this.importValue('orderId', override),
+                OrderUtil.load(this.importValue('order', override)));
         return result;
     }
 }

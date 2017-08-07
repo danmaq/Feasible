@@ -1,8 +1,8 @@
 'use strict';
 
+import { Model } from './model.js';
 import { Exchange, ExchangeUtil } from '../enums/exchange.js';
 import { Rate, RateUtil } from './rate.js';
-import { Utils } from '../utils.js';
 
 /** Default ordered quantity value. */
 const DEFAULT_QUANTITY = 1;
@@ -14,7 +14,7 @@ const DEFAULT_EXCHANGE = Exchange.BUY;
 const DEFAULT_TAKEPROFIT = Number.NaN;
 
 /** Position model. */
-export class Position {
+export class Position extends Model {
     /**
      * Initialize new object.
      * @param {Rate} rate Rate at ordered.
@@ -58,12 +58,14 @@ export class Position {
      * @param {object} override Override object.
      * @return {Position} Position object.
      */
-    clone(override = {}) {
-        return new Rate(
-            RateUtil.load(Utils.getValue('rate', override, this.rate)),
-            Utils.getValue('quantity', override, this.quantity),
-            Utils.getValue('exchange', override, this.exchange),
-            Utils.getValue('takeProfit', override, this.takeProfit));
+    innerClone(override = {}) {
+        const result =
+            new Rate(
+                RateUtil.load(this.importValue('rate', override)),
+                this.importValue('quantity', override),
+                this.importValue('exchange', override),
+                this.importValue('takeProfit', override));
+        return result;
     }
 }
 

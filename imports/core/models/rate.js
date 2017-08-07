@@ -59,7 +59,7 @@ export class Rate extends Model {
      * @param {object} override Override object.
      * @return {Rate} Rate object.
      */
-    clone(override = {}) {
+    innerClone(override = {}) {
         const result =
             new Rate(
                 this.importValue('pair', override),
