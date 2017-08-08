@@ -14,7 +14,7 @@ export class Context {
     constructor(collectionName = '') {
         this._collection = new Mongo.Collection(collectionName);
         if (Meteor.isServer) {
-            const getAll = () => this.collection.find(uidData());
+            const getAll = () => this.collection.find(Context.uidData());
             Meteor.publish(collectionName, getAll);
         }
     }

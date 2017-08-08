@@ -8,6 +8,8 @@ import { Accounts } from '../../api/accounts.js';
 import { PairUtil } from '../../core/enums/pair.js';
 import { Account } from '../../core/models/account.js';
 
+import formUtil from '../formUtil.js';
+
 import './accounts.html';
 import './account.js';
 
@@ -28,6 +30,20 @@ Template.accounts.events({
     "submit #fe-add-account": event => {
         event.preventDefault();
         const target = event.target;
+        const params =
+            formUtil.parse(
+                event.target,
+                {
+                    "pair": formUtil.types.int,
+                    "swap-long": formUtil.types.float,
+                    "swap-short": formUtil.types.float,
+                    "lot": formUtil.types.int,
+                    "mul": formUtil.types.float,
+                    "step": formUtil.types.float,
+                    "martingale": formUtil.types.float,
+                });
+        console.log(params);
+        return;
         Meteor.call(
             'accounts.insert',
             Number.parseInt(target['pair'].value),
