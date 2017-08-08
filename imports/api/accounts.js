@@ -17,18 +17,27 @@ const ctx = new Context('accounts');
 export const Accounts = ctx.collection;
 
 Meteor.methods({
-    "accounts.insert": (pair, swapLong, swapShort, lot, mul, step, martin) => {
+    "accounts.insert": ({
+        pair,
+        "swap-long": swapLong,
+        "swap-short": swapShort,
+        lot,
+        mul,
+        step,
+        martingale,
+    }) => {
         check(pair, Number);
         check(swapLong, Number);
         check(swapShort, Number);
         check(lot, Number);
         check(mul, Number);
         check(step, Number);
-        check(martin, Number);
+        check(martingale, Number);
         Context.checkSignIn();
         const swap = new Swap(swapLong, swapShort);
         const account =
-            new Account(pair, new Rate(), swap, lot, mul, step, martin);
+            new Account(
+                pair, new Rate(), swap, lot, mul, step, martingale);
         ctx.insertCollection(account);
     },
     "accounts.remove": accountId => {

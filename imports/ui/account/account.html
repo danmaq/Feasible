@@ -3,7 +3,7 @@
         <h4>
             <button type="button" class="btn btn-default fe-delete" title="remove"><i class="fa fa-trash"></i></button>
             <button type="button" class="btn btn-default fe-modify" disabled="disabled" title="Not implemented yet."><i class="fa fa-pencil-square-o"></i></button>
-            <a href="/account/{{_id}}"><strong>{{strPair}}</strong> {{body._rate._ask}} {{body._rate._bid}} (long/short: {{body._swap._long}}/{{body._swap._short}}) Step: {{body._step}}, Lot: {{body._lot}}x{{body._mul}}, Martingale: x{{body._martingale}}</a>
+            <a href="/account/{{_id}}"><strong>{{strPair}}</strong> {{_rate._ask}} {{_rate._bid}} (long/short: {{_swap._long}}/{{_swap._short}}) Step: {{_step}}, Lot: {{_lot}}x{{_mul}}, Martingale: x{{_martingale}}</a>
         </h4>
     </li>
 </template>

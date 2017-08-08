@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { PairUtil } from '../../core/enums/pair.js';
-import { Account, AccountUtil } from '../../core/models/account.js';
+import { Account } from '../../core/models/account.js';
 
 import './account.html';
 
@@ -12,10 +12,10 @@ import './account.html';
 const getData = () => Template.instance().data;
 
 /** Get Account data from template data. */
-const getAccount = () => AccountUtil.load(getData().body);
+const getAccount = () => Account.load(getData());
 
 Template.account.helpers({
-    "strPair": () => AccountUtil.getStrPair(getAccount()),
+    "strPair": () => PairUtil.toStr(getAccount().pair),
 });
 
 Template.account.events({

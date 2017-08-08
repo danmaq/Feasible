@@ -31,7 +31,7 @@ export class Context {
      * @return {object} Inserted object.
      */
     insertCollection(model = new Model(), additional = {}) {
-        const recorsd = {...Context.recordData(model), ...additional };
+        const record = {...Context.recordData(model), ...additional };
         this.collection.insert(record);
         return record;
     }

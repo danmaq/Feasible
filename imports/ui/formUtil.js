@@ -1,21 +1,23 @@
 'use strict';
 
-export const types =
+/** Object list of parser by type string key. */
+export const to =
     Object.freeze({
         "int": Number.parseInt,
         "float": Number.parseFloat,
         "string": (x = '') => x,
     });
 
+/**
+ * Parse inputed form.
+ * @param {object} target Event target.
+ * @param {object} params Params object list.
+ * @return {object} Parsed object.
+ */
 export const parse =
     (target, params = {}) => {
-        const keys = Object.keys(params);
-        const map =
-            (k = '') => ({ "key": k, "value": params[k](target[k].value)});
-        let result = {};
-        for (let item of keys.map(map))
-        {
-            result[item.key] = item.value;
-        }
-        return result;
+        const map = (key = '') => ({
+            [key]: params[key](target[key].value)
+        });
+        return Object.assign({}, ...Object.keys(params).map(map));
     };

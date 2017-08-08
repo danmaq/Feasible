@@ -29,29 +29,17 @@ Template.accounts.helpers({
 Template.accounts.events({
     "submit #fe-add-account": event => {
         event.preventDefault();
-        const target = event.target;
         const params =
             formUtil.parse(
-                event.target,
-                {
-                    "pair": formUtil.types.int,
-                    "swap-long": formUtil.types.float,
-                    "swap-short": formUtil.types.float,
-                    "lot": formUtil.types.int,
-                    "mul": formUtil.types.float,
-                    "step": formUtil.types.float,
-                    "martingale": formUtil.types.float,
+                event.target, {
+                    "pair": formUtil.to.int,
+                    "swap-long": formUtil.to.float,
+                    "swap-short": formUtil.to.float,
+                    "lot": formUtil.to.int,
+                    "mul": formUtil.to.float,
+                    "step": formUtil.to.float,
+                    "martingale": formUtil.to.float,
                 });
-        console.log(params);
-        return;
-        Meteor.call(
-            'accounts.insert',
-            Number.parseInt(target['pair'].value),
-            Number.parseFloat(target['swap-long'].value),
-            Number.parseFloat(target['swap-short'].value),
-            Number.parseInt(target['lot'].value),
-            Number.parseFloat(target['mul'].value),
-            Number.parseFloat(target['step'].value),
-            Number.parseFloat(target['martingale'].value));
+        Meteor.call('accounts.insert', params);
     },
 });
