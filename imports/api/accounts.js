@@ -38,7 +38,7 @@ Meteor.methods({
     },
     "accounts.removeUser": () => {
         Context.checkSignIn();
-        Accounts.remove(getUIDData());
+        Accounts.remove(Context.uidData());
     },
     "accounts.updateRate": (accountId, ask, bid) => {
         check(accountId, String);

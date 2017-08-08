@@ -4,34 +4,18 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
+import { Context } from './context.js';
 import { Accounts } from './accounts.js';
 
 import { Account } from '../core/models/account.js';
 import { Position } from '../core/models/position.js';
 import { Rate } from '../core/models/rate.js';
 
+/** API Context. */
+const ctx = new Context('positions');
+
 /** Positions collection. */
-export const Positions = new Mongo.Collection('positions');
-
-/** get user-ID data. */
-const getUIDData = () => ({ "owner": Meteor.userId() });
-
-if (Meteor.isServer) {
-    Meteor.publish('positions', () => Positions.find(getUIDData()));
-}
-
-/** Create record for collection. */
-const createRecord =
-    (position = new Position()) =>
-    ({...position.exportWithoutId(), ...getUIDData() });
-
-/** Check sign-in. */
-const checkSignIn =
-    () => {
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
-    };
+export const Positions = ctx.collection;
 
 Meteor.methods({
     'positions.insert': (accountId, price, quantity, exchange, takeProfit) => {
@@ -40,26 +24,26 @@ Meteor.methods({
         check(quantity, Number);
         check(exchange, Number);
         check(takeProfit, Number);
-        checkSignIn();
+        Context.checkSignIn();
         const account = Account.load(Accounts.findOne(accountId));
         const rate = new Rate(account.pair, price, price);
-        const pos =
+        const position =
             new Position(
                 account.id, rate, quantity, exchange, takeProfit);
-        Positions.insert(createRecord(pos));
+        ctx.insertCollection(position);
     },
     'positions.remove': positionId => {
         check(positionId, String);
-        checkSignIn();
+        Context.checkSignIn();
         Positions.remove(positionId);
     },
     'positions.removeByAccount': accountId => {
         check(accountId, String);
-        checkSignIn();
+        Context.checkSignIn();
         Positions.remove({ "accountId": accountId });
     },
     'positions.removeByUser': () => {
-        checkSignIn();
-        Positions.remove(getUIDData());
+        Context.checkSignIn();
+        Positions.remove(Context.uidData());
     },
 });
