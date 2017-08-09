@@ -14,6 +14,9 @@ import './detail.html';
 import '../direction/directions.js';
 import '../position/positions.js';
 
+/** Convert function: String to Number. */
+const TO_FLOAT = formUtil.to.float;
+
 /** Cached account data. */
 let account = null;
 
@@ -52,10 +55,11 @@ Template.accountDetail.events({
     },
     "submit #fe-mod-account-rate": event => {
         event.preventDefault();
-        const target = event.target;
-        const ask = Number.parseFloat(target['ask'].value);
-        const bid = Number.parseFloat(target['bid'].value);
-        Meteor.call('directions.flush', accountId());
-        Meteor.call('accounts.updateRate', accountId(), ask, bid);
+        const params =
+            formUtil.parse(
+                event.target, { "ask": TO_FLOAT, "bid": TO_FLOAT });
+        Meteor.call(
+            'accounts.updateRate',
+            { "accountId": accountId(), ...params });
     },
 });

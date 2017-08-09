@@ -49,7 +49,7 @@ Meteor.methods({
         Context.checkSignIn();
         Accounts.remove(Context.uidData());
     },
-    "accounts.updateRate": (accountId, ask, bid) => {
+    "accounts.updateRate": ({accountId, ask, bid}) => {
         check(accountId, String);
         check(ask, Number);
         check(bid, Number);
