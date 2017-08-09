@@ -58,7 +58,7 @@ Meteor.methods({
         if (!accountRaw) {
             throw new Meteor.Error('unknown-account');
         }
-        const account = Account.load(accountRaw.body);
+        const account = Account.load(accountRaw);
         const rate = account.rate.clone({ "ask": ask, "bid": bid });
         const cloned = account.clone({ "rate": rate });
         ctx.updateCollection(cloned);

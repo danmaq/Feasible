@@ -18,7 +18,8 @@ const ctx = new Context('positions');
 export const Positions = ctx.collection;
 
 Meteor.methods({
-    'positions.insert': (accountId, price, quantity, exchange, takeProfit) => {
+    'positions.insert': ({
+        accountId, price, quantity, exchange, takeProfit}) => {
         check(accountId, String);
         check(price, Number);
         check(quantity, Number);

@@ -43,7 +43,7 @@ export class Context {
      * @return {object} Inserted object.
      */
     updateCollection(model = new Model(), additional = {}) {
-        const recorsd = {...Context.recordData(model), ...additional };
+        const record = {...Context.recordData(model), ...additional };
         this.collection.update(model.id, record);
         return record;
     }
