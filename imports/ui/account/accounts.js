@@ -16,6 +16,12 @@ import './account.js';
 /** Default account instance. */
 const DEFAULT_ACCOUNT = new Account();
 
+/** Convert function: String to Number. */
+const TO_FLOAT = formUtil.to.float;
+
+/** Convert function: String to integer (number). */
+const TO_INT = formUtil.to.int;
+
 Template.accounts.onCreated(() => Meteor.subscribe('accounts'));
 Template.accounts.helpers({
     "accounts": () => Accounts.find({}, { "sort": { "sortBy": 1 } }),
@@ -32,13 +38,13 @@ Template.accounts.events({
         const params =
             formUtil.parse(
                 event.target, {
-                    "pair": formUtil.to.int,
-                    "swap-long": formUtil.to.float,
-                    "swap-short": formUtil.to.float,
-                    "lot": formUtil.to.int,
-                    "mul": formUtil.to.float,
-                    "step": formUtil.to.float,
-                    "martingale": formUtil.to.float,
+                    "pair": TO_INT,
+                    "swap-long": TO_FLOAT,
+                    "swap-short": TO_FLOAT,
+                    "lot": TO_INT,
+                    "mul": TO_FLOAT,
+                    "step": TO_FLOAT,
+                    "martingale": TO_FLOAT,
                 });
         Meteor.call('accounts.insert', params);
     },

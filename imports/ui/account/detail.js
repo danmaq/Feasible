@@ -8,6 +8,8 @@ import { Accounts } from '../../api/accounts.js';
 import { PairUtil } from '../../core/enums/pair.js';
 import { Account } from '../../core/models/account.js';
 
+import formUtil from '../formUtil.js';
+
 import './detail.html';
 import '../direction/directions.js';
 import '../position/positions.js';
