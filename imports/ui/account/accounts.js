@@ -26,6 +26,7 @@ Template.accounts.onCreated(() => Meteor.subscribe('accounts'));
 Template.accounts.helpers({
     "accounts": () => Accounts.find({}, { "sort": { "sortBy": 1 } }),
     "accountLength": () => Accounts.find().count(),
+    "column": DEFAULT_ACCOUNT.column,
     "lot": DEFAULT_ACCOUNT.lot,
     "multiply": DEFAULT_ACCOUNT.mul,
     "step": DEFAULT_ACCOUNT.step,

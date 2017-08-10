@@ -12,6 +12,7 @@ export class Account extends IdModel {
     constructor({pair = Pair.USDJPY,
         rate = new Rate(),
         swap = new Swap(),
+        column = 3,
         lot = 10000,
         multiply = 0.01,
         step = 1.0,
@@ -21,6 +22,7 @@ export class Account extends IdModel {
         this._pair = pair;
         this._rate = rate;
         this._swap = swap;
+        this._column = column;
         this._lot = lot;
         this._multiply = multiply;
         this._step = step;
@@ -40,6 +42,11 @@ export class Account extends IdModel {
     /** Swap point. */
     get swap() {
         return this._swap;
+    }
+
+    /** Column of pips. */
+    get column() {
+        return this._column;
     }
 
     /** Lot unit. */
@@ -73,6 +80,7 @@ export class Account extends IdModel {
                 "pair": this.importValue('pair', override),
                 "rate": Rate.load(this.importValue('rate', override)),
                 "swap": Swap.load(this.importValue('swap', override)),
+                "column": this.importValue('column', override),
                 "lot": this.importValue('lot', override),
                 "multiply": this.importValue('multiply', override),
                 "step": this.importValue('step', override),
