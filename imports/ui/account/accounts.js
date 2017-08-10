@@ -24,13 +24,9 @@ const TO_INT = formUtil.to.int;
 
 Template.accounts.onCreated(() => Meteor.subscribe('accounts'));
 Template.accounts.helpers({
+    "defaultAccount": DEFAULT_ACCOUNT,
     "accounts": () => Accounts.find({}, { "sort": { "sortBy": 1 } }),
     "accountLength": () => Accounts.find().count(),
-    "column": DEFAULT_ACCOUNT.column,
-    "lot": DEFAULT_ACCOUNT.lot,
-    "multiply": DEFAULT_ACCOUNT.mul,
-    "step": DEFAULT_ACCOUNT.step,
-    "martingale": DEFAULT_ACCOUNT.martingale,
     "pairs": Array.from(PairUtil.iterkv()),
 });
 Template.accounts.events({
@@ -42,6 +38,7 @@ Template.accounts.events({
                     "pair": TO_INT,
                     "swap-long": TO_FLOAT,
                     "swap-short": TO_FLOAT,
+                    "column": TO_INT,
                     "lot": TO_INT,
                     "mul": TO_FLOAT,
                     "step": TO_FLOAT,

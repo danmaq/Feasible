@@ -1,0 +1,13 @@
+<template name="accountModify">
+    {{> nav}}
+    <section class="container">
+        <h2>Modify <em>{{strPair}}</em> Account</h2>
+        <form id="fe-modify">
+            <ul class="list-group">
+                {{> accountForm defaultAccount=defaultAccount}}
+                <li class="list-group-item"><button class="btn btn-primary">Modify and back</button><button type="button" class="btn btn-default fe-cancel">Cancel and back</button></li>
+            </ul>
+        </form>
+    </section>
+    {{> footer}}
+</template>

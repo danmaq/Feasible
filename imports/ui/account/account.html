@@ -1,8 +1,8 @@
 <template name="account">
     <li class="list-group-item">
         <h4>
-            <button type="button" class="btn btn-default fe-delete" title="remove"><i class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-default fe-modify" disabled="disabled" title="Not implemented yet."><i class="fa fa-pencil-square-o"></i></button>
+            <button type="button" class="btn btn-danger fe-delete" title="remove"><i class="fa fa-trash"></i></button>
+            <a class="btn btn-default fe-modify" role="button" href="/account/{{_id}}/modify" title="modify"><i class="fa fa-pencil-square-o" data-toggle="modal" data-target="#fe-modify-account"></i></a>
             <a href="/account/{{_id}}"><strong>{{strPair}}</strong> {{_rate._ask}} {{_rate._bid}} (long/short: {{_swap._long}}/{{_swap._short}}) Step: {{_step}}, Lot: {{_lot}}x{{_multiply}}, Martingale: x{{_martingale}}</a>
         </h4>
     </li>

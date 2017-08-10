@@ -6,6 +6,8 @@ import { Template } from 'meteor/templating';
 import { PairUtil } from '../../core/enums/pair.js';
 import { Account } from '../../core/models/account.js';
 
+import { Accounts } from '../../api/accounts.js';
+
 import './account.html';
 
 /** Get template data. */
@@ -24,8 +26,5 @@ Template.account.events({
         const data = getData();
         Meteor.call('positions.removeByAccount', data._id);
         Meteor.call('accounts.remove', data._id);
-    },
-    "click .fe-modify": event => {
-        event.preventDefault();
     },
 });

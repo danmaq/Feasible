@@ -21,6 +21,7 @@ Meteor.methods({
         pair,
         "swap-long": swapLong,
         "swap-short": swapShort,
+        column,
         lot,
         mul,
         step,
@@ -29,6 +30,7 @@ Meteor.methods({
         check(pair, Number);
         check(swapLong, Number);
         check(swapShort, Number);
+        check(column, Number);
         check(lot, Number);
         check(mul, Number);
         check(step, Number);
@@ -40,12 +42,50 @@ Meteor.methods({
                 "pair": pair,
                 "rate": new Rate(),
                 "swap": swap,
+                "column": column,
                 "lot": lot,
                 "multiply": mul,
                 "step": step,
                 "martingale": martingale
             });
         ctx.insertCollection(account);
+    },
+    "accounts.update": ({
+        accountId,
+        "swap-long": swapLong,
+        "swap-short": swapShort,
+        column,
+        lot,
+        mul,
+        step,
+        martingale,
+    }) => {
+        check(accountId, String);
+        check(swapLong, Number);
+        check(swapShort, Number);
+        check(column, Number);
+        check(lot, Number);
+        check(mul, Number);
+        check(step, Number);
+        check(martingale, Number);
+        Context.checkSignIn();
+        const accountRaw = Accounts.findOne(accountId);
+        if (!accountRaw) {
+            throw new Meteor.Error('unknown-account');
+        }
+        const account = Account.load(accountRaw);
+        const swap =
+            account.swap.clone({ "long": swapLong, "short": swapShort });
+        const cloned =
+            account.clone({
+                "swap": swap,
+                "column": column,
+                "lot": lot,
+                "multiply": mul,
+                "step": step,
+                "martingale": martingale
+            });
+        ctx.updateCollection(cloned);
     },
     "accounts.remove": accountId => {
         check(accountId, String);
