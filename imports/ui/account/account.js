@@ -23,7 +23,6 @@ Template.account.events({
         event.preventDefault();
         const data = getData();
         Meteor.call('positions.removeByAccount', data._id);
-        Meteor.call('directions.flush', data._id);
         Meteor.call('accounts.remove', data._id);
     },
     "click .fe-modify": event => {

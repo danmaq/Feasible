@@ -5,12 +5,8 @@ import { Exchange } from '../enums/exchange.js';
 
 /** Swap point data. */
 export class Swap extends Model {
-    /**
-     * Initialize new object.
-     * @param {number} long Long swap.
-     * @param {number} short Short swap.
-     */
-    constructor(long = 0, short = 0) {
+    /** Initialize new object. */
+    constructor({ long = 0, short = 0 } = {}) {
         super();
         this._long = long;
         this._short = short;
@@ -33,9 +29,10 @@ export class Swap extends Model {
      */
     innerClone(override = {}) {
         const result =
-            new Swap(
-                this.importValue('long', override),
-                this.importValue('short', override));
+            new Swap({
+                "long": this.importValue('long', override),
+                "short": this.importValue('short', override)
+            });
         return result;
     }
 

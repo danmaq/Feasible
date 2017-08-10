@@ -34,7 +34,7 @@ Meteor.methods({
         check(step, Number);
         check(martingale, Number);
         Context.checkSignIn();
-        const swap = new Swap(swapLong, swapShort);
+        const swap = new Swap({ "long": swapLong, "short": swapShort });
         const account =
             new Account(
                 pair, new Rate(), swap, lot, mul, step, martingale);
