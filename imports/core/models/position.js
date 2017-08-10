@@ -1,7 +1,7 @@
 'use strict';
 
 import { IdModel } from './idModel.js';
-import { Exchange, ExchangeUtil } from '../enums/exchange.js';
+import { Exchange } from '../enums/exchange.js';
 import { Rate, RateUtil } from './rate.js';
 
 /** Position model. */
@@ -60,7 +60,7 @@ export class Position extends IdModel {
      */
     innerClone(override = {}) {
         const result =
-            new Rate(
+            new Position(
                 this.importValue('accountId', override),
                 Rate.load(this.importValue('rate', override)),
                 this.importValue('quantity', override),
@@ -91,15 +91,6 @@ export class Position extends IdModel {
 
 /** Extension of Position model. */
 export class PositionUtil {
-    /**
-     * Get stringed exchange type.
-     * @param {Position} source Source object.
-     * @return {string} Stringed exchange type.
-     */
-    static strExchange(source = new Position()) {
-        return ExchangeUtil.toStr(source.exchange);
-    }
-
     /**
      * Get gain point.
      * @param {Position} source Source object.

@@ -27,7 +27,9 @@ Meteor.methods({
         check(takeProfit, Number);
         Context.checkSignIn();
         const account = Account.load(Accounts.findOne(accountId));
-        const rate = new Rate(account.pair, price, price);
+        const rate =
+            new Rate({
+                "pair": account.pair, "ask": price, "bid": price});
         const position =
             new Position(
                 account.id, rate, quantity, exchange, takeProfit);

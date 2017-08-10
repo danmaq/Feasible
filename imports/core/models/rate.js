@@ -6,15 +6,14 @@ import { Pair } from '../enums/pair.js';
 
 /** Exchange rate data. */
 export class Rate extends IdModel {
-    /**
-     * Initialize new object.
-     * @param {number} pair Currency pair.
-     * @param {Date} tick Timestamp.
-     * @param {number} ask Ask point.
-     * @param {number} bid Bid point.
-     */
+    /** Initialize new object. */
     constructor(
-        pair = Pair.USDJPY, tick = new Date(), ask = 0, bid = 0) {
+        {
+            pair = Pair.USDJPY,
+            tick = new Date(),
+            ask = 0,
+            bid = 0
+        } = {}) {
         super();
         this._pair = pair;
         this._tick = tick;
@@ -50,10 +49,12 @@ export class Rate extends IdModel {
     innerClone(override = {}) {
         const result =
             new Rate(
-                this.importValue('pair', override),
-                this.importValue('tick', override),
-                this.importValue('ask', override),
-                this.importValue('bid', override));
+                {
+                    "pair": this.importValue('pair', override),
+                    "tick": this.importValue('tick', override),
+                    "ask": this.importValue('ask', override),
+                    "bid": this.importValue('bid', override)
+                });
         return result;
     }
 
