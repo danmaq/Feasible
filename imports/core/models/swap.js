@@ -1,22 +1,13 @@
 'use strict';
 
-import { Exchange } from '../enums/exchange.js'
-import { Utils } from '../utils.js'
-
-/** Default long swap value. */
-const DEFAULT_LONG = 0;
-
-/** Default short swap value. */
-const DEFAULT_SHORT = 0;
+import { Model } from './model.js';
+import { Exchange } from '../enums/exchange.js';
 
 /** Swap point data. */
-export class Swap {
-    /**
-     * Initialize new object.
-     * @param {number} long Long swap.
-     * @param {number} short Short swap.
-     */
-    constructor(long = DEFAULT_LONG, short = DEFAULT_SHORT) {
+export class Swap extends Model {
+    /** Initialize new object. */
+    constructor({ long = 0, short = 0 } = {}) {
+        super();
         this._long = long;
         this._short = short;
     }
@@ -36,15 +27,15 @@ export class Swap {
      * @param {object} override Override object.
      * @return {Swap} Swap object.
      */
-    clone(override = {}) {
-        return new Swap(
-            Utils.getValue('long', override, this.long),
-            Utils.getValue('short', override, this.short));
+    innerClone(override = {}) {
+        const result =
+            new Swap({
+                "long": this.importValue('long', override),
+                "short": this.importValue('short', override)
+            });
+        return result;
     }
-}
 
-/** Extension of Swap point data. */
-export class SwapUtil {
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -53,7 +44,10 @@ export class SwapUtil {
     static load(raw = {}) {
         return new Swap().clone(raw);
     }
+}
 
+/** Extension of Swap point data. */
+export class SwapUtil {
     /**
      * Get swap point.
      * @param {Swap} source Source object.

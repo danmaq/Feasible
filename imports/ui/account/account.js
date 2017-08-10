@@ -4,7 +4,9 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { PairUtil } from '../../core/enums/pair.js';
-import { Account, AccountUtil } from '../../core/models/account.js';
+import { Account } from '../../core/models/account.js';
+
+import { Accounts } from '../../api/accounts.js';
 
 import './account.html';
 
@@ -12,10 +14,10 @@ import './account.html';
 const getData = () => Template.instance().data;
 
 /** Get Account data from template data. */
-const getAccount = () => AccountUtil.load(getData().body);
+const getAccount = () => Account.load(getData());
 
 Template.account.helpers({
-    "strPair": () => AccountUtil.getStrPair(getAccount()),
+    "strPair": () => PairUtil.toStr(getAccount().pair),
 });
 
 Template.account.events({
@@ -24,8 +26,5 @@ Template.account.events({
         const data = getData();
         Meteor.call('positions.removeByAccount', data._id);
         Meteor.call('accounts.remove', data._id);
-    },
-    "click .fe-modify": event => {
-        event.preventDefault();
     },
 });

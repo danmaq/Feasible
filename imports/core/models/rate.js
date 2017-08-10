@@ -1,32 +1,19 @@
 'use strict';
 
-import { Exchange } from '../enums/exchange.js'
-import { Pair } from '../enums/pair.js'
-import { Utils } from '../utils.js'
-
-/** Default currency pair value. */
-const DEFAULT_PAIR = Pair.USDJPY;
-
-/** Default ask point value. */
-const DEFAULT_ASK = 0;
-
-/** Default bid point value. */
-const DEFAULT_BID = 0;
+import { IdModel } from './idModel.js';
+import { Exchange } from '../enums/exchange.js';
+import { Pair } from '../enums/pair.js';
 
 /** Exchange rate data. */
-export class Rate {
-    /**
-     * Initialize new object.
-     * @param {number} pair Currency pair.
-     * @param {Date} tick Timestamp.
-     * @param {number} ask Ask point.
-     * @param {number} bid Bid point.
-     */
-    constructor(
-        pair = DEFAULT_PAIR,
+export class Rate extends IdModel {
+    /** Initialize new object. */
+    constructor({
+        pair = Pair.USDJPY,
         tick = new Date(),
-        ask = DEFAULT_ASK,
-        bid = DEFAULT_BID) {
+        ask = 0,
+        bid = 0
+    } = {}) {
+        super();
         this._pair = pair;
         this._tick = tick;
         this._ask = ask;
@@ -58,17 +45,18 @@ export class Rate {
      * @param {object} override Override object.
      * @return {Rate} Rate object.
      */
-    clone(override = {}) {
-        return new Rate(
-            Utils.getValue('pair', override, this.pair),
-            Utils.getValue('tick', override, this.tick),
-            Utils.getValue('ask', override, this.ask),
-            Utils.getValue('bid', override, this.bid));
+    innerClone(override = {}) {
+        const result =
+            new Rate(
+                {
+                    "pair": this.importValue('pair', override),
+                    "tick": this.importValue('tick', override),
+                    "ask": this.importValue('ask', override),
+                    "bid": this.importValue('bid', override)
+                });
+        return result;
     }
-}
 
-/** Extension of Exchange rate data. */
-export class RateUtil {
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -77,7 +65,10 @@ export class RateUtil {
     static load(raw = {}) {
         return new Rate().clone(raw);
     }
+}
 
+/** Extension of Exchange rate data. */
+export class RateUtil {
     /**
      * Get point by exchange type.
      * @param {Rate} source Current rate.
@@ -111,5 +102,4 @@ export class RateUtil {
         const stop = RateUtil.stopPoint(to, exchange);
         return (order - stop) * exchange;
     }
-
 }

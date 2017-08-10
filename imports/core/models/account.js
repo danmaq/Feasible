@@ -1,50 +1,30 @@
 'use strict';
 
-import { Swap, SwapUtil } from './swap.js'
-import { Rate, RateUtil } from './rate.js'
-import { Pair, PairUtil } from '../enums/pair.js'
-import { Utils } from '../utils.js'
+import { Pair, PairUtil } from '../enums/pair.js';
 
-/** Default currency pair value. */
-const DEFAULT_PAIR = Pair.USDJPY;
-
-/** Default lot unit value. */
-const DEFAULT_LOT = 10000;
-
-/** Default initial multiply rate value. */
-const DEFAULT_MUL = 0.01;
-
-/** Default Step range value of next action. */
-const DEFAULT_STEP = 1.0;
-
-/** Default martingale rate value. */
-const DEFAULT_MARTINGALE = 2;
+import { IdModel } from './idModel.js';
+import { Rate } from './rate.js';
+import { Swap } from './swap.js';
 
 /** Account data. */
-export class Account {
-    /**
-     * Initialize new object.
-     * @param {number} pair Currency pair (see Pair module)
-     * @param {Rate} rate Exchange rate data.
-     * @param {Swap} swap Swap point to exchange.
-     * @param {number} lot Lot unit.
-     * @param {number} mul Initial multiply rate.
-     * @param {number} step Step range of next action.
-     * @param {number} martingale Martingale rate.
-     */
-    constructor(
-        pair = DEFAULT_PAIR,
+export class Account extends IdModel {
+    /** Initialize new object. */
+    constructor({pair = Pair.USDJPY,
         rate = new Rate(),
         swap = new Swap(),
-        lot = DEFAULT_LOT,
-        mul = DEFAULT_MUL,
-        step = DEFAULT_STEP,
-        martingale = DEFAULT_MARTINGALE) {
+        column = 3,
+        lot = 10000,
+        multiply = 0.01,
+        step = 1.0,
+        martingale = 2
+    } = {}) {
+        super();
         this._pair = pair;
         this._rate = rate;
         this._swap = swap;
+        this._column = column;
         this._lot = lot;
-        this._mul = mul;
+        this._multiply = multiply;
         this._step = step;
         this._martingale = martingale;
     }
@@ -64,14 +44,19 @@ export class Account {
         return this._swap;
     }
 
+    /** Column of pips. */
+    get column() {
+        return this._column;
+    }
+
     /** Lot unit. */
     get lot() {
         return this._lot;
     }
 
     /** Initial multiply rate. */
-    get mul() {
-        return this._mul;
+    get multiply() {
+        return this._multiply;
     }
 
     /** Step range of next action (PIPS). */
@@ -89,20 +74,31 @@ export class Account {
      * @param {object} override Override object.
      * @return {Account} Account object.
      */
-    clone(override = {}) {
-        return new Account(
-            Utils.getValue('pair', override, this.pair),
-            RateUtil.load(Utils.getValue('rate', override, this.rate)),
-            SwapUtil.load(Utils.getValue('swap', override, this.swap)),
-            Utils.getValue('lot', override, this.lot),
-            Utils.getValue('mul', override, this.mul),
-            Utils.getValue('step', override, this.step),
-            Utils.getValue('martingale', override, this.martingale));
+    innerClone(override = {}) {
+        const result =
+            new Account({
+                "pair": this.importValue('pair', override),
+                "rate": Rate.load(this.importValue('rate', override)),
+                "swap": Swap.load(this.importValue('swap', override)),
+                "column": this.importValue('column', override),
+                "lot": this.importValue('lot', override),
+                "multiply": this.importValue('multiply', override),
+                "step": this.importValue('step', override),
+                "martingale": this.importValue('martingale', override)
+            });
+        return result;
     }
-}
 
-/** Extension of Account data. */
-export class AccountUtil {
+    /**
+     * Export object data for Mongo.
+     * @return {object} data object.
+     */
+    exportWithoutId() {
+        let result = super.exportWithoutId();
+        result._rate = this.rate.exportWithoutId();
+        return result;
+    }
+
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -111,9 +107,7 @@ export class AccountUtil {
     static load(raw = {}) {
         return new Account().clone(raw);
     }
-
-    /** Get stringed currency pair. */
-    static getStrPair(account = new Account()) {
-        return PairUtil.toStr(account.pair);
-    }
 }
+
+/** Extension of Account data. */
+export class AccountUtil {}

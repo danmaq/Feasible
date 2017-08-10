@@ -6,44 +6,43 @@ import { Template } from 'meteor/templating';
 import { Accounts } from '../../api/accounts.js';
 
 import { PairUtil } from '../../core/enums/pair.js';
-import { Account, AccountUtil } from '../../core/models/account.js';
+import { Account } from '../../core/models/account.js';
+
+import formUtil from '../formUtil.js';
 
 import './detail.html';
-import '../position/positions.js'
+import '../direction/directions.js';
+import '../position/positions.js';
+
+/** Convert function: String to Number. */
+const TO_FLOAT = formUtil.to.float;
 
 /** Cached account data. */
-let account = new Account();
-account = null;
+let account = null;
 
 /** Get account-id from router. */
-const getAccountId = () => FlowRouter.getParam('accountId');
-
-/** Get account raw data using id from router. */
-const getAccountRaw = () =>
-    account ? account : (account = Accounts.findOne(getAccountId()));
+const accountId = () => FlowRouter.getParam('accountId');
 
 /** Get account data using id from router. */
-const getAccount = () => {
-    const raw = getAccountRaw();
-    return AccountUtil.load(raw ? raw.body : {});
+const loadAccount = () => {
+    const raw =
+        account ? account : (account = Accounts.findOne(accountId()));
+    return Account.load(raw ? raw : {});
 };
 
 /** Incremente or decrement to volatility rate value. */
 const changeRate = (dir = 1) => {
-    const step = getAccount().step * dir;
-    const ch = (s = '') => {
-        const q = $(s);
+    const step = loadAccount().step * Math.sign(dir);
+    const ch = (q = $('')) =>
         q.val(Math.max(step + Number.parseFloat(q.val()), 0));
-    };
-    ch('#ask');
-    ch('#bid');
+    ch($('#ask'));
+    ch($('#bid'));
 };
 
-Template.accountDetail.onCreated(() => {});
 Template.accountDetail.onDestroyed(() => account = null);
 Template.accountDetail.helpers({
-    "account": getAccount,
-    "strPair": () => PairUtil.toStr(getAccount().pair),
+    "account": loadAccount,
+    "strPair": () => PairUtil.toStr(loadAccount().pair),
 });
 Template.accountDetail.events({
     "click #fe-mod-account-rate #fe-rate-up": event => {
@@ -56,9 +55,11 @@ Template.accountDetail.events({
     },
     "submit #fe-mod-account-rate": event => {
         event.preventDefault();
-        const target = event.target;
-        const ask = Number.parseFloat(target['ask'].value);
-        const bid = Number.parseFloat(target['bid'].value);
-        Meteor.call('accounts.updateRate', getAccountId(), ask, bid);
+        const params =
+            formUtil.parse(
+                event.target, { "ask": TO_FLOAT, "bid": TO_FLOAT });
+        Meteor.call(
+            'accounts.updateRate',
+            { "accountId": accountId(), ...params });
     },
 });

@@ -1,46 +1,29 @@
 'use strict';
 
-import { Exchange } from '../enums/exchange.js'
-import { Limit } from '../enums/limit.js'
-import { Position } from './position.js'
-import { Rate, RateUtil } from './rate.js'
-
-/** Default exchange type value. */
-const DEFAULT_EXCHANGE = Exchange.BUY;
-
-/** Default limit trade type value. */
-const DEFAULT_LIMIT = Limit.NONE;
-
-/** Default limit price value. */
-const DEFAULT_PRICE = 0;
-
-/** Default ordered quantity value. */
-const DEFAULT_QUANTITY = 1;
-
-/** Default take profit value. */
-const DEFAULT_TAKEPROFIT = Number.NaN;
+import { IdModel } from './idModel.js';
+import { Exchange } from '../enums/exchange.js';
+import { Limit } from '../enums/limit.js';
+import { Position } from './position.js';
+import { Rate, RateUtil } from './rate.js';
 
 /** Order model. */
-export class Order {
-    /**
-     * Initialize new object.
-     * @param {number} exchange Exchange type.
-     * @param {number} limit Limit trade type.
-     * @param {number} price Limit price.
-     * @param {number} quantity Ordered quantity.
-     * @param {number} takeProfit Take profit.
-     */
-    constructor(
-        exchange = DEFAULT_EXCHANGE,
-        limit = DEFAULT_LIMIT,
-        price = DEFAULT_PRICE,
-        quantity = DEFAULT_QUANTITY,
-        takeProfit = DEFAULT_TAKEPROFIT) {
+export class Order extends IdModel {
+    /** Initialize new object. */
+    constructor({
+        exchange = Exchange.BUY,
+        limit = Limit.NONE,
+        price = 0,
+        quantity = 1,
+        takeProfit = Number.NaN,
+        preOrder = false
+    } = {}) {
+        super();
         this._exchange = exchange;
         this._limit = limit;
         this._price = price;
         this._quantity = quantity;
         this._takeProfit = takeProfit;
+        this._preOrder = preOrder;
     }
 
     /** Exchange type. */
@@ -68,23 +51,28 @@ export class Order {
         return this._takeProfit;
     }
 
+    /** Pre-order. */
+    get preOrder() {
+        return this._preOrder;
+    }
+
     /**
      * Clone object.
      * @param {object} override Override object.
      * @return {Order} Order object.
      */
-    clone(override = {}) {
-        return new Order(
-            Utils.getValue('exchange', override, this.exchange),
-            Utils.getValue('limit', override, this.limit),
-            Utils.getValue('price', override, this.price),
-            Utils.getValue('quantity', override, this.quantity),
-            Utils.getValue('takeProfit', override, this.takeProfit));
+    innerClone(override = {}) {
+        const result =
+            new Order({
+                "exchange": this.importValue('exchange', override),
+                "limit": this.importValue('limit', override),
+                "price": this.importValue('price', override),
+                "quantity": this.importValue('quantity', override),
+                "takeProfit": this.importValue('takeProfit', override),
+                "preOrder": this.importValue('preOrder', override)
+            });
     }
-}
 
-/** Extension of Order model. */
-export class OrderUtil {
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -93,6 +81,10 @@ export class OrderUtil {
     static load(raw = {}) {
         return new Order().clone(raw);
     }
+}
+
+/** Extension of Order model. */
+export class OrderUtil {
 
     /**
      * Get available this order.
@@ -120,7 +112,13 @@ export class OrderUtil {
      * @return {Position} Position object.
      */
     static toPosition(rate = new Rate()) {
-        return new Position(
-            rate, this.quantity, this.exchange, this.takeProfit);
+        const result =
+            new Position({
+                "rate": rate,
+                "quantity": this.quantity,
+                "exchange": this.exchange,
+                "takeProfit": this.takeProfit
+            });
+        return result;
     }
 }

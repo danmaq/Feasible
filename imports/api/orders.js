@@ -10,10 +10,7 @@ export const Orders = new Mongo.Collection('orders');
 
 if (Meteor.isServer) {
     Meteor.publish(
-        'orders',
-        function() {
-            return Orders.find({ owner: this.userId });
-        });
+        'orders', () => Orders.find({ "owner": Meteor.userId() }));
 }
 
 Meteor.methods({

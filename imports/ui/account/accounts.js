@@ -5,8 +5,10 @@ import { Template } from 'meteor/templating';
 
 import { Accounts } from '../../api/accounts.js';
 
-import { Pair, PairUtil } from '../../core/enums/pair.js';
+import { PairUtil } from '../../core/enums/pair.js';
 import { Account } from '../../core/models/account.js';
+
+import formUtil from '../formUtil.js';
 
 import './accounts.html';
 import './account.js';
@@ -14,35 +16,34 @@ import './account.js';
 /** Default account instance. */
 const DEFAULT_ACCOUNT = new Account();
 
+/** Convert function: String to Number. */
+const TO_FLOAT = formUtil.to.float;
+
+/** Convert function: String to integer (number). */
+const TO_INT = formUtil.to.int;
+
 Template.accounts.onCreated(() => Meteor.subscribe('accounts'));
 Template.accounts.helpers({
+    "defaultAccount": DEFAULT_ACCOUNT,
     "accounts": () => Accounts.find({}, { "sort": { "sortBy": 1 } }),
     "accountLength": () => Accounts.find().count(),
-    "lot": DEFAULT_ACCOUNT.lot,
-    "multiply": DEFAULT_ACCOUNT.mul,
-    "step": DEFAULT_ACCOUNT.step,
-    "martingale": DEFAULT_ACCOUNT.martingale,
     "pairs": Array.from(PairUtil.iterkv()),
 });
 Template.accounts.events({
     "submit #fe-add-account": event => {
         event.preventDefault();
-        const target = event.target;
-        const pair = Number.parseInt(target['pair'].value);
-        const swapLong = Number.parseFloat(target['swap-long'].value);
-        const swapShort = Number.parseFloat(target['swap-short'].value);
-        const lot = Number.parseInt(target['lot'].value);
-        const mul = Number.parseFloat(target['mul'].value);
-        const step = Number.parseFloat(target['step'].value);
-        const martin = Number.parseFloat(target['martingale'].value);
-        Meteor.call(
-            'accounts.insert',
-            pair,
-            swapLong,
-            swapShort,
-            lot,
-            mul,
-            step,
-            martin);
+        const params =
+            formUtil.parse(
+                event.target, {
+                    "pair": TO_INT,
+                    "swap-long": TO_FLOAT,
+                    "swap-short": TO_FLOAT,
+                    "column": TO_INT,
+                    "lot": TO_INT,
+                    "mul": TO_FLOAT,
+                    "step": TO_FLOAT,
+                    "martingale": TO_FLOAT,
+                });
+        Meteor.call('accounts.insert', params);
     },
 });

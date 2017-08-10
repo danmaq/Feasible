@@ -4,53 +4,54 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
+import { Context } from './context.js';
 import { Accounts } from './accounts.js';
 
+import { Account } from '../core/models/account.js';
 import { Position } from '../core/models/position.js';
 import { Rate } from '../core/models/rate.js';
 
-export const Positions = new Mongo.Collection('positions');
+/** API Context. */
+const ctx = new Context('positions');
 
-if (Meteor.isServer) {
-    Meteor.publish(
-        'positions',
-        function() {
-            return Positions.find({ owner: this.userId });
-        });
-}
+/** Positions collection. */
+export const Positions = ctx.collection;
 
 Meteor.methods({
-    'positions.insert': (accountId, pair, buy, sell, quantity, exchange, takeProfit) => {
+    'positions.insert': ({
+        accountId, price, quantity, exchange, takeProfit}) => {
         check(accountId, String);
-        check(pair, Number);
-        check(buy, Number);
-        check(sell, Number);
+        check(price, Number);
         check(quantity, Number);
         check(exchange, Number);
         check(takeProfit, Number);
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
-        const rate = new Rate(pair, buy, sell);
-        const pos = new Position(rate, quantity, exchange, takeProfit);
-        Positions.insert({
-            "body": pos,
-            "accountId": accountId,
-            "owner": Meteor.userId()
-        });
+        Context.checkSignIn();
+        const account = Account.load(Accounts.findOne(accountId));
+        const rate =
+            new Rate({
+                "pair": account.pair, "ask": price, "bid": price});
+        const position =
+            new Position({
+                "accountId": account.id,
+                "rate": rate,
+                "quantity": quantity,
+                "exchange": exchange,
+                "takeProfit": takeProfit
+            });
+        ctx.insertCollection(position);
     },
     'positions.remove': positionId => {
         check(positionId, String);
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
+        Context.checkSignIn();
         Positions.remove(positionId);
     },
     'positions.removeByAccount': accountId => {
         check(accountId, String);
-        if (!Meteor.userId()) {
-            throw new Meteor.Error('not-authorized');
-        }
+        Context.checkSignIn();
         Positions.remove({ "accountId": accountId });
+    },
+    'positions.removeByUser': () => {
+        Context.checkSignIn();
+        Positions.remove(Context.uidData());
     },
 });

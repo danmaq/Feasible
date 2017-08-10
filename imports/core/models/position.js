@@ -1,36 +1,30 @@
 'use strict';
 
-import { Exchange, ExchangeUtil } from '../enums/exchange.js'
-import { Rate, RateUtil } from './rate.js'
-import { Utils } from '../utils.js'
-
-/** Default ordered quantity value. */
-const DEFAULT_QUANTITY = 1;
-
-/** Default exchange type value. */
-const DEFAULT_EXCHANGE = Exchange.BUY;
-
-/** Default take profit value. */
-const DEFAULT_TAKEPROFIT = Number.NaN;
+import { IdModel } from './idModel.js';
+import { Exchange } from '../enums/exchange.js';
+import { Rate, RateUtil } from './rate.js';
 
 /** Position model. */
-export class Position {
-    /**
-     * Initialize new object.
-     * @param {Rate} rate Rate at ordered.
-     * @param {number} quantity Ordered quantity.
-     * @param {number} exchange Exchange type.
-     * @param {number} takeProfit Take profit.
-     */
-    constructor(
+export class Position extends IdModel {
+    /** Initialize new object. */
+    constructor({
+        accountId = '',
         rate = new Rate(),
-        quantity = DEFAULT_QUANTITY,
-        exchange = DEFAULT_EXCHANGE,
-        takeProfit = DEFAULT_TAKEPROFIT) {
+        quantity = 1,
+        exchange = Exchange.BUY,
+        takeProfit = Number.NaN
+    } = {}) {
+        super();
+        this._accountId = accountId;
         this._rate = rate;
         this._quantity = quantity;
         this._exchange = exchange;
         this._takeProfit = takeProfit;
+    }
+
+    /** Key of account. */
+    get accountId() {
+        return this._accountId;
     }
 
     /** Rate at ordered. */
@@ -58,17 +52,28 @@ export class Position {
      * @param {object} override Override object.
      * @return {Position} Position object.
      */
-    clone(override = {}) {
-        return new Rate(
-            RateUtil.load(Utils.getValue('rate', override, this.rate)),
-            Utils.getValue('quantity', override, this.quantity),
-            Utils.getValue('exchange', override, this.exchange),
-            Utils.getValue('takeProfit', override, this.takeProfit));
+    innerClone(override = {}) {
+        const result =
+            new Position({
+                "acccountId": this.importValue('accountId', override),
+                "rate": Rate.load(this.importValue('rate', override)),
+                "quantity": this.importValue('quantity', override),
+                "exchange": this.importValue('exchange', override),
+                "takeProfit": this.importValue('takeProfit', override)
+            });
+        return result;
     }
-}
 
-/** Extension of Position model. */
-export class PositionUtil {
+    /**
+     * Export object data for Mongo.
+     * @return {object} data object.
+     */
+    exportWithoutId() {
+        let result = super.exportWithoutId();
+        result._rate = this.rate.exportWithoutId();
+        return result;
+    }
+
     /**
      * Load from de-serialized object.
      * @param {object} raw Raw object.
@@ -77,16 +82,10 @@ export class PositionUtil {
     static load(raw = {}) {
         return new Position().clone(raw);
     }
+}
 
-    /**
-     * Get stringed exchange type.
-     * @param {Position} source Source object.
-     * @return {string} Stringed exchange type.
-     */
-    static strExchange(source = new Position()) {
-        return ExchangeUtil.toStr(source.exchange);
-    }
-
+/** Extension of Position model. */
+export class PositionUtil {
     /**
      * Get gain point.
      * @param {Position} source Source object.

@@ -3,12 +3,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { Accounts } from '../../api/accounts.js';
 import { Positions } from '../../api/positions.js';
 
 import { ExchangeKV } from '../../core/enums/exchange.js';
-import { Account, AccountUtil } from '../../core/models/account.js';
 import { Position } from '../../core/models/position.js';
+
+import formUtil from '../formUtil.js';
 
 import './positions.html';
 import './position.js';
@@ -16,18 +16,22 @@ import './position.js';
 /** Default position instance. */
 const DEFAULT_POSITION = new Position();
 
+/** Convert function: String to Number. */
+const TO_FLOAT = formUtil.to.float;
+
+/** Convert function: String to integer (number). */
+const TO_INT = formUtil.to.int;
+
 /** Get account-id from router. */
-const getAccountId = () => FlowRouter.getParam('accountId');
+const accountId = () => FlowRouter.getParam('accountId');
 
 /** Get positions list from account-id. */
-const getPositions = () => Positions.find({ "accountId": getAccountId() });
+const getPositions =
+    () => Positions.find({ "_accountId": accountId() });
 
-Template.positions.onCreated(() => {
-    Meteor.subscribe('accounts');
-    Meteor.subscribe('positions');
-});
+Template.positions.onCreated(() => Meteor.subscribe('positions'));
 Template.positions.helpers({
-    "positions": () => getPositions(),
+    "positions": getPositions,
     "positionLength": () => getPositions().count(),
     "price": DEFAULT_POSITION.rate,
     "quantity": DEFAULT_POSITION.quantity,
@@ -36,24 +40,18 @@ Template.positions.helpers({
 Template.positions.events({
     "submit #fe-add-position": event => {
         event.preventDefault();
+        const params =
+            formUtil.parse(
+                event.target, {
+                    "price": TO_FLOAT,
+                    "quantity": TO_INT,
+                    "exchange": TO_INT,
+                    "takeProfit": TO_FLOAT,
+                });
         const target = event.target;
         const price = Number.parseFloat(target['price'].value);
-        const quantity = Number.parseInt(target['quantity'].value);
-        const exchange = Number.parseInt(target['exchange'].value);
-        const tp = Number.parseFloat(target['takeProfit'].value);
-        const accountId = getAccountId();
-        const accountRaw = Accounts.findOne(accountId);
-        if (!accountRaw) {
-            throw new Meteor.Error('unknown-account');
-        }
         Meteor.call(
             'positions.insert',
-            accountId,
-            AccountUtil.load(accountRaw.body).pair,
-            price,
-            price,
-            quantity,
-            exchange,
-            tp);
+            { "accountId": accountId(), ...params });
     },
 });
