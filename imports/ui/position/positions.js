@@ -27,7 +27,7 @@ const accountId = () => FlowRouter.getParam('accountId');
 
 /** Get positions list from account-id. */
 const getPositions =
-    () => Positions.find({ "accountId": accountId() });
+    () => Positions.find({ "_accountId": accountId() });
 
 Template.positions.onCreated(() => Meteor.subscribe('positions'));
 Template.positions.helpers({

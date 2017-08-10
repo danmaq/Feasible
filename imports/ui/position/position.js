@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { ExchangeUtil } from '../../core/enums/exchange.js';
-import { Position, PositionUtil } from '../../core/models/position.js';
+import { Position } from '../../core/models/position.js';
 
 import './position.html';
 
@@ -12,13 +12,10 @@ import './position.html';
 const getData = () => Template.instance().data;
 
 /** Get position instance from template data. */
-const getPosition = () => PositionUtil.load(getData().body);
-
-/** Get account-id from router. */
-const getAccountId = () => FlowRouter.getParam('accountId');
+const getPosition = () => Position.load(getData());
 
 Template.position.helpers({
-    "strExchange": () => PositionUtil.strExchange(getPosition()),
+    "strExchange": () => ExchangeUtil.toStr(getPosition().exchange),
 });
 Template.position.events({
     "click .fe-delete": event => {
