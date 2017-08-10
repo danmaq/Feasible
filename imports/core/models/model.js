@@ -2,24 +2,6 @@
 
 /** Mongo model data. */
 export class Model {
-    /** Key string for Mongo. */
-    _id = '';
-
-    /** Key string for Mongo. */
-    get id() {
-        return this._id;
-    }
-
-    /**
-     * Export object data for Mongo.
-     * @return {object} data object.
-     */
-    exportWithoutId() {
-        let result = Object.assign({}, this);
-        delete result['_id'];
-        return result;
-    }
-
     /**
      * Get class property from extern object.
      * @param {string} key key name.
@@ -40,9 +22,7 @@ export class Model {
      * @return {Model} Model object.
      */
     clone(override = {}) {
-        const model = this.innerClone(override);
-        model._id = this.importValue('id', override);
-        return model;
+        return this.innerClone(override);
     }
 
     /**

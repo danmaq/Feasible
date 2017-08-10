@@ -1,11 +1,11 @@
 'use strict';
 
-import { Model } from './model.js';
+import { IdModel } from './idModel.js';
 import { Exchange, ExchangeUtil } from '../enums/exchange.js';
 import { Rate, RateUtil } from './rate.js';
 
 /** Position model. */
-export class Position extends Model {
+export class Position extends IdModel {
     /**
      * Initialize new object.
      * @param {string} accountId Key of account.

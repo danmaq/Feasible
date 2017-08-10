@@ -2,13 +2,13 @@
 
 import { Operation } from '../enums/operation.js';
 
-import { Model } from './model.js';
+import { IdModel } from './idModel.js';
 import { Account } from './account.js';
 import { Order } from './order.js';
 import { Position } from './position.js';
 
 /** Direction data. */
-export class Direction extends Model {
+export class Direction extends IdModel {
     /**
      * Initialize new object.
      * @param {number} operation Operation type.

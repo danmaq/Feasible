@@ -1,13 +1,13 @@
 'use strict';
 
-import { Model } from './model.js';
+import { IdModel } from './idModel.js';
 import { Exchange } from '../enums/exchange.js';
 import { Limit } from '../enums/limit.js';
 import { Position } from './position.js';
 import { Rate, RateUtil } from './rate.js';
 
 /** Order model. */
-export class Order extends Model {
+export class Order extends IdModel {
     /**
      * Initialize new object.
      * @param {number} exchange Exchange type.

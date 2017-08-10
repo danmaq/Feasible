@@ -1,11 +1,11 @@
 'use strict';
 
-import { Model } from './model.js';
+import { IdModel } from './idModel.js';
 import { Exchange } from '../enums/exchange.js';
 import { Pair } from '../enums/pair.js';
 
 /** Exchange rate data. */
-export class Rate extends Model {
+export class Rate extends IdModel {
     /**
      * Initialize new object.
      * @param {number} pair Currency pair.

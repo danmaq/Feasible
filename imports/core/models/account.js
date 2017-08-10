@@ -2,12 +2,12 @@
 
 import { Pair, PairUtil } from '../enums/pair.js';
 
-import { Model } from './model.js';
+import { IdModel } from './idModel.js';
 import { Rate } from './rate.js';
 import { Swap } from './swap.js';
 
 /** Account data. */
-export class Account extends Model {
+export class Account extends IdModel {
     /**
      * Initialize new object.
      * @param {number} pair Currency pair (see Pair module)
@@ -96,7 +96,6 @@ export class Account extends Model {
     exportWithoutId() {
         let result = super.exportWithoutId();
         result._rate = this.rate.exportWithoutId();
-        result._swap = this.swap.exportWithoutId();
         return result;
     }
 
