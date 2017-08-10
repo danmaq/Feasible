@@ -8,30 +8,21 @@ import { Swap } from './swap.js';
 
 /** Account data. */
 export class Account extends IdModel {
-    /**
-     * Initialize new object.
-     * @param {number} pair Currency pair (see Pair module)
-     * @param {Rate} rate Exchange rate data.
-     * @param {Swap} swap Swap point to exchange.
-     * @param {number} lot Lot unit.
-     * @param {number} mul Initial multiply rate.
-     * @param {number} step Step range of next action.
-     * @param {number} martingale Martingale rate.
-     */
-    constructor(
-        pair = Pair.USDJPY,
+    /** Initialize new object. */
+    constructor({pair = Pair.USDJPY,
         rate = new Rate(),
         swap = new Swap(),
         lot = 10000,
-        mul = 0.01,
+        multiply = 0.01,
         step = 1.0,
-        martingale = 2) {
+        martingale = 2
+    } = {}) {
         super();
         this._pair = pair;
         this._rate = rate;
         this._swap = swap;
         this._lot = lot;
-        this._mul = mul;
+        this._multiply = multiply;
         this._step = step;
         this._martingale = martingale;
     }
@@ -57,8 +48,8 @@ export class Account extends IdModel {
     }
 
     /** Initial multiply rate. */
-    get mul() {
-        return this._mul;
+    get multiply() {
+        return this._multiply;
     }
 
     /** Step range of next action (PIPS). */
@@ -78,14 +69,15 @@ export class Account extends IdModel {
      */
     innerClone(override = {}) {
         const result =
-            new Account(
-                this.importValue('pair', override),
-                Rate.load(this.importValue('rate', override)),
-                Swap.load(this.importValue('swap', override)),
-                this.importValue('lot', override),
-                this.importValue('mul', override),
-                this.importValue('step', override),
-                this.importValue('martingale', override));
+            new Account({
+                "pair": this.importValue('pair', override),
+                "rate": Rate.load(this.importValue('rate', override)),
+                "swap": Swap.load(this.importValue('swap', override)),
+                "lot": this.importValue('lot', override),
+                "multiply": this.importValue('multiply', override),
+                "step": this.importValue('step', override),
+                "martingale": this.importValue('martingale', override)
+            });
         return result;
     }
 

@@ -31,8 +31,13 @@ Meteor.methods({
             new Rate({
                 "pair": account.pair, "ask": price, "bid": price});
         const position =
-            new Position(
-                account.id, rate, quantity, exchange, takeProfit);
+            new Position({
+                "accountId": account.id,
+                "rate": rate,
+                "quantity": quantity,
+                "exchange": exchange,
+                "takeProfit": takeProfit
+            });
         ctx.insertCollection(position);
     },
     'positions.remove': positionId => {

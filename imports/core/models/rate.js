@@ -7,13 +7,12 @@ import { Pair } from '../enums/pair.js';
 /** Exchange rate data. */
 export class Rate extends IdModel {
     /** Initialize new object. */
-    constructor(
-        {
-            pair = Pair.USDJPY,
-            tick = new Date(),
-            ask = 0,
-            bid = 0
-        } = {}) {
+    constructor({
+        pair = Pair.USDJPY,
+        tick = new Date(),
+        ask = 0,
+        bid = 0
+    } = {}) {
         super();
         this._pair = pair;
         this._tick = tick;

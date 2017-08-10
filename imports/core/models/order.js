@@ -8,22 +8,15 @@ import { Rate, RateUtil } from './rate.js';
 
 /** Order model. */
 export class Order extends IdModel {
-    /**
-     * Initialize new object.
-     * @param {number} exchange Exchange type.
-     * @param {number} limit Limit trade type.
-     * @param {number} price Limit price.
-     * @param {number} quantity Ordered quantity.
-     * @param {number} takeProfit Take profit.
-     * @param {boolean} preOrder pre-order.
-     */
-    constructor(
+    /** Initialize new object. */
+    constructor({
         exchange = Exchange.BUY,
         limit = Limit.NONE,
         price = 0,
         quantity = 1,
         takeProfit = Number.NaN,
-        preOrder = false) {
+        preOrder = false
+    } = {}) {
         super();
         this._exchange = exchange;
         this._limit = limit;
@@ -69,13 +62,15 @@ export class Order extends IdModel {
      * @return {Order} Order object.
      */
     innerClone(override = {}) {
-        return new Order(
-            this.importValue('exchange', override),
-            this.importValue('limit', override),
-            this.importValue('price', override),
-            this.importValue('quantity', override),
-            this.importValue('takeProfit', override),
-            this.importValue('preOrder', override));
+        const result =
+            new Order({
+                "exchange": this.importValue('exchange', override),
+                "limit": this.importValue('limit', override),
+                "price": this.importValue('price', override),
+                "quantity": this.importValue('quantity', override),
+                "takeProfit": this.importValue('takeProfit', override),
+                "preOrder": this.importValue('preOrder', override)
+            });
     }
 
     /**
@@ -117,7 +112,13 @@ export class OrderUtil {
      * @return {Position} Position object.
      */
     static toPosition(rate = new Rate()) {
-        return new Position(
-            rate, this.quantity, this.exchange, this.takeProfit);
+        const result =
+            new Position({
+                "rate": rate,
+                "quantity": this.quantity,
+                "exchange": this.exchange,
+                "takeProfit": this.takeProfit
+            });
+        return result;
     }
 }

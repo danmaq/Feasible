@@ -6,20 +6,14 @@ import { Rate, RateUtil } from './rate.js';
 
 /** Position model. */
 export class Position extends IdModel {
-    /**
-     * Initialize new object.
-     * @param {string} accountId Key of account.
-     * @param {Rate} rate Rate at ordered.
-     * @param {number} quantity Ordered quantity.
-     * @param {number} exchange Exchange type.
-     * @param {number} takeProfit Take profit.
-     */
-    constructor(
+    /** Initialize new object. */
+    constructor({
         accountId = '',
         rate = new Rate(),
         quantity = 1,
         exchange = Exchange.BUY,
-        takeProfit = Number.NaN) {
+        takeProfit = Number.NaN
+    } = {}) {
         super();
         this._accountId = accountId;
         this._rate = rate;
@@ -60,12 +54,13 @@ export class Position extends IdModel {
      */
     innerClone(override = {}) {
         const result =
-            new Position(
-                this.importValue('accountId', override),
-                Rate.load(this.importValue('rate', override)),
-                this.importValue('quantity', override),
-                this.importValue('exchange', override),
-                this.importValue('takeProfit', override));
+            new Position({
+                "acccountId": this.importValue('accountId', override),
+                "rate": Rate.load(this.importValue('rate', override)),
+                "quantity": this.importValue('quantity', override),
+                "exchange": this.importValue('exchange', override),
+                "takeProfit": this.importValue('takeProfit', override)
+            });
         return result;
     }
 

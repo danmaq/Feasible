@@ -36,8 +36,15 @@ Meteor.methods({
         Context.checkSignIn();
         const swap = new Swap({ "long": swapLong, "short": swapShort });
         const account =
-            new Account(
-                pair, new Rate(), swap, lot, mul, step, martingale);
+            new Account({
+                "pair": pair,
+                "rate": new Rate(),
+                "swap": swap,
+                "lot": lot,
+                "multiply": mul,
+                "step": step,
+                "martingale": martingale
+            });
         ctx.insertCollection(account);
     },
     "accounts.remove": accountId => {
