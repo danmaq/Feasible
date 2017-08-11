@@ -22,20 +22,29 @@
                 </dl>
             </div>
         </div>
-        <h4>Ask / Bid</h4>
-        <form id="fe-mod-account-rate" class="form-horizontal">
-            <div class="form-group">
-                <div class="form-inline">
-                    <input id="ask" type="number" value="{{account._rate._ask}}" min="0" max="32767" step="{{minStep}}" required="required" class="form-control" /> / 
-                    <input id="bid" type="number" value="{{account._rate._bid}}" min="0" max="32767" step="{{minStep}}" required="required" class="form-control" />
-                    <span class="">
-                        <button id="fe-rate-up" type="button" class="btn btn-default"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-                        <button id="fe-rate-down" type="button" class="btn btn-default"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-                        <button class="btn btn-primary">Deside</button>
-                    </span>
-                </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4>Change Ask / Bid</h4>
             </div>
-        </form>
+            <div id="detail" class="panel-body">
+                <form id="fe-mod-account-rate" class="form-horizontal">
+                    <div class="form-group">
+                        <span class="col-xs-5 col-sm-3">
+                            <input id="ask" type="number" value="{{account._rate._ask}}" min="0" max="32767" step="{{minStep}}" required="required" class="form-control" />
+                        </span>
+                        <span class="col-xs-2 col-sm-1">/</span>
+                        <span class="col-xs-5 col-sm-3">
+                            <input id="bid" type="number" value="{{account._rate._bid}}" min="0" max="32767" step="{{minStep}}" required="required" class="form-control" />
+                        </span>
+                        <span class="col-xs-12 col-sm-4">
+                            <button id="fe-rate-up" type="button" class="btn btn-default"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                            <button id="fe-rate-down" type="button" class="btn btn-default"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                            <button class="btn btn-primary">Deside</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
     </section>
     {{> directions}}
     {{> positions}}
