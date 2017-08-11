@@ -1,19 +1,19 @@
 <template name="accountForm">
     <li class="list-group-item">
-        <label for="swap-long">Swap long: </label>
-        <input id="swap-long" type="number" class="form-control" required="required" value="{{defaultAccount._swap._long}}" step="0.01" min="-16777216" max="16777215" />
-    </li>
-    <li class="list-group-item">
-        <label for="swap-short">Swap short: </label>
-        <input id="swap-short" type="number" class="form-control" required="required" value="{{defaultAccount._swap._short}}" step="0.01" min="-16777216" max="16777215" />
-    </li>
-    <li class="list-group-item">
         <label for="column">Column: </label>
         <input id="column" type="number" class="form-control" required="required" value="{{defaultAccount._column}}" step="1" min="0" max="10" />
     </li>
     <li class="list-group-item">
+        <label for="swap-long">Swap long: </label>
+        <input id="swap-long" type="number" class="form-control" required="required" value="{{defaultAccount._swap._long}}" step="0.01" min="-16777216" max="16777215" />
+    </li>
+    <li class="list-group-item">
         <label for="lot">Lot unit: </label>
         <input id="lot" type="number" class="form-control" required="required" value="{{defaultAccount._lot}}" step="100" min="100" max="1000000" />
+    </li>
+    <li class="list-group-item">
+        <label for="swap-short">Swap short: </label>
+        <input id="swap-short" type="number" class="form-control" required="required" value="{{defaultAccount._swap._short}}" step="0.01" min="-16777216" max="16777215" />
     </li>
     <li class="list-group-item">
         <label for="mul">Initial multiply for lot: </label>

@@ -15,7 +15,9 @@
                 <a class="navbar-brand" href="/">Feasible EA (pre-alpha)</a>
             </div>
             <div class="collapse navbar-collapse" id="fe-navbar">
-                <p class="navbar-text">{{> loginButtons}} {{#if currentUser}} | <a href="/account">Dashboard</a>{{/if}}</p>
+                <ul class="nav navbar-nav navbar-right">
+                    {{> loginButtons}}
+                </ul>
             </div>
         </div>
     </nav>
@@ -26,4 +28,8 @@
     <address class="text-center">
         &copy;2017 @danmaq &lt;<a href="https://twitter.com/danmaq" target="_blank">https://twitter.com/danmaq</a>&gt;
     </address>
+</template>
+
+<template name="_loginButtonsAdditionalLoggedInDropdownActions">
+	<a class="btn btn-info btn-block" role="button" id="dashboard">Dashboard</a>
 </template>

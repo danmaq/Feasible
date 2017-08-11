@@ -16,7 +16,6 @@ standard-minifier-js    # JS minifier run for production mode
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 shell-server            # Server-side component of the `meteor shell` command
 
-accounts-ui
 accounts-password
 dynamic-import
 practicalmeteor:mocha
@@ -29,3 +28,4 @@ kadira:blaze-layout
 arillo:flow-router-helpers
 jquery
 xolvio:core-js
+ian:accounts-ui-bootstrap-3
