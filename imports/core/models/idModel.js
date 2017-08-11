@@ -29,7 +29,7 @@ export class IdModel extends Model {
      */
     clone(override = {}) {
         const model = super.clone(override);
-        model._id = this.importValue('id', override);
+        model._id = this.getValue('id', override);
         return model;
     }
 }

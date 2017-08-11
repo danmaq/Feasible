@@ -3,20 +3,23 @@
 import { IdModel } from './idModel.js';
 import { Exchange } from '../enums/exchange.js';
 import { Rate, RateUtil } from './rate.js';
+import { Swap, SwapUtil } from './swap.js';
 
 /** Position model. */
 export class Position extends IdModel {
     /** Initialize new object. */
     constructor({
         accountId = '',
-        rate = new Rate(),
+        price = 0,
+        tick = new Date(),
         quantity = 1,
         exchange = Exchange.BUY,
         takeProfit = Number.NaN
     } = {}) {
         super();
         this._accountId = accountId;
-        this._rate = rate;
+        this._tick = tick;
+        this._price = price;
         this._quantity = quantity;
         this._exchange = exchange;
         this._takeProfit = takeProfit;
@@ -27,9 +30,14 @@ export class Position extends IdModel {
         return this._accountId;
     }
 
-    /** Rate at ordered. */
-    get rate() {
-        return this._rate;
+    /** Date-Time at ordered. */
+    get tick() {
+        return this._tick;
+    }
+
+    /** Price at ordered. */
+    get price() {
+        return this._price;
     }
 
     /** Ordered quantity. */
@@ -56,7 +64,8 @@ export class Position extends IdModel {
         const result =
             new Position({
                 "acccountId": this.importValue('accountId', override),
-                "rate": Rate.load(this.importValue('rate', override)),
+                "tick": this.importValue('tick', override),
+                "price": this.importValue('price', override),
                 "quantity": this.importValue('quantity', override),
                 "exchange": this.importValue('exchange', override),
                 "takeProfit": this.importValue('takeProfit', override)
@@ -81,18 +90,27 @@ export class Position extends IdModel {
 /** Extension of Position model. */
 export class PositionUtil {
     /** Get gain point. */
-    static gain = (source = new Position(), rate = new Rate()) => {
-        const traded = source.rate.tick;
+    static gain = ({
+        source = new Position(),
+        rate = new Rate(),
+        swap = new Swap(),
+    } = {}) => {
+        const gap = rate.tick.getTime() - source.tick.getTime();
+        const day = (gap / (86400000)) >> 0;
+        const sp = SwapUtil.point(swap, source.exchange) * day;
         // TODO: Swap calculation.
         const ex = source.exchange;
         return RateUtil.gain(source.rate, rate, ex) * source.quantity;
     }
 
     /** Can be take profit. */
-    static profit = (source = new Position(), rate = new Rate()) => {
+    static profit = ({
+        source = new Position(),
+        rate = new Rate()
+    } = {}) => {
         const ex = source.exchange;
-        const sp = RateUtil.stopPoint(source.rate, ex);
+        const sp = RateUtil.stopPoint(rate, ex);
         const tp = source.takeProfit;
-        return ex === Exchange.BUY ? sp >= tp : sp <= tp;
+        return !Number.isNaN(tp) && ex === Exchange.BUY ? sp >= tp : sp <= tp;
     }
 }

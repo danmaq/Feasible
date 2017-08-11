@@ -43,18 +43,20 @@ export class Rate extends IdModel {
     /**
      * Clone object.
      * @param {object} override Override object.
+     * @return {Rate} Model object.
+     */
+    clone(override = {}) {
+        return super.clone(override);
+    }
+
+    /**
+     * Clone object.
+     * @param {object} override Override object.
      * @return {Rate} Rate object.
      */
     innerClone(override = {}) {
-        const result =
-            new Rate(
-                {
-                    "pair": this.importValue('pair', override),
-                    "tick": this.importValue('tick', override),
-                    "ask": this.importValue('ask', override),
-                    "bid": this.importValue('bid', override)
-                });
-        return result;
+        const keys = ['pair', 'tick', 'ask', 'bid'];
+        return new Rate(this.getValues(keys, override));
     }
 
     /** Load from de-serialized object. */

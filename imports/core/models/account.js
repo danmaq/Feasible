@@ -3,20 +3,32 @@
 import { Pair, PairUtil } from '../enums/pair.js';
 
 import { IdModel } from './idModel.js';
+import { Position } from './position.js';
+import { Order } from './order.js';
+import { Order } from './order.js';
 import { Rate } from './rate.js';
 import { Swap } from './swap.js';
+import { Preference } from './order.js';
 
 /** Account data. */
 export class Account extends IdModel {
+    /** Empty object. */
+    static empty =
+        Object.freeze(new Account({ "positions": [], "orders": [] }));
+
     /** Initialize new object. */
-    constructor({pair = Pair.USDJPY,
+    constructor({
         rate = new Rate(),
         swap = new Swap(),
+        preference
         column = 3,
         lot = 10000,
         multiply = 0.01,
         step = 1.0,
-        martingale = 2
+        martingale = 2,
+        positions = [new Position()],
+        orders = [new Order()],
+        directions = [new Order()]
     } = {}) {
         super();
         this._pair = pair;
@@ -27,6 +39,8 @@ export class Account extends IdModel {
         this._multiply = multiply;
         this._step = step;
         this._martingale = martingale;
+        this._positions = positions;
+        this._orders = orders;
     }
 
     /** Currency pair. */
@@ -69,6 +83,16 @@ export class Account extends IdModel {
         return this._martingale;
     }
 
+    /** Positions collection. */
+    get positions() {
+        return this._positions;
+    }
+
+    /** Orders collection. */
+    get orders() {
+        return this._orders;
+    }
+
     /**
      * Clone object.
      * @param {object} override Override object.
@@ -84,7 +108,9 @@ export class Account extends IdModel {
                 "lot": this.importValue('lot', override),
                 "multiply": this.importValue('multiply', override),
                 "step": this.importValue('step', override),
-                "martingale": this.importValue('martingale', override)
+                "martingale": this.importValue('martingale', override),
+                "positions": this.importValue('positions', override),
+                "orders": this.importValue('orders', override),
             });
         return result;
     }
@@ -100,7 +126,7 @@ export class Account extends IdModel {
     }
 
     /** Load from de-serialized object. */
-    static load = (raw = {}) => new Account().clone(raw);
+    static load = (raw = {}) => Account.empty.clone(raw);
 }
 
 /** Extension of Account data. */

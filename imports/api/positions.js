@@ -9,7 +9,6 @@ import { Accounts } from './accounts.js';
 
 import { Account } from '../core/models/account.js';
 import { Position } from '../core/models/position.js';
-import { Rate } from '../core/models/rate.js';
 
 /** API Context. */
 const ctx = new Context('positions');
@@ -19,7 +18,12 @@ export const Positions = ctx.collection;
 
 Meteor.methods({
     'positions.insert': ({
-        accountId, price, quantity, exchange, takeProfit}) => {
+        accountId,
+        price,
+        quantity,
+        exchange,
+        takeProfit
+    }) => {
         check(accountId, String);
         check(price, Number);
         check(quantity, Number);
@@ -27,13 +31,10 @@ Meteor.methods({
         check(takeProfit, Number);
         Context.checkSignIn();
         const account = Account.load(Accounts.findOne(accountId));
-        const rate =
-            new Rate({
-                "pair": account.pair, "ask": price, "bid": price});
         const position =
             new Position({
                 "accountId": account.id,
-                "rate": rate,
+                "price": price,
                 "quantity": quantity,
                 "exchange": exchange,
                 "takeProfit": takeProfit

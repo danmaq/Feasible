@@ -3,6 +3,7 @@
 import { Operation } from '../enums/operation.js';
 
 import { IdModel } from './idModel.js';
+import { Rate } from './rate.js';
 import { Account } from './account.js';
 import { Order } from './order.js';
 import { Position } from './position.js';
@@ -56,11 +57,4 @@ export class Direction extends IdModel {
 }
 
 /** Extension of Direction data. */
-export class DirectionUtil {
-    static next = ({positions = [new Position()], orders = [new Order()]}) => {
-        if(positions.length === 0) {
-            return [];
-        }
-        return [];
-    };
-}
+export class DirectionUtil {}

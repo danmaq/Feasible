@@ -25,24 +25,26 @@ export class Swap extends Model {
     /**
      * Clone object.
      * @param {object} override Override object.
+     * @return {Swap} Model object.
+     */
+    clone(override = {}) {
+        return super.clone(override);
+    }
+
+    /**
+     * Clone object.
+     * @param {object} override Override object.
      * @return {Swap} Swap object.
      */
     innerClone(override = {}) {
-        const result =
-            new Swap({
-                "long": this.importValue('long', override),
-                "short": this.importValue('short', override)
-            });
-        return result;
+        const keys = ['long', 'short'];
+        return new Swap(this.getValues(keys, override));
     }
 
     /** Load from de-serialized object. */
     static load = (raw = {}) => new Swap().clone(raw);
-}
 
-/** Extension of Swap point data. */
-export class SwapUtil {
     /** Get swap point. */
-    static point = (source = new Swap(), exchange = Exchange.BUY) =>
-        exchange === Exchange.BUY ? source.long : source.short;
+    static point = (src = new Swap(), exchange = Exchange.BUY) =>
+        exchange === Exchange.BUY ? src.long : src.short;
 }
