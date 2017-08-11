@@ -9,26 +9,15 @@ import { Position } from './position.js';
 
 /** Direction data. */
 export class Direction extends IdModel {
-    /**
-     * Initialize new object.
-     * @param {number} operation Operation type.
-     * @param {string} positionId Position model ID.
-     * @param {Position} position New position model.
-     * @param {string} orderId Order model ID.
-     * @param {Order} order New order model.
-     */
-    constructor(
+    /** Initialize new object. */
+    constructor({
         operation = Operation.ORDER,
-        positionId = '',
         position = new Position(),
-        orderId = '',
         order = new Order(),
-    ) {
+    } = {}) {
         super();
         this._operation = operation;
-        this._positionId = positionId;
         this._position = position;
-        this._orderId = orderId;
         this._order = order;
     }
 
@@ -37,19 +26,9 @@ export class Direction extends IdModel {
         return this._operation;
     }
 
-    /** Position model ID. */
-    get positionId() {
-        return this._positionId;
-    }
-
     /** New position model. */
     get position() {
         return this._position;
-    }
-
-    /** Order model ID. */
-    get orderId() {
-        return this._orderId;
     }
 
     /** New order model. */
@@ -64,12 +43,11 @@ export class Direction extends IdModel {
      */
     innerClone(override = {}) {
         const result =
-            new Direction(
-                this.importValue('operation', override),
-                this.importValue('positionId', override),
-                Position.load(this.importValue('position', override)),
-                this.importValue('orderId', override),
-                Order.load(this.importValue('order', override)));
+            new Direction({
+                "operation": this.importValue('operation', override),
+                "position": Position.load(this.importValue('position', override)),
+                "order": Order.load(this.importValue('order', override))
+            });
         return result;
     }
 }

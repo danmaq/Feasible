@@ -25,7 +25,11 @@ Meteor.methods({
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
-        const dir = new Direction(operation, positionId, orderId);
+        const dir = new Direction({
+            "operation": operation,
+            "": positionId,
+            "": orderId
+        });
         Directions.insert({
             "body": dir,
             "accountId": accountId,
