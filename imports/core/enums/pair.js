@@ -77,18 +77,11 @@ const pairStr = Object.freeze(Object.keys(Pair));
 
 /** Extension of currency pairs. */
 export class PairUtil {
-    /**
-     * Get stringed value.
-     * @param {number} pair Currency pair.
-     * @return {string} Stringed value.
-     */
-    static toStr(pair = Pair.USDJPY) {
-        return pair in pairStr ? pairStr[pair] : '';
-    }
+    /** Get stringed value. */
+    static toStr = (pair = Pair.USDJPY) =>
+        pair in pairStr ? pairStr[pair] : '';
 
-    /**
-     * Get iterator. { key: number, value: string }
-     */
+    /** Get iterator. { key: number, value: string } */
     static * iterkv() {
         for (let i = 0; i < Pair.__length; i++) {
             yield { key: i, value: PairUtil.toStr(i) };

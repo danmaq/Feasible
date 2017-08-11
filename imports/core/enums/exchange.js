@@ -17,12 +17,8 @@ export const ExchangeKV =
 
 /** Extension of Exchange type. */
 export class ExchangeUtil {
-    /**
-     * Get stringed value.
-     * @param {number} exchange Exchange type.
-     * @return {string} Stringed value.
-     */
-    static toStr(exchange = Exchange.BUY) {
+    /** Get stringed value. */
+    static toStr = (exchange = Exchange.BUY) => {
         switch (exchange) {
             case Exchange.BUY:
                 return 'Buy';

@@ -10,12 +10,8 @@ export const Operation =
 
 /** Extension of limit type. */
 export class OperationUtil {
-    /**
-     * Get stringed value.
-     * @param {number} operation Trade operation type.
-     * @return {string} Stringed value.
-     */
-    static toStr(operation = Operation.ORDER) {
+    /** Get stringed value. */
+    static toStr = (operation = Operation.ORDER) => {
         switch (operation) {
             case Operation.ORDER:
                 return 'Order';

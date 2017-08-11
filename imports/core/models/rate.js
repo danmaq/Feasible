@@ -57,47 +57,23 @@ export class Rate extends IdModel {
         return result;
     }
 
-    /**
-     * Load from de-serialized object.
-     * @param {object} raw Raw object.
-     * @return {Rate} Rate object.
-     */
-    static load(raw = {}) {
-        return new Rate().clone(raw);
-    }
+    /** Load from de-serialized object. */
+    static load = (raw = {}) => new Rate().clone(raw);
 }
 
 /** Extension of Exchange rate data. */
 export class RateUtil {
-    /**
-     * Get point by exchange type.
-     * @param {Rate} source Current rate.
-     * @param {number} exchange Exchange type.
-     * @return {number} Point at order.
-     */
-    static orderPoint(source = new Rate(), exchange = Exchange.BUY) {
-        return exchange === Exchange.BUY ? source.ask : source.bid;
-    }
+    /** Get point by exchange type. */
+    static orderPoint = (source = new Rate(), exchange = Exchange.BUY) =>
+        exchange === Exchange.BUY ? source.ask : source.bid;
 
-    /**
-     * Get stop point by exchange type.
-     * @param {Rate} source Current rate.
-     * @param {number} exchange Exchange type.
-     * @return {number} Point at stop.
-     */
-    static stopPoint(source = new Rate(), exchange = Exchange.BUY) {
-        return exchange === Exchange.BUY ? source.bid : source.ask;
-    }
+    /** Get stop point by exchange type. */
+    static stopPoint = (source = new Rate(), exchange = Exchange.BUY) =>
+        exchange === Exchange.BUY ? source.bid : source.ask;
 
-    /**
-     * Get gap between rate.
-     * @param {Rate} from Current rate.
-     * @param {Rate} to Current rate.
-     * @param {number} exchange Exchange type.
-     * @return {number} Gap point.
-     */
-    static gain(
-        from = new Rate(), to = new Rate(), exchange = Exchange.BUY) {
+    /** Get gap between rate. */
+    static gain = (
+        from = new Rate(), to = new Rate(), exchange = Exchange.BUY) => {
         const order = RateUtil.orderPoint(from, exchange);
         const stop = RateUtil.stopPoint(to, exchange);
         return (order - stop) * exchange;

@@ -74,37 +74,22 @@ export class Position extends IdModel {
         return result;
     }
 
-    /**
-     * Load from de-serialized object.
-     * @param {object} raw Raw object.
-     * @return {Position} Position object.
-     */
-    static load(raw = {}) {
-        return new Position().clone(raw);
-    }
+    /** Load from de-serialized object. */
+    static load = (raw = {}) => new Position().clone(raw);
 }
 
 /** Extension of Position model. */
 export class PositionUtil {
-    /**
-     * Get gain point.
-     * @param {Position} source Source object.
-     * @param {Rate} rate Current rate.
-     * @return {number} Gain point.
-     */
-    static gain(source = new Position(), rate = new Rate()) {
+    /** Get gain point. */
+    static gain = (source = new Position(), rate = new Rate()) => {
         const traded = source.rate.tick;
         // TODO: Swap calculation.
         const ex = source.exchange;
         return RateUtil.gain(source.rate, rate, ex) * source.quantity;
     }
 
-    /**
-     * Can be take profit.
-     * @param {Rate} rate Current rate.
-     * @return {boolean} If can be take profit, return true.
-     */
-    static profit(source = new Position(), rate = new Rate()) {
+    /** Can be take profit. */
+    static profit = (source = new Position(), rate = new Rate()) => {
         const ex = source.exchange;
         const sp = RateUtil.stopPoint(source.rate, ex);
         const tp = source.takeProfit;

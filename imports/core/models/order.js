@@ -73,25 +73,14 @@ export class Order extends IdModel {
             });
     }
 
-    /**
-     * Load from de-serialized object.
-     * @param {object} raw Raw object.
-     * @return {Order} Order object.
-     */
-    static load(raw = {}) {
-        return new Order().clone(raw);
-    }
+    /** Load from de-serialized object. */
+    static load = (raw = {}) => new Order().clone(raw);
 }
 
 /** Extension of Order model. */
 export class OrderUtil {
-
-    /**
-     * Get available this order.
-     * @param {Rate} rate Current rate.
-     * @return {boolean} If available this order, return true.
-     */
-    static available(source = new Order(), rate = new Rate()) {
+    /** Get available this order. */
+    static available = (source = new Order(), rate = new Rate()) => {
         const limit = source.limit;
         if (limit === Limit.NONE) {
             return true;
@@ -106,19 +95,12 @@ export class OrderUtil {
         return cmp(op, source.price);
     }
 
-    /**
-     * Export to Position object.
-     * @param {Rate} rate Current rate.
-     * @return {Position} Position object.
-     */
-    static toPosition(rate = new Rate()) {
-        const result =
-            new Position({
-                "rate": rate,
-                "quantity": this.quantity,
-                "exchange": this.exchange,
-                "takeProfit": this.takeProfit
-            });
-        return result;
-    }
+    /** Export to Position object. */
+    static toPosition = (rate = new Rate()) => 
+        new Position({
+            "rate": rate,
+            "quantity": this.quantity,
+            "exchange": this.exchange,
+            "takeProfit": this.takeProfit
+        });
 }

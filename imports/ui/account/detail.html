@@ -9,10 +9,12 @@
                 <dl class="dl-horizontal">
                     <dt>Swap (Long/Short)</dt>
                     <dd>{{account._swap._long}} / {{account._swap._short}}</dd>
+                    <dt>Columns</dt>
+                    <dd>{{account._column}}</dd>
                     <dt>Lot</dt>
                     <dd>{{account._lot}}</dd>
                     <dt>Initial quantity</dt>
-                    <dd>{{account._mul}}</dd>
+                    <dd>{{account._multiply}}</dd>
                     <dt>Step range</dt>
                     <dd>{{account._step}}</dd>
                     <dt>Martingale</dt>
@@ -24,8 +26,8 @@
         <form id="fe-mod-account-rate" class="form-horizontal">
             <div class="form-group">
                 <div class="form-inline">
-                    <input id="ask" type="number" value="{{account._rate._ask}}" min="0" max="32767" step="0.00001" required="required" class="form-control" /> / 
-                    <input id="bid" type="number" value="{{account._rate._bid}}" min="0" max="32767" step="0.00001" required="required" class="form-control" />
+                    <input id="ask" type="number" value="{{account._rate._ask}}" min="0" max="32767" step="{{minStep}}" required="required" class="form-control" /> / 
+                    <input id="bid" type="number" value="{{account._rate._bid}}" min="0" max="32767" step="{{minStep}}" required="required" class="form-control" />
                     <span class="">
                         <button id="fe-rate-up" type="button" class="btn btn-default"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
                         <button id="fe-rate-down" type="button" class="btn btn-default"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>

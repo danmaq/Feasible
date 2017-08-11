@@ -99,15 +99,13 @@ export class Account extends IdModel {
         return result;
     }
 
-    /**
-     * Load from de-serialized object.
-     * @param {object} raw Raw object.
-     * @return {Account} Account object.
-     */
-    static load(raw = {}) {
-        return new Account().clone(raw);
-    }
+    /** Load from de-serialized object. */
+    static load = (raw = {}) => new Account().clone(raw);
 }
 
 /** Extension of Account data. */
-export class AccountUtil {}
+export class AccountUtil {
+    /** Culculate minimum step. */
+    static minStep = (account = new Account()) =>
+        Math.pow(10, -account.column);
+}

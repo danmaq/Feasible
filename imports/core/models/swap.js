@@ -36,25 +36,13 @@ export class Swap extends Model {
         return result;
     }
 
-    /**
-     * Load from de-serialized object.
-     * @param {object} raw Raw object.
-     * @return {Swap} Swap object.
-     */
-    static load(raw = {}) {
-        return new Swap().clone(raw);
-    }
+    /** Load from de-serialized object. */
+    static load = (raw = {}) => new Swap().clone(raw);
 }
 
 /** Extension of Swap point data. */
 export class SwapUtil {
-    /**
-     * Get swap point.
-     * @param {Swap} source Source object.
-     * @param {number} exchange Exchange type.
-     * @return {number} Swap point.
-     */
-    static point(source = new Swap(), exchange = Exchange.BUY) {
-        return exchange === Exchange.BUY ? source.long : source.short;
-    }
+    /** Get swap point. */
+    static point = (source = new Swap(), exchange = Exchange.BUY) =>
+        exchange === Exchange.BUY ? source.long : source.short;
 }
