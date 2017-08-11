@@ -50,16 +50,17 @@ export class Direction extends IdModel {
             });
         return result;
     }
+
+    /** Load from de-serialized object. */
+    static load = (raw = {}) => new Direction().clone(raw);
 }
 
 /** Extension of Direction data. */
 export class DirectionUtil {
-    /**
-     * Load from de-serialized object.
-     * @param {object} raw Raw object.
-     * @return {Direction} Direction object.
-     */
-    static load(raw = {}) {
-        return new Direction().clone(raw);
-    }
+    static next = ({positions = [new Position()], orders = [new Order()]}) => {
+        if(positions.length === 0) {
+            return [];
+        }
+        return [];
+    };
 }
