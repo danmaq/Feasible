@@ -60,8 +60,9 @@ Template.accountDetail.events({
         const params =
             formUtil.parse(
                 event.target, { "ask": TO_FLOAT, "bid": TO_FLOAT });
+        const aid = accountId();
         Meteor.call(
-            'accounts.updateRate',
-            { "accountId": accountId(), ...params });
+            'accounts.updateRate', { "accountId": aid, ...params });
+        Meteor.call('directions.flush', aid);
     },
 });
