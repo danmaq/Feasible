@@ -33,5 +33,11 @@ This project is __pre-alpha version, also known as mockup__.
 * Back test between 1, 3, and 10 years.
     * Use [HistData.com](http://www.histdata.com/download-free-forex-data/) historical data.
 * Connect to MT4 via MQL4, and order automatically.
-    * C is horrid...
+    * C is horrid...
 * Real-trade test using few money.
+
+## ScreenShots
+
+* ![Home screen](https://media.githubusercontent.com/media/danmaq/Feasible/gh-pages/images/Feasible_ss01.png)
+* ![Dashboard](https://media.githubusercontent.com/media/danmaq/Feasible/gh-pages/images/Feasible_ss02.png)
+* ![Directions and Positions](https://media.githubusercontent.com/media/danmaq/Feasible/gh-pages/images/Feasible_ss03.png)
