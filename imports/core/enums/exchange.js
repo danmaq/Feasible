@@ -8,7 +8,7 @@ export const Exchange =
     });
 
 /** Key and value of exchange type. */
-export const ExchangeKV =
+const ExchangeKV =
     Object.freeze(
         [
             { key: Exchange.BUY, value: "Buy" },
@@ -17,6 +17,11 @@ export const ExchangeKV =
 
 /** Extension of Exchange type. */
 export class ExchangeUtil {
+    /** Key and value of exchange type. */
+    static get KeyValuePairs() {
+        return ExchangeKV;
+    }
+
     /** Get stringed value. */
     static toStr = (exchange = Exchange.BUY) => {
         switch (exchange) {

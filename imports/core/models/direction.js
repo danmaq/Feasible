@@ -2,14 +2,12 @@
 
 import { Operation } from '../enums/operation.js';
 
-import { IdModel } from './idModel.js';
-import { Rate } from './rate.js';
-import { Account } from './account.js';
-import { Order } from './order.js';
-import { Position } from './position.js';
+import Model from './model.js';
+import Position from './position.js';
+import Order from './order.js';
 
 /** Direction data. */
-export class Direction extends IdModel {
+export default class Direction extends Model {
     /** Initialize new object. */
     constructor({
         operation = Operation.ORDER,
@@ -42,12 +40,12 @@ export class Direction extends IdModel {
      * @param {object} override Override object.
      * @return {Direction} Direction object.
      */
-    innerClone(override = {}) {
+    clone(override = {}) {
         const result =
             new Direction({
-                "operation": this.importValue('operation', override),
-                "position": Position.load(this.importValue('position', override)),
-                "order": Order.load(this.importValue('order', override))
+                "operation": this.getValue('operation', override),
+                "position": Position.load(this.getValue('position', override)),
+                "order": Order.load(this.getValue('order', override))
             });
         return result;
     }
@@ -55,6 +53,3 @@ export class Direction extends IdModel {
     /** Load from de-serialized object. */
     static load = (raw = {}) => new Direction().clone(raw);
 }
-
-/** Extension of Direction data. */
-export class DirectionUtil {}

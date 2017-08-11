@@ -1,7 +1,7 @@
 'use strict'
 
-/** Mongo model data. */
-export class Model {
+/** base class for Model. */
+export default class Model {
     /**
      * Get class property from extern object.
      * @param {string} key key name.
@@ -35,15 +35,6 @@ export class Model {
      * @return {Model} Model object.
      */
     clone(override = {}) {
-        return this.innerClone(override);
-    }
-
-    /**
-     * Clone object.
-     * @param {object} override Override object.
-     * @return {Model} Model object.
-     */
-    innerClone(override = {}) {
         return new Model();
     }
 }

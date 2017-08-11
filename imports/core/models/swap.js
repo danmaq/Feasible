@@ -1,10 +1,10 @@
 'use strict';
 
-import { Model } from './model.js';
-import { Exchange } from '../enums/exchange.js';
+import Model from './model.js';
+import { Exchange, ExchangeUtil } from '../enums/exchange.js';
 
 /** Swap point data. */
-export class Swap extends Model {
+export default class Swap extends Model {
     /** Initialize new object. */
     constructor({ long = 0, short = 0 } = {}) {
         super();
@@ -25,18 +25,9 @@ export class Swap extends Model {
     /**
      * Clone object.
      * @param {object} override Override object.
-     * @return {Swap} Model object.
-     */
-    clone(override = {}) {
-        return super.clone(override);
-    }
-
-    /**
-     * Clone object.
-     * @param {object} override Override object.
      * @return {Swap} Swap object.
      */
-    innerClone(override = {}) {
+    clone(override = {}) {
         const keys = ['long', 'short'];
         return new Swap(this.getValues(keys, override));
     }

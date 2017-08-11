@@ -1,11 +1,12 @@
 'use strict';
 
-import { IdModel } from './idModel.js';
-import { Exchange } from '../enums/exchange.js';
+import IdModel from './idModel.js';
+
+import { Exchange, ExchangeUtil } from '../enums/exchange.js';
 import { Pair } from '../enums/pair.js';
 
 /** Exchange rate data. */
-export class Rate extends IdModel {
+export default class Rate extends IdModel {
     /** Initialize new object. */
     constructor({
         pair = Pair.USDJPY,
@@ -43,41 +44,31 @@ export class Rate extends IdModel {
     /**
      * Clone object.
      * @param {object} override Override object.
-     * @return {Rate} Model object.
-     */
-    clone(override = {}) {
-        return super.clone(override);
-    }
-
-    /**
-     * Clone object.
-     * @param {object} override Override object.
      * @return {Rate} Rate object.
      */
-    innerClone(override = {}) {
+    clone(override = {}) {
         const keys = ['pair', 'tick', 'ask', 'bid'];
         return new Rate(this.getValues(keys, override));
     }
 
     /** Load from de-serialized object. */
     static load = (raw = {}) => new Rate().clone(raw);
-}
 
-/** Extension of Exchange rate data. */
-export class RateUtil {
-    /** Get point by exchange type. */
-    static orderPoint = (source = new Rate(), exchange = Exchange.BUY) =>
-        exchange === Exchange.BUY ? source.ask : source.bid;
+    /** Get order price by exchange type. */
+    static orderPrice = (src = new Rate(), exchange = Exchange.BUY) =>
+        exchange === Exchange.BUY ? src.ask : src.bid;
 
-    /** Get stop point by exchange type. */
-    static stopPoint = (source = new Rate(), exchange = Exchange.BUY) =>
-        exchange === Exchange.BUY ? source.bid : source.ask;
+    /** Get stop price by exchange type. */
+    static stopPrice = (src = new Rate(), exchange = Exchange.BUY) =>
+        exchange === Exchange.BUY ? src.bid : src.ask;
 
-    /** Get gap between rate. */
+    /** Get price and tick by exchange type. */
+    static priceAndTick = (src = new Rate(), exchange = Exchange.BUY) =>
+        ({ "price": Rate.orderPrice(src, exchange), "tick": src.tick });
+
+    /** Get gap between rate exclude swap. */
     static gain = (
-        from = new Rate(), to = new Rate(), exchange = Exchange.BUY) => {
-        const order = RateUtil.orderPoint(from, exchange);
-        const stop = RateUtil.stopPoint(to, exchange);
-        return (order - stop) * exchange;
-    }
+        from = new Rate(), to = new Rate(), exchange = Exchange.BUY) =>
+            (RateUtil.orderPrice(from, exchange) -
+             RateUtil.stopPrice(to, exchange)) * exchange;
 }

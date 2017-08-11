@@ -1,9 +1,9 @@
 'use strict'
 
-import { Model } from './model.js';
+import Model from './model.js';
 
 /** Mongo model data. */
-export class IdModel extends Model {
+export default class IdModel extends Model {
     /** Key string for Mongo. */
     _id = '';
 
@@ -25,11 +25,20 @@ export class IdModel extends Model {
     /**
      * Clone object.
      * @param {object} override Override object.
-     * @return {Model} Model object.
+     * @return {IdModel} Model object.
      */
     clone(override = {}) {
-        const model = super.clone(override);
+        const model = this.innerClone(override);
         model._id = this.getValue('id', override);
         return model;
+    }
+
+    /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {IdModel} Model object.
+     */
+    innerClone(override = {}) {
+        return new IdModel();
     }
 }

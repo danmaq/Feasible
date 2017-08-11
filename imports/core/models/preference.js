@@ -1,9 +1,9 @@
 'use strict';
 
-import { Model } from './Model.js';
+import Model from './model.js';
 
-/** Account preference. */
-export class Preference extends Model {
+/** Account preference model. */
+export default class Preference extends Model {
     /** Initialize new object. */
     constructor({
         pair = Pair.USDJPY,
@@ -55,18 +55,9 @@ export class Preference extends Model {
     /**
      * Clone object.
      * @param {object} override Override object.
-     * @return {Preference} Model object.
+     * @return {Preference} Account preference object.
      */
     clone(override = {}) {
-        return super.clone(override);
-    }
-
-    /**
-     * Clone object.
-     * @param {object} override Override object.
-     * @return {Preference} Account object.
-     */
-    innerClone(override = {}) {
         const keys = ['pair', 'column', 'lot', 'multiply', 'martingale'];
         return new Preference(this.getValues(keys, override));
     }

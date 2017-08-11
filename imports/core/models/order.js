@@ -1,21 +1,21 @@
 'use strict';
 
-import { IdModel } from './idModel.js';
+import Model from './model.js';
+import Position from './position.js';
+import Rate from './rate.js';
+
 import { Exchange } from '../enums/exchange.js';
 import { Limit } from '../enums/limit.js';
-import { Position } from './position.js';
-import { Rate, RateUtil } from './rate.js';
 
 /** Order model. */
-export class Order extends IdModel {
+export default class Order extends Model {
     /** Initialize new object. */
     constructor({
-        exchange = Exchange.BUY,
-        limit = Limit.NONE,
         price = 0,
         quantity = 1,
+        exchange = Exchange.BUY,
+        limit = Limit.NONE,
         takeProfit = Number.NaN,
-        preOrder = false
     } = {}) {
         super();
         this._exchange = exchange;
@@ -23,7 +23,6 @@ export class Order extends IdModel {
         this._price = price;
         this._quantity = quantity;
         this._takeProfit = takeProfit;
-        this._preOrder = preOrder;
     }
 
     /** Exchange type. */
@@ -51,17 +50,12 @@ export class Order extends IdModel {
         return this._takeProfit;
     }
 
-    /** Pre-order. */
-    get preOrder() {
-        return this._preOrder;
-    }
-
     /**
      * Clone object.
      * @param {object} override Override object.
      * @return {Order} Order object.
      */
-    innerClone(override = {}) {
+    clone(override = {}) {
         const result =
             new Order({
                 "exchange": this.importValue('exchange', override),
@@ -69,28 +63,23 @@ export class Order extends IdModel {
                 "price": this.importValue('price', override),
                 "quantity": this.importValue('quantity', override),
                 "takeProfit": this.importValue('takeProfit', override),
-                "preOrder": this.importValue('preOrder', override)
             });
     }
 
     /** Load from de-serialized object. */
     static load = (raw = {}) => new Order().clone(raw);
-}
 
-/** Extension of Order model. */
-export class OrderUtil {
     /** Get available this order. */
     static available = (source = new Order(), rate = new Rate()) => {
-        const limit = source.limit;
-        if (limit === Limit.NONE) {
+        if (source.limit === Limit.NONE) {
             return true;
         }
         const ex = source.exchange;
         const lt = (a, b) => a <= b;
         const gt = (a, b) => a >= b;
         const cmp =
-            ex === Exchange.BUY && limit === Limit.STOP ||
-            ex === Exchange.SELL && limit === Limit.LIMIT ? lt : gt;
+            ex === Exchange.BUY && source.limit === Limit.STOP ||
+            ex === Exchange.SELL && source.limit === Limit.LIMIT ? lt : gt;
         const op = RateUtil.orderPoint(rate, source.exchange);
         return cmp(op, source.price);
     }
@@ -98,7 +87,7 @@ export class OrderUtil {
     /** Export to Position object. */
     static toPosition = (rate = new Rate()) => 
         new Position({
-            "rate": rate,
+            ...Rate.priceAndTick(rate),
             "quantity": this.quantity,
             "exchange": this.exchange,
             "takeProfit": this.takeProfit

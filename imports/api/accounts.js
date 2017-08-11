@@ -6,9 +6,10 @@ import { check } from 'meteor/check';
 
 import { Context } from './context.js';
 
-import { Account } from '../core/models/account.js';
-import { Rate } from '../core/models/rate.js';
-import { Swap } from '../core/models/swap.js';
+import Account from '../core/models/account.js';
+import Preference from '../core/models/preference.js';
+import Rate from '../core/models/rate.js';
+import Swap from '../core/models/swap.js';
 
 /** API Context. */
 const ctx = new Context('accounts');
@@ -37,16 +38,18 @@ Meteor.methods({
         check(martingale, Number);
         Context.checkSignIn();
         const swap = new Swap({ "long": swapLong, "short": swapShort });
-        const account =
-            new Account({
+        const preference =
+            new Preference({
                 "pair": pair,
-                "rate": new Rate(),
-                "swap": swap,
                 "column": column,
                 "lot": lot,
                 "multiply": mul,
                 "step": step,
                 "martingale": martingale
+            });
+        const account =
+            Account.empty.clone({
+                "rate": new Rate(), "swap": swap, "preference": preference
             });
         ctx.insertCollection(account);
     },

@@ -2,50 +2,37 @@
 
 import { Pair, PairUtil } from '../enums/pair.js';
 
-import { IdModel } from './idModel.js';
-import { Position } from './position.js';
-import { Order } from './order.js';
-import { Order } from './order.js';
-import { Rate } from './rate.js';
-import { Swap } from './swap.js';
-import { Preference } from './order.js';
+import IdModel from './idModel.js';
+import Direction from './direction.js';
+import Position from './position.js';
+import Order from './order.js';
+import Preference from './order.js';
+import Rate from './rate.js';
+import Swap from './swap.js';
 
 /** Account data. */
-export class Account extends IdModel {
+export default class Account extends IdModel {
     /** Empty object. */
     static empty =
-        Object.freeze(new Account({ "positions": [], "orders": [] }));
+        Object.freeze(
+            new Account({
+                "directions": [], "positions": [], "orders": [] }));
 
     /** Initialize new object. */
     constructor({
         rate = new Rate(),
         swap = new Swap(),
-        preference
-        column = 3,
-        lot = 10000,
-        multiply = 0.01,
-        step = 1.0,
-        martingale = 2,
+        preference = new Preference(),
+        directions = [new Order()],
         positions = [new Position()],
-        orders = [new Order()],
-        directions = [new Order()]
+        orders = [new Order()]
     } = {}) {
         super();
-        this._pair = pair;
         this._rate = rate;
         this._swap = swap;
-        this._column = column;
-        this._lot = lot;
-        this._multiply = multiply;
-        this._step = step;
-        this._martingale = martingale;
+        this._directions = directions;
         this._positions = positions;
         this._orders = orders;
-    }
-
-    /** Currency pair. */
-    get pair() {
-        return this._pair;
     }
 
     /** Exchange rate data. */
@@ -58,29 +45,14 @@ export class Account extends IdModel {
         return this._swap;
     }
 
-    /** Column of pips. */
-    get column() {
-        return this._column;
+    /** Others preference. */
+    get preference() {
+        return this._preference;
     }
 
-    /** Lot unit. */
-    get lot() {
-        return this._lot;
-    }
-
-    /** Initial multiply rate. */
-    get multiply() {
-        return this._multiply;
-    }
-
-    /** Step range of next action (PIPS). */
-    get step() {
-        return this._step;
-    }
-
-    /** Martingale rate. */
-    get martingale() {
-        return this._martingale;
+    /** Directions collection. */
+    get directions() {
+        return this._directions;
     }
 
     /** Positions collection. */
@@ -98,19 +70,24 @@ export class Account extends IdModel {
      * @param {object} override Override object.
      * @return {Account} Account object.
      */
+    clone(override = {}) {
+        return super.clone(override);
+    }
+
+    /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {Account} Account object.
+     */
     innerClone(override = {}) {
         const result =
             new Account({
-                "pair": this.importValue('pair', override),
-                "rate": Rate.load(this.importValue('rate', override)),
-                "swap": Swap.load(this.importValue('swap', override)),
-                "column": this.importValue('column', override),
-                "lot": this.importValue('lot', override),
-                "multiply": this.importValue('multiply', override),
-                "step": this.importValue('step', override),
-                "martingale": this.importValue('martingale', override),
-                "positions": this.importValue('positions', override),
-                "orders": this.importValue('orders', override),
+                "rate": Rate.load(this.getValue('rate', override)),
+                "swap": Swap.load(this.getValue('swap', override)),
+                "preference": Preference.load(this.getValue('preference', override)),
+                "directions": this.getValue('directions', override),
+                "positions": this.getValue('positions', override),
+                "orders": this.getValue('orders', override),
             });
         return result;
     }
@@ -127,10 +104,7 @@ export class Account extends IdModel {
 
     /** Load from de-serialized object. */
     static load = (raw = {}) => Account.empty.clone(raw);
-}
 
-/** Extension of Account data. */
-export class AccountUtil {
     /** Culculate minimum step. */
     static minStep = (account = new Account()) =>
         Math.pow(10, -account.column);
