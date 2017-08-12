@@ -4,8 +4,10 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { ExchangeKV } from '../../core/enums/exchange.js';
-import { Position } from '../../core/models/position.js';
 
+import Position from '../../core/models/position.js';
+
+import AccountUtil from '../account/accountUtil.js';
 import formUtil from '../formUtil.js';
 
 import './positions.html';
@@ -20,18 +22,14 @@ const TO_FLOAT = formUtil.to.float;
 /** Convert function: String to integer (number). */
 const TO_INT = formUtil.to.int;
 
-/** Get account-id from router. */
-const accountId = () => FlowRouter.getParam('accountId');
+/** Get positions. */
+const positions = () => AccountUtil.tryGet([], a => a.positions);
 
-/** Get positions list from account-id. */
-const getPositions =
-    () => Positions.find({ "_accountId": accountId() });
-
-Template.positions.onCreated(() => Meteor.subscribe('positions'));
+Template.positions.onCreated(AccountUtil.subscribe);
 Template.positions.helpers({
-    "positions": getPositions,
-    "positionLength": () => getPositions().count(),
-    "price": DEFAULT_POSITION.rate,
+    "positions": positions,
+    "positionLength": () => positions().length,
+    "price": DEFAULT_POSITION.price,
     "quantity": DEFAULT_POSITION.quantity,
     "exchanges": ExchangeKV,
 });

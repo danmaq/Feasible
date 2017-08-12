@@ -16,7 +16,7 @@ const getData = () => Template.instance().data;
 const getAccount = () => Account.load(getData());
 
 /** Stringed currency pair. */
-const strPair = () => PairUtil.toStr(getAccount().pair);
+const strPair = () => PairUtil.toStr(getAccount().preference.pair);
 
 Template.account.helpers({ "strPair": strPair, });
 Template.account.events({

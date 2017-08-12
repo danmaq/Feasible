@@ -11,6 +11,7 @@ import Swap from './swap.js';
 /** Structure data. */
 const structure =
     Object.freeze({
+        ...IdModel.structure,
         "_rate": Rate.structure,
         "_swap": Swap.structure,
         "_preference": Preference.structure,
@@ -122,8 +123,4 @@ export default class Account extends IdModel {
 
     /** Load from de-serialized object. */
     static load = (raw = {}) => Account.empty.clone(raw);
-
-    /** Culculate minimum step. */
-    static minStep = (account = new Account()) =>
-        Math.pow(10, -account.column);
 }

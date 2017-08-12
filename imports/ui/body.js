@@ -9,17 +9,16 @@ import './lp.js';
 import './account/accounts.js';
 import './account/detail.js';
 import './account/modify.js';
-import './account/form.html';
 
 Tracker.autorun(() => {
     if (!Meteor.userId()) {
-        FlowRouter.go('/');
+        FlowRouter.go('home');
     }
 });
 
 Template._loginButtonsAdditionalLoggedInDropdownActions.events({
     "click #dashboard": event => {
         event.preventDefault();
-        FlowRouter.go('/account');
+        FlowRouter.go('accounts.show');
     }
 });

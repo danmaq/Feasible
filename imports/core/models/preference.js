@@ -71,7 +71,9 @@ export default class Preference extends Model {
      * @return {Preference} Account preference object.
      */
     clone(override = {}) {
-        const keys = ['pair', 'column', 'lot', 'multiply', 'martingale'];
+        const keys = [
+            'pair', 'column', 'lot', 'multiply', 'step', 'martingale'
+        ];
         return new Preference(this.getValues(keys, override));
     }
 

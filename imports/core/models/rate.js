@@ -8,6 +8,7 @@ import { Pair } from '../enums/pair.js';
 /** Structure data. */
 const structure =
     Object.freeze({
+        ...IdModel.structure,
         "_pair": Number,
         "_tick": Date,
         "_ask": Number,

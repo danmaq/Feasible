@@ -1,15 +1,15 @@
 <template name="accountForm">
     <li class="list-group-item">
         <label for="column">Column: </label>
-        <input id="column" type="number" class="form-control" required="required" value="{{defaultAccount._column}}" step="1" min="0" max="10" />
+        <input id="column" type="number" class="form-control" required="required" value="{{defaultAccount._preference._column}}" step="1" min="0" max="10" />
+    </li>
+    <li class="list-group-item">
+        <label for="lot">Lot unit: </label>
+        <input id="lot" type="number" class="form-control" required="required" value="{{defaultAccount._preference._lot}}" step="100" min="100" max="1000000" />
     </li>
     <li class="list-group-item">
         <label for="swap-long">Swap long: </label>
         <input id="swap-long" type="number" class="form-control" required="required" value="{{defaultAccount._swap._long}}" step="0.01" min="-16777216" max="16777215" />
-    </li>
-    <li class="list-group-item">
-        <label for="lot">Lot unit: </label>
-        <input id="lot" type="number" class="form-control" required="required" value="{{defaultAccount._lot}}" step="100" min="100" max="1000000" />
     </li>
     <li class="list-group-item">
         <label for="swap-short">Swap short: </label>
@@ -17,14 +17,14 @@
     </li>
     <li class="list-group-item">
         <label for="mul">Initial multiply for lot: </label>
-        <input id="mul" type="number" class="form-control" required="required" value="{{defaultAccount._multiply}}" step="0.01" min="0.01" max="16777215" />
+        <input id="mul" type="number" class="form-control" required="required" value="{{defaultAccount._preference._multiply}}" step="0.01" min="0.01" max="16777215" />
     </li>
     <li class="list-group-item">
         <label for="step">Step range to next action: </label>
-        <input id="step" type="number" class="form-control" required="required" value="{{defaultAccount._step}}" step="0.00001" min="0.00001" max="16777215" />
+        <input id="step" type="number" class="form-control" required="required" value="{{defaultAccount._preference._step}}" step="0.00001" min="0.00001" max="16777215" />
     </li>
     <li class="list-group-item">
         <label for="martingale">Martingale multiply: </label>
-        <input id="martingale" type="number" class="form-control" required="required" value="{{defaultAccount._martingale}}" step="0.1" min="1.5" max="16777215" />
+        <input id="martingale" type="number" class="form-control" required="required" value="{{defaultAccount._preference._martingale}}" step="0.1" min="1.5" max="16777215" />
     </li>
 </template>
