@@ -99,9 +99,9 @@ export default class Account extends IdModel {
                 "rate": Rate.load(this.getValue('rate', override)),
                 "swap": Swap.load(this.getValue('swap', override)),
                 "preference": Preference.load(this.getValue('preference', override)),
-                "directions": this.getValue('directions', override),
-                "positions": this.getValue('positions', override),
-                "orders": this.getValue('orders', override),
+                "directions": this.getValue('directions', override).map(Direction.load),
+                "positions": this.getValue('positions', override).map(Position.load),
+                "orders": this.getValue('orders', override).map(Order.load),
             });
         return result;
     }

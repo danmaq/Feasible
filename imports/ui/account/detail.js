@@ -57,5 +57,6 @@ Template.accountDetail.events({
             "rate": {...Rate.load(formParams) }
         };
         Meteor.call('accounts.updateRate', params);
+        AccountUtil.unloadAccount();
     },
 });

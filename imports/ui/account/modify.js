@@ -34,6 +34,7 @@ Template.accountModify.events({
         const accountId = AccountUtil.accountId();
         const paramsWithId = { "accountId": accountId, ...params };
         Meteor.call('accounts.updatePreference', paramsWithId);
+        AccountUtil.unloadAccount();
         window.history.back();
     },
     "click .fe-cancel": event => {

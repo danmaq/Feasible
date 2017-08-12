@@ -1,5 +1,7 @@
 'use strict'
 
+import { Mongo } from 'meteor/mongo';
+
 import Model from './model.js';
 
 /** Structure data. */
@@ -7,8 +9,14 @@ const structure = Object.freeze({ "_id": String });
 
 /** Mongo model data. */
 export default class IdModel extends Model {
-    /** Key string for Mongo. */
-    _id = '';
+    /**
+     * Initialize new object.
+     * @param {String} id unique key.
+     */
+    constructor(id = '') {
+        super();
+        this._id = id;
+    }
 
     /** Key string for Mongo. */
     get id() {
@@ -49,4 +57,11 @@ export default class IdModel extends Model {
     static get structure() {
         return structure;
     }
+
+    /** Generate random ID. */
+    static randomId = () => new Mongo.ObjectID().valueOf();
+
+    /** Remove collection matched data. */
+    static remove = (id = '', collection = [new IdModel()]) =>
+        collection.filter(m => m.id !== id);
 }

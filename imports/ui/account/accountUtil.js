@@ -1,29 +1,28 @@
 'use strict';
 
 import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
 
 import Accounts from '../../api/accounts.js';
 
 import Account from '../../core/models/account.js';
 
-/** Cached account data. */
-let account = new Account();
-account = null;
+const KEY = 'account';
+Session.setDefault(KEY, null);
 
 /** Get account-id from router. */
 export const accountId = () => `${FlowRouter.getParam('accountId')}`;
 
 /** Get account data using id from router. */
 export const loadAccount = () => {
-    if (!account) {
-        const raw = Accounts.findOne(accountId());
-        account = !!raw ? Account.load(raw) : null;
+    if (!Session.get(KEY)) {
+        Session.set(KEY, Accounts.findOne(accountId()));
     }
-    return account;
+    return Account.load(Session.get(KEY));
 };
 
 /** Flush cached account data. */
-export const unloadAccount = () => account = null;
+export const unloadAccount = () => Session.set(KEY, null);
 
 /** Subscribe account server data. */
 export const subscribe = () => Meteor.subscribe('accounts');

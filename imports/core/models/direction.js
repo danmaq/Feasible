@@ -2,27 +2,29 @@
 
 import { Operation } from '../enums/operation.js';
 
-import Model from './model.js';
+import IdModel from './idModel.js';
 import Position from './position.js';
 import Order from './order.js';
 
 /** Structure data. */
 const structure =
     Object.freeze({
+        ...IdModel.structure,
         "_operation": Number,
         "_position": Position.structure,
         "_order": Order.structure,
     });
 
 /** Direction data. */
-export default class Direction extends Model {
+export default class Direction extends IdModel {
     /** Initialize new object. */
     constructor({
+        id = '',
         operation = Operation.ORDER,
         position = new Position(),
         order = new Order(),
     } = {}) {
-        super();
+        super(id);
         this._operation = operation;
         this._position = position;
         this._order = order;
@@ -49,6 +51,15 @@ export default class Direction extends Model {
      * @return {Direction} Direction object.
      */
     clone(override = {}) {
+        return super.clone(override);
+    }
+
+    /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {Direction} Direction object.
+     */
+    innerClone(override = {}) {
         const result =
             new Direction({
                 "operation": this.getValue('operation', override),
@@ -64,5 +75,6 @@ export default class Direction extends Model {
     }
 
     /** Load from de-serialized object. */
-    static load = (raw = {}) => new Direction().clone(raw);
+    static load = (raw = {}) =>
+        new Direction({ "id": IdModel.randomId() }).clone(raw);
 }

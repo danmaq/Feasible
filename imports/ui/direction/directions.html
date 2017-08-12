@@ -1,10 +1,16 @@
 <template name="directions">
     <section class="container">
-        <h3>Directions <span class="badge">{{directionLength}}</span></h3>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2>Directions <span class="badge">{{directionLength}}</span></h2>
+            </div>
+            <div id="detail" class="panel-body">
+                {{#if directionLength}}
+                <ul class="list-group">
+                    {{#each directions}}{{/each}}
+                </ul>
+                {{/if}}
+            </div>
+        </div>
     </section>
-    {{#if directionLength}}
-    <ul class="list-group">
-        {{#each directions}}{{/each}}
-    </ul>
-    {{/if}}
 </template>

@@ -1,6 +1,6 @@
 <template name="position">
     <li class="list-group-item panel panel-default">
         <button class="btn btn-default fe-delete">&times;</button>
-        <strong>{{strExchange}} {{_quantity}}</strong> {{_rate._ask}} -> {{_rate._ask}}
+        <strong class="position-{{strExchange}}">{{strExchange}} {{position._quantity}}</strong> {{position._price}} -> {{rate._ask}}
     </li>
 </template>

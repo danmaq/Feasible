@@ -1,7 +1,6 @@
 'use strict';
 
-import Model from './model.js';
-
+import IdModel from './idModel.js';
 import Rate from './rate.js';
 import Swap from './swap.js';
 
@@ -10,6 +9,7 @@ import { Exchange } from '../enums/exchange.js';
 /** Structure data. */
 const structure =
     Object.freeze({
+        ...IdModel.structure,
         "_tick": Date,
         "_price": Number,
         "_quantity": Number,
@@ -18,16 +18,17 @@ const structure =
     });
 
 /** Position model. */
-export default class Position extends Model {
+export default class Position extends IdModel {
     /** Initialize new object. */
     constructor({
+        id = '',
         tick = new Date(),
         price = 0,
         quantity = 1,
         exchange = Exchange.BUY,
         takeProfit = Number.NaN
     } = {}) {
-        super();
+        super(id);
         this._tick = tick;
         this._price = price;
         this._quantity = quantity;
@@ -66,6 +67,15 @@ export default class Position extends Model {
      * @return {Position} Position object.
      */
     clone(override = {}) {
+        return super.clone(override);
+    }
+
+    /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {Position} Position object.
+     */
+    innerClone(override = {}) {
         const keys = ['tick', 'price', 'quantity', 'exchange', 'takeProfit'];
         return new Position(this.getValues(keys, override));
     }
@@ -76,7 +86,8 @@ export default class Position extends Model {
     }
 
     /** Load from de-serialized object. */
-    static load = (raw = {}) => new Position().clone(raw);
+    static load = (raw = {}) =>
+        new Position({ "id": IdModel.randomId() }).clone(raw);
 
     /** Get gain point. */
     static gain = ({

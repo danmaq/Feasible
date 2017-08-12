@@ -1,6 +1,6 @@
 'use strict';
 
-import Model from './model.js';
+import IdModel from './idModel.js';
 import Position from './position.js';
 import Rate from './rate.js';
 
@@ -10,6 +10,7 @@ import { Limit } from '../enums/limit.js';
 /** Structure data. */
 const structure =
     Object.freeze({
+        ...IdModel.structure,
         "_exchange": Number,
         "_limit": Number,
         "_price": Number,
@@ -18,9 +19,10 @@ const structure =
     });
 
 /** Order model. */
-export default class Order extends Model {
+export default class Order extends IdModel {
     /** Initialize new object. */
     constructor({
+        id = '',
         price = 0,
         quantity = 1,
         exchange = Exchange.BUY,
@@ -66,6 +68,15 @@ export default class Order extends Model {
      * @return {Order} Order object.
      */
     clone(override = {}) {
+        return super.clone(override);
+    }
+    
+    /**
+     * Clone object.
+     * @param {object} override Override object.
+     * @return {Order} Order object.
+     */
+    innerClone(override = {}) {
         const result =
             new Order({
                 "exchange": this.importValue('exchange', override),
@@ -82,7 +93,8 @@ export default class Order extends Model {
     }
 
     /** Load from de-serialized object. */
-    static load = (raw = {}) => new Order().clone(raw);
+    static load = (raw = {}) =>
+        new Order({ "id": IdModel.randomId() }).clone(raw);
 
     /** Get available this order. */
     static available = (source = new Order(), rate = new Rate()) => {

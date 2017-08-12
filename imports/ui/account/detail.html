@@ -3,7 +3,7 @@
     <section class="container">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><button type="button" class="btn btn-link" data-toggle="collapse" data-target="#detail"><strong>{{strPair}}</strong> account detail <i class="fa fa-caret-down" aria-hidden="true"></i></button></h3>
+                <h1 class="panel-title"><button type="button" class="btn btn-link" data-toggle="collapse" data-target="#detail"><strong>{{strPair}}</strong> account detail <i class="fa fa-caret-down" aria-hidden="true"></i></button></h1>
             </div>
             <div id="detail" class="panel-body panel-collapse collapse">
                 <dl class="dl-horizontal">
@@ -25,7 +25,8 @@
         </div>
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h4>Change Ask / Bid (min: {{minStep}})</h4>
+                <h2>Change Ask / Bid <br /></h2>
+                <p>(min: {{minStep}})</p>
             </div>
             <div id="detail" class="panel-body">
                 <form id="fe-mod-account-rate" class="form-horizontal">
@@ -38,8 +39,8 @@
                             <input id="bid" type="number" value="{{account._rate._bid}}" min="0" max="32767" step="{{minStep}}" required="required" class="form-control" />
                         </span>
                         <span class="col-xs-12 col-sm-4">
-                            <button id="fe-rate-up" type="button" class="btn btn-default"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-                            <button id="fe-rate-down" type="button" class="btn btn-default"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                            <button id="fe-rate-up" type="button" class="btn btn-default" title="Up {{account._preference._step}}"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                            <button id="fe-rate-down" type="button" class="btn btn-default" title="Down {{account._preference._step}}"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
                             <button class="btn btn-primary">Deside</button>
                         </span>
                     </div>
