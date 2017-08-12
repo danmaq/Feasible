@@ -3,6 +3,7 @@
         <h4>
             <button type="button" class="btn btn-danger fe-delete" title="remove"><i class="fa fa-trash"></i></button>
             <a class="btn btn-default fe-modify" role="button" href="/account/{{_id}}/modify" title="modify"><i class="fa fa-pencil-square-o" data-toggle="modal" data-target="#fe-modify-account"></i></a>
+            <span class="badge">{{_positions.length}}</span>
             <a href="/account/{{_id}}"><strong>{{strPair}}</strong> {{_rate._ask}} {{_rate._bid}} (long/short: {{_swap._long}}/{{_swap._short}}) Step: {{_preference._step}}, Lot: {{_preference._lot}}x{{_preference._multiply}}, Martingale: x{{_preference._martingale}}</a>
         </h4>
     </li>

@@ -10,15 +10,15 @@
                     <dt>Swap (Long/Short)</dt>
                     <dd>{{account._swap._long}} / {{account._swap._short}}</dd>
                     <dt>Columns</dt>
-                    <dd>{{account._column}}</dd>
+                    <dd>{{account._preference._column}}</dd>
                     <dt>Lot</dt>
-                    <dd>{{account._lot}}</dd>
+                    <dd>{{account._preference._lot}}</dd>
                     <dt>Initial quantity</dt>
-                    <dd>{{account._multiply}}</dd>
+                    <dd>{{account._preference._multiply}}</dd>
                     <dt>Step range</dt>
-                    <dd>{{account._step}}</dd>
+                    <dd>{{account._preference._step}}</dd>
                     <dt>Martingale</dt>
-                    <dd>x {{account._martingale}}</dd>
+                    <dd>x {{account._preference._martingale}}</dd>
                 </dl>
                 <p><a class="btn btn-default fe-modify" role="button" href="/account/{{account._id}}/modify"><i class="fa fa-pencil-square-o" data-toggle="modal" data-target="#fe-modify-account"></i> Modify</a></p>
             </div>

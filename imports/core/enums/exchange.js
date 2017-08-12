@@ -8,7 +8,7 @@ export const Exchange =
     });
 
 /** Key and value of exchange type. */
-const ExchangeKV =
+export const ExchangeKV =
     Object.freeze(
         [
             { key: Exchange.BUY, value: "Buy" },
