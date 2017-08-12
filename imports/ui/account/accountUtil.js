@@ -7,22 +7,24 @@ import Accounts from '../../api/accounts.js';
 
 import Account from '../../core/models/account.js';
 
-const KEY = 'account';
-Session.setDefault(KEY, null);
+import AI from '../../core/ai.js';
+
+const KEY_ACCOUNT = 'account';
+Session.setDefault(KEY_ACCOUNT, null);
 
 /** Get account-id from router. */
 export const accountId = () => `${FlowRouter.getParam('accountId')}`;
 
 /** Get account data using id from router. */
 export const loadAccount = () => {
-    if (!Session.get(KEY)) {
-        Session.set(KEY, Accounts.findOne(accountId()));
+    if (!Session.get(KEY_ACCOUNT)) {
+        Session.set(KEY_ACCOUNT, Accounts.findOne(accountId()));
     }
-    return Account.load(Session.get(KEY));
+    return Account.load(Session.get(KEY_ACCOUNT));
 };
 
 /** Flush cached account data. */
-export const unloadAccount = () => Session.set(KEY, null);
+export const unloadAccount = () => Session.set(KEY_ACCOUNT, null);
 
 /** Subscribe account server data. */
 export const subscribe = () => Meteor.subscribe('accounts');
