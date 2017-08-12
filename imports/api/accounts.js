@@ -15,102 +15,48 @@ import Swap from '../core/models/swap.js';
 const ctx = new Context('accounts');
 
 /** Accounts collection. */
-export const Accounts = ctx.collection;
+export default ctx.collection;
 
-Meteor.methods({
-    "accounts.insert": ({
-        pair,
-        "swap-long": swapLong,
-        "swap-short": swapShort,
-        column,
-        lot,
-        mul,
-        step,
-        martingale,
-    }) => {
-        check(pair, Number);
-        check(swapLong, Number);
-        check(swapShort, Number);
-        check(column, Number);
-        check(lot, Number);
-        check(mul, Number);
-        check(step, Number);
-        check(martingale, Number);
+const getAccount =
+    accountId => {
         Context.checkSignIn();
-        const swap = new Swap({ "long": swapLong, "short": swapShort });
-        const preference =
-            new Preference({
-                "pair": pair,
-                "column": column,
-                "lot": lot,
-                "multiply": mul,
-                "step": step,
-                "martingale": martingale
-            });
-        const account =
-            Account.empty.clone({
-                "rate": new Rate(), "swap": swap, "preference": preference
-            });
-        ctx.insertCollection(account);
-    },
-    "accounts.update": ({
-        accountId,
-        "swap-long": swapLong,
-        "swap-short": swapShort,
-        column,
-        lot,
-        mul,
-        step,
-        martingale,
-    }) => {
-        check(accountId, String);
-        check(swapLong, Number);
-        check(swapShort, Number);
-        check(column, Number);
-        check(lot, Number);
-        check(mul, Number);
-        check(step, Number);
-        check(martingale, Number);
-        Context.checkSignIn();
-        const accountRaw = Accounts.findOne(accountId);
+        const accountRaw = ctx.collection.findOne(accountId);
         if (!accountRaw) {
             throw new Meteor.Error('unknown-account');
         }
-        const account = Account.load(accountRaw);
-        const swap =
-            account.swap.clone({ "long": swapLong, "short": swapShort });
-        const cloned =
-            account.clone({
-                "swap": swap,
-                "column": column,
-                "lot": lot,
-                "multiply": mul,
-                "step": step,
-                "martingale": martingale
-            });
-        ctx.updateCollection(cloned);
+        return Account.load(accountRaw);
+    };
+
+Meteor.methods({
+    "accounts.create": ({ preference, swap }) => {
+        check(preference, Preference.structure);
+        check(swap, Swap.structure);
+        Context.checkSignIn();
+        const params = { "preference": preference, "swap": swap };
+        ctx.insertCollection(Account.load(params));
+    },
+    "accounts.updatePreference": ({ accountId, preference, swap }) => {
+        check(accountId, String);
+        check(preference, Preference.structure);
+        check(swap, Swap.structure);
+        const account = getAccount(accountId);
+        const params = { "swap": swap, "preference": preference };
+        ctx.updateCollection(account.clone(params));
+    },
+    "accounts.updateRate": ({ accountId, rate }) => {
+        check(accountId, String);
+        check(rate, Rate.structure);
+        const account = getAccount(accountId);
+        const params = { "rate": Rate.load(rate) };
+        ctx.updateCollection(account.clone(params));
     },
     "accounts.remove": accountId => {
         check(accountId, String);
         Context.checkSignIn();
-        Accounts.remove(accountId);
+        ctx.collection.remove(accountId);
     },
     "accounts.removeUser": () => {
         Context.checkSignIn();
-        Accounts.remove(Context.uidData());
-    },
-    "accounts.updateRate": ({accountId, ask, bid}) => {
-        check(accountId, String);
-        check(ask, Number);
-        check(bid, Number);
-        Context.checkSignIn();
-        const accountRaw = Accounts.findOne(accountId);
-        if (!accountRaw) {
-            throw new Meteor.Error('unknown-account');
-        }
-        const account = Account.load(accountRaw);
-        const rate = account.rate.clone({ "ask": ask, "bid": bid });
-        const cloned = account.clone({ "rate": rate });
-        ctx.updateCollection(cloned);
+        ctx.collection.remove(Context.uidData());
     },
 });

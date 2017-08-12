@@ -3,10 +3,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { Accounts } from '../../api/accounts.js';
+import Accounts from '../../api/accounts.js';
 
 import { PairUtil } from '../../core/enums/pair.js';
-import { Account, AccountUtil } from '../../core/models/account.js';
+
+import Account from '../../core/models/account.js';
+import Rate from '../../core/models/rate.js';
 
 import formUtil from '../formUtil.js';
 
@@ -44,7 +46,7 @@ Template.accountDetail.onDestroyed(() => account = null);
 Template.accountDetail.helpers({
     "account": loadAccount,
     "strPair": () => PairUtil.toStr(loadAccount().pair),
-    "minStep": () => AccountUtil.minStep(loadAccount()),
+    "minStep": () => Account.minStep(loadAccount()),
 });
 Template.accountDetail.events({
     "click #fe-mod-account-rate #fe-rate-up": event => {
@@ -57,12 +59,13 @@ Template.accountDetail.events({
     },
     "submit #fe-mod-account-rate": event => {
         event.preventDefault();
-        const params =
+        const formParams =
             formUtil.parse(
                 event.target, { "ask": TO_FLOAT, "bid": TO_FLOAT });
-        const aid = accountId();
-        Meteor.call(
-            'accounts.updateRate', { "accountId": aid, ...params });
-        Meteor.call('directions.flush', aid);
+        const params = {
+            "accountId": accountId(),
+            "rate": Rate.load(formParams)
+        };
+        Meteor.call('accounts.updateRate', params);
     },
 });

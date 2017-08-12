@@ -4,9 +4,8 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { PairUtil } from '../../core/enums/pair.js';
-import { Account } from '../../core/models/account.js';
 
-import { Accounts } from '../../api/accounts.js';
+import Account from '../../core/models/account.js';
 
 import './account.html';
 
@@ -19,19 +18,14 @@ const getAccount = () => Account.load(getData());
 /** Stringed currency pair. */
 const strPair = () => PairUtil.toStr(getAccount().pair);
 
-Template.account.helpers({
-    "strPair": strPair,
-});
-
+Template.account.helpers({ "strPair": strPair, });
 Template.account.events({
     "click .fe-delete": event => {
         event.preventDefault();
         const msg =
             `${strPair()} account will remove. This operation can't be undone. Are you ok?`;
         if (confirm(msg)) {
-            const data = getData();
-            Meteor.call('positions.removeByAccount', data._id);
-            Meteor.call('accounts.remove', data._id);
+            Meteor.call('accounts.remove', getData()._id);
         }
     },
 });

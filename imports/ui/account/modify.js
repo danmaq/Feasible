@@ -3,10 +3,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { Accounts } from '../../api/accounts.js';
+import Accounts from '../../api/accounts.js';
 
 import { PairUtil } from '../../core/enums/pair.js';
-import { Account } from '../../core/models/account.js';
+
+import Account from '../../core/models/account.js';
+import Preference from '../../core/models/preference.js';
+import Swap from '../../core/models/swap.js';
 
 import formUtil from '../formUtil.js';
 
@@ -40,7 +43,7 @@ Template.accountModify.helpers({
 Template.accountModify.events({
     "submit #fe-modify": event => {
         event.preventDefault();
-        const params =
+        const formParams =
             formUtil.parse(
                 event.target, {
                     "swap-long": TO_FLOAT,
@@ -51,8 +54,16 @@ Template.accountModify.events({
                     "step": TO_FLOAT,
                     "martingale": TO_FLOAT,
                 });
-        Meteor.call(
-            'accounts.update', { "accountId": accountId(), ...params });
+        const swapParams = {
+            "long": formParams['swap-long'],
+            "short": formParams['swap-short']
+        };
+        const params = {
+            "accountId": accountId(),
+            "preference": Preference.load(formParams),
+            "swap": Swap.load(swapParams),
+        };
+        Meteor.call('accounts.update', params);
         window.history.back();
     },
     "click .fe-cancel": event => {

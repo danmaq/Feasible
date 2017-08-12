@@ -7,6 +7,16 @@ import Rate from './rate.js';
 import { Exchange } from '../enums/exchange.js';
 import { Limit } from '../enums/limit.js';
 
+/** Structure data. */
+const structure =
+    Object.freeze({
+        "_exchange": Number,
+        "_limit": Number,
+        "_price": Number,
+        "_quantity": Number,
+        "_takeProfit": Number
+    });
+
 /** Order model. */
 export default class Order extends Model {
     /** Initialize new object. */
@@ -66,6 +76,11 @@ export default class Order extends Model {
             });
     }
 
+    /** Structure data. */
+    static get structure() {
+        return structure;
+    }
+
     /** Load from de-serialized object. */
     static load = (raw = {}) => new Order().clone(raw);
 
@@ -85,7 +100,7 @@ export default class Order extends Model {
     }
 
     /** Export to Position object. */
-    static toPosition = (rate = new Rate()) => 
+    static toPosition = (rate = new Rate()) =>
         new Position({
             ...Rate.priceAndTick(rate),
             "quantity": this.quantity,

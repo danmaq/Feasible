@@ -7,6 +7,16 @@ import Swap from './swap.js';
 
 import { Exchange } from '../enums/exchange.js';
 
+/** Structure data. */
+const structure =
+    Object.freeze({
+        "_tick": Date,
+        "_price": Number,
+        "_quantity": Number,
+        "_exchange": Number,
+        "_takeProfit": Number
+    });
+
 /** Position model. */
 export default class Position extends Model {
     /** Initialize new object. */
@@ -56,9 +66,13 @@ export default class Position extends Model {
      * @return {Position} Position object.
      */
     clone(override = {}) {
-        const keys =
-            ['tick', 'price', 'quantity', 'exchange', 'takeProfit'];
+        const keys = ['tick', 'price', 'quantity', 'exchange', 'takeProfit'];
         return new Position(this.getValues(keys, override));
+    }
+
+    /** Structure data. */
+    static get structure() {
+        return structure;
     }
 
     /** Load from de-serialized object. */
@@ -71,9 +85,10 @@ export default class Position extends Model {
         swap = new Swap(),
     } = {}) => {
         const gap = rate.tick.getTime() - src.tick.getTime();
-        const ex = src.exchange;
-        const sp = Swap.point(swap, ex) * ((gap / 86400000) >> 0);
-        return (Rate.gain(src.rate, rate, ex) + sp) * src.quantity;
+        const days = (gap / 86400000) >> 0;
+        const swapPoint = Swap.point(swap, src.exchange) * days;
+        const stop = Rate.stopPrice(rate, src.exchange);
+        return (src.price - stop + swapPoint) * src.quantity;
     };
 
     /** Can be take profit. */

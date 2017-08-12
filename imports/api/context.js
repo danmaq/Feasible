@@ -3,7 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-import { Model } from '../core/models/model.js';
+import IdModel from '../core/models/idModel.js';
 
 /** API Context. */
 export class Context {
@@ -26,11 +26,11 @@ export class Context {
 
     /**
      * Insert object.
-     * @param {Model} model Model object.
+     * @param {IdModel} model Model object.
      * @param {object} additional Additional data.
      * @return {object} Inserted object.
      */
-    insertCollection(model = new Model(), additional = {}) {
+    insertCollection(model = new IdModel(), additional = {}) {
         const record = {...Context.recordData(model), ...additional };
         this.collection.insert(record);
         return record;
@@ -38,11 +38,11 @@ export class Context {
 
     /**
      * Update object.
-     * @param {Model} model Model object.
+     * @param {IdModel} model Model object.
      * @param {object} additional Additional data.
      * @return {object} Inserted object.
      */
-    updateCollection(model = new Model(), additional = {}) {
+    updateCollection(model = new IdModel(), additional = {}) {
         const record = {...Context.recordData(model), ...additional };
         this.collection.update(model.id, record);
         return record;
@@ -50,10 +50,10 @@ export class Context {
 
     /**
      * Create record data.
-     * @param {Model} model Data model object. 
+     * @param {IdModel} model Data model object. 
      * @return {object} record data.
      */
-    static recordData(model = new Model()) {
+    static recordData(model = new IdModel()) {
         return {...model.exportWithoutId(), ...Context.uidData() };
     }
 

@@ -3,6 +3,9 @@
 import Model from './model.js';
 import { Exchange, ExchangeUtil } from '../enums/exchange.js';
 
+/** Structure data. */
+const structure = Object.freeze({ "_long": Number, "_short": Number });
+
 /** Swap point data. */
 export default class Swap extends Model {
     /** Initialize new object. */
@@ -30,6 +33,11 @@ export default class Swap extends Model {
     clone(override = {}) {
         const keys = ['long', 'short'];
         return new Swap(this.getValues(keys, override));
+    }
+
+    /** Structure data. */
+    static get structure() {
+        return structure;
     }
 
     /** Load from de-serialized object. */

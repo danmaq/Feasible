@@ -1,6 +1,19 @@
 'use strict';
 
+import { Pair } from '../enums/pair.js';
+
 import Model from './model.js';
+
+/** Structure data. */
+const structure =
+    Object.freeze({
+        "_pair": Number,
+        "_column": Number,
+        "_lot": Number,
+        "_multiply": Number,
+        "_step": Number,
+        "_martingale": Number
+    });
 
 /** Account preference model. */
 export default class Preference extends Model {
@@ -60,6 +73,11 @@ export default class Preference extends Model {
     clone(override = {}) {
         const keys = ['pair', 'column', 'lot', 'multiply', 'martingale'];
         return new Preference(this.getValues(keys, override));
+    }
+
+    /** Structure data. */
+    static get structure() {
+        return structure;
     }
 
     /** Load from de-serialized object. */

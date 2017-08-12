@@ -3,8 +3,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { Positions } from '../../api/positions.js';
-
 import { ExchangeKV } from '../../core/enums/exchange.js';
 import { Position } from '../../core/models/position.js';
 
@@ -51,7 +49,6 @@ Template.positions.events({
         const target = event.target;
         const price = Number.parseFloat(target['price'].value);
         Meteor.call(
-            'positions.insert',
-            { "accountId": accountId(), ...params });
+            'positions.insert', { "accountId": accountId(), ...params });
     },
 });

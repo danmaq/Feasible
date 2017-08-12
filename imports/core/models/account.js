@@ -1,14 +1,23 @@
 'use strict';
 
-import { Pair, PairUtil } from '../enums/pair.js';
-
 import IdModel from './idModel.js';
 import Direction from './direction.js';
 import Position from './position.js';
 import Order from './order.js';
-import Preference from './order.js';
+import Preference from './preference.js';
 import Rate from './rate.js';
 import Swap from './swap.js';
+
+/** Structure data. */
+const structure =
+    Object.freeze({
+        "_rate": Rate.structure,
+        "_swap": Swap.structure,
+        "_preference": Preference.structure,
+        "_directions": Object.freeze([Direction.structure]),
+        "_positions": Object.freeze([Position.structure]),
+        "_orders": Object.freeze([Order.structure])
+    });
 
 /** Account data. */
 export default class Account extends IdModel {
@@ -16,7 +25,10 @@ export default class Account extends IdModel {
     static empty =
         Object.freeze(
             new Account({
-                "directions": [], "positions": [], "orders": [] }));
+                "directions": [],
+                "positions": [],
+                "orders": []
+            }));
 
     /** Initialize new object. */
     constructor({
@@ -30,6 +42,7 @@ export default class Account extends IdModel {
         super();
         this._rate = rate;
         this._swap = swap;
+        this._preference = preference;
         this._directions = directions;
         this._positions = positions;
         this._orders = orders;
@@ -100,6 +113,11 @@ export default class Account extends IdModel {
         let result = super.exportWithoutId();
         result._rate = this.rate.exportWithoutId();
         return result;
+    }
+
+    /** Structure data. */
+    static get structure() {
+        return structure;
     }
 
     /** Load from de-serialized object. */

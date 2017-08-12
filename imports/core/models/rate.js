@@ -5,6 +5,15 @@ import IdModel from './idModel.js';
 import { Exchange, ExchangeUtil } from '../enums/exchange.js';
 import { Pair } from '../enums/pair.js';
 
+/** Structure data. */
+const structure =
+    Object.freeze({
+        "_pair": Number,
+        "_tick": Date,
+        "_ask": Number,
+        "_bid": Number
+    });
+
 /** Exchange rate data. */
 export default class Rate extends IdModel {
     /** Initialize new object. */
@@ -51,6 +60,11 @@ export default class Rate extends IdModel {
         return new Rate(this.getValues(keys, override));
     }
 
+    /** Structure data. */
+    static get structure() {
+        return structure;
+    }
+
     /** Load from de-serialized object. */
     static load = (raw = {}) => new Rate().clone(raw);
 
@@ -65,10 +79,4 @@ export default class Rate extends IdModel {
     /** Get price and tick by exchange type. */
     static priceAndTick = (src = new Rate(), exchange = Exchange.BUY) =>
         ({ "price": Rate.orderPrice(src, exchange), "tick": src.tick });
-
-    /** Get gap between rate exclude swap. */
-    static gain = (
-        from = new Rate(), to = new Rate(), exchange = Exchange.BUY) =>
-            (RateUtil.orderPrice(from, exchange) -
-             RateUtil.stopPrice(to, exchange)) * exchange;
 }

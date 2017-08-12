@@ -2,6 +2,9 @@
 
 import Model from './model.js';
 
+/** Structure data. */
+const structure = Object.freeze({ "_id": String });
+
 /** Mongo model data. */
 export default class IdModel extends Model {
     /** Key string for Mongo. */
@@ -40,5 +43,10 @@ export default class IdModel extends Model {
      */
     innerClone(override = {}) {
         return new IdModel();
+    }
+
+    /** Structure data. */
+    static get structure() {
+        return structure;
     }
 }

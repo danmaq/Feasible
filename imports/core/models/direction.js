@@ -6,6 +6,14 @@ import Model from './model.js';
 import Position from './position.js';
 import Order from './order.js';
 
+/** Structure data. */
+const structure =
+    Object.freeze({
+        "_operation": Number,
+        "_position": Position.structure,
+        "_order": Order.structure,
+    });
+
 /** Direction data. */
 export default class Direction extends Model {
     /** Initialize new object. */
@@ -48,6 +56,11 @@ export default class Direction extends Model {
                 "order": Order.load(this.getValue('order', override))
             });
         return result;
+    }
+
+    /** Structure data. */
+    static get structure() {
+        return structure;
     }
 
     /** Load from de-serialized object. */
