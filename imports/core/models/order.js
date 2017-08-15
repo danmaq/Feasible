@@ -77,14 +77,10 @@ export default class Order extends IdModel {
      * @return {Order} Order object.
      */
     innerClone(override = {}) {
-        const result =
-            new Order({
-                "exchange": this.importValue('exchange', override),
-                "limit": this.importValue('limit', override),
-                "price": this.importValue('price', override),
-                "quantity": this.importValue('quantity', override),
-                "takeProfit": this.importValue('takeProfit', override),
-            });
+        const keys = [
+            'exchange', 'limit', 'price', 'quantity', 'takeProfit'
+        ];
+        return new Order(this.getValues(keys, override));
     }
 
     /** Structure data. */
