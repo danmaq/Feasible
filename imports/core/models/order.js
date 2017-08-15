@@ -92,6 +92,10 @@ export default class Order extends IdModel {
     static load = (raw = {}) =>
         new Order({ "id": IdModel.randomId() }).clone(raw);
 
+    /** Get price when limit order. */
+    static limitPrice = (source = new Order()) =>
+        !!source && source.limit !== Limit.NONE ? source.price : Number.NaN;
+
     /** Get available this order. */
     static available = (source = new Order(), rate = new Rate()) => {
         if (source.limit === Limit.NONE) {
