@@ -77,14 +77,10 @@ export default class Order extends IdModel {
      * @return {Order} Order object.
      */
     innerClone(override = {}) {
-        const result =
-            new Order({
-                "exchange": this.importValue('exchange', override),
-                "limit": this.importValue('limit', override),
-                "price": this.importValue('price', override),
-                "quantity": this.importValue('quantity', override),
-                "takeProfit": this.importValue('takeProfit', override),
-            });
+        const keys = [
+            'exchange', 'limit', 'price', 'quantity', 'takeProfit'
+        ];
+        return new Order(this.getValues(keys, override));
     }
 
     /** Structure data. */
@@ -95,6 +91,10 @@ export default class Order extends IdModel {
     /** Load from de-serialized object. */
     static load = (raw = {}) =>
         new Order({ "id": IdModel.randomId() }).clone(raw);
+
+    /** Get price when limit order. */
+    static limitPrice = (source = new Order()) =>
+        !!source && source.limit !== Limit.NONE ? source.price : Number.NaN;
 
     /** Get available this order. */
     static available = (source = new Order(), rate = new Rate()) => {

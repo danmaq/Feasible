@@ -15,7 +15,7 @@ export class LimitUtil {
         switch (limit) {
             case Limit.STOP:
                 return 'Stop';
-            case Exchange.LIMIT:
+            case Limit.LIMIT:
                 return 'Limit';
             default:
                 return '';

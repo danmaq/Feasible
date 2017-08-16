@@ -7,7 +7,7 @@
             <div id="detail" class="panel-body">
                 {{#if directionLength}}
                 <ul class="list-group">
-                    {{#each directions}}{{/each}}
+                    {{#each directions}}{{> direction}}{{/each}}
                 </ul>
                 {{/if}}
             </div>

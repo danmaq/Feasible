@@ -2,29 +2,27 @@
 
 import { Operation } from '../enums/operation.js';
 
-import IdModel from './idModel.js';
+import Model from './model.js';
 import Position from './position.js';
 import Order from './order.js';
 
 /** Structure data. */
 const structure =
     Object.freeze({
-        ...IdModel.structure,
         "_operation": Number,
         "_position": Position.structure,
         "_order": Order.structure,
     });
 
 /** Direction data. */
-export default class Direction extends IdModel {
+export default class Direction extends Model {
     /** Initialize new object. */
     constructor({
-        id = '',
         operation = Operation.ORDER,
         position = new Position(),
         order = new Order(),
     } = {}) {
-        super(id);
+        super();
         this._operation = operation;
         this._position = position;
         this._order = order;
@@ -51,20 +49,13 @@ export default class Direction extends IdModel {
      * @return {Direction} Direction object.
      */
     clone(override = {}) {
-        return super.clone(override);
-    }
-
-    /**
-     * Clone object.
-     * @param {object} override Override object.
-     * @return {Direction} Direction object.
-     */
-    innerClone(override = {}) {
+        const srcPosition = this.getValue('position', override);
+        const srcOrder = this.getValue('order', override);
         const result =
             new Direction({
                 "operation": this.getValue('operation', override),
-                "position": Position.load(this.getValue('position', override)),
-                "order": Order.load(this.getValue('order', override))
+                "position": srcPosition ? Position.load(srcPosition) : null,
+                "order": srcOrder ? Order.load(srcOrder) : null
             });
         return result;
     }
@@ -74,7 +65,9 @@ export default class Direction extends IdModel {
         return structure;
     }
 
+    /** Create empty object. */
+    static empty = () => new Direction({ "position": null, "order": null });
+
     /** Load from de-serialized object. */
-    static load = (raw = {}) =>
-        new Direction({ "id": IdModel.randomId() }).clone(raw);
+    static load = (raw = {}) => Direction.empty().clone(raw);
 }

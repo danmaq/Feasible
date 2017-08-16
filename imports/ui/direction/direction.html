@@ -1,5 +1,10 @@
 <template name="direction">
-    <li class="list-group-item panel panel-default">
-        {{body}}
+    <li class="list-group-item">
+        {{strOperation}}
+        {{#if isPosition}}
+            Position: {{strExchange _position._exchange}}
+        {{else}}
+            : {{strExchange _order._exchange}} {{strLimit}} {{price}}, T/P: {{_order._takeProfit}}
+        {{/if}}
     </li>
 </template>
