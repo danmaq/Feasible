@@ -112,11 +112,11 @@ export default class Order extends IdModel {
     }
 
     /** Export to Position object. */
-    static toPosition = (rate = new Rate()) =>
+    static toPosition = (source = new Order(), rate = new Rate()) =>
         new Position({
             ...Rate.priceAndTick(rate),
-            "quantity": this.quantity,
-            "exchange": this.exchange,
-            "takeProfit": this.takeProfit
+            "quantity": source.quantity,
+            "exchange": source.exchange,
+            "takeProfit": source.takeProfit
         });
 }
