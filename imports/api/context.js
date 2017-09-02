@@ -62,7 +62,7 @@ export class Context {
      * @return {object} user-ID data.
      */
     static uidData() {
-        return { "owner": Meteor.userId() };
+        return { owner: Meteor.userId() };
     }
 
     /** Assert already sign-in. */

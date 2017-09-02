@@ -36,12 +36,12 @@ export class AccountFormUtil {
         (target, template = paramsTemplate, preference = new Preference()) => {
             const formParams = formUtil.parse(event.target, template);
             const swapParams = {
-                "long": formParams['swap-long'],
-                "short": formParams['swap-short']
+                long: formParams['swap-long'],
+                short: formParams['swap-short']
             };
             const result = {
-                "preference": {...preference.clone(formParams) },
-                "swap": {...Swap.load(swapParams) },
+                preference: {...preference.clone(formParams) },
+                swap: {...Swap.load(swapParams) },
             };
             return result;
         };

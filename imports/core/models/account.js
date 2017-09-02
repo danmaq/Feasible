@@ -11,22 +11,18 @@ import Swap from './swap.js';
 const structure =
     Object.freeze({
         ...IdModel.structure,
-        "_rate": Rate.structure,
-        "_swap": Swap.structure,
-        "_preference": Preference.structure,
-        "_positions": Object.freeze([Position.structure]),
-        "_orders": Object.freeze([Order.structure])
+        _rate: Rate.structure,
+        _swap: Swap.structure,
+        _preference: Preference.structure,
+        _positions: Object.freeze([Position.structure]),
+        _orders: Object.freeze([Order.structure])
     });
 
 /** Account data. */
 export default class Account extends IdModel {
     /** Empty object. */
     static empty =
-        Object.freeze(
-            new Account({
-                "positions": [],
-                "orders": []
-            }));
+        Object.freeze(new Account({ positions: [], orders: [] }));
 
     /** Initialize new object. */
     constructor({
@@ -91,11 +87,11 @@ export default class Account extends IdModel {
     innerClone(override = {}) {
         const result =
             new Account({
-                "rate": Rate.load(this.getValue('rate', override)),
-                "swap": Swap.load(this.getValue('swap', override)),
-                "preference": Preference.load(this.getValue('preference', override)),
-                "positions": this.getValue('positions', override).map(Position.load),
-                "orders": this.getValue('orders', override).map(Order.load),
+                rate: Rate.load(this.getValue('rate', override)),
+                swap: Swap.load(this.getValue('swap', override)),
+                preference: Preference.load(this.getValue('preference', override)),
+                positions: this.getValue('positions', override).map(Position.load),
+                orders: this.getValue('orders', override).map(Order.load),
             });
         return result;
     }

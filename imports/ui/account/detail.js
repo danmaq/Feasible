@@ -33,10 +33,12 @@ const changeRate = (vel = 1) => {
 Template.accountDetail.onCreated(AccountUtil.subscribe);
 Template.accountDetail.onDestroyed(AccountUtil.unloadAccount);
 Template.accountDetail.helpers({
-    "account": AccountUtil.loadAccount,
-    "strPair":
+    account: AccountUtil.loadAccount,
+    strPair:
         () => PairUtil.toStr(AccountUtil.tryGet(0, a => a.preference.pair)),
-    "minStep": () => Preference.minStep(AccountUtil.tryGet(new Preference(), a => a.preference)),
+    minStep: () =>
+        Preference.minStep(
+            AccountUtil.tryGet(new Preference(), a => a.preference)),
 });
 Template.accountDetail.events({
     "click #fe-mod-account-rate #fe-rate-up": event => {
@@ -53,8 +55,8 @@ Template.accountDetail.events({
             formUtil.parse(
                 event.target, { "ask": TO_FLOAT, "bid": TO_FLOAT });
         const params = {
-            "accountId": AccountUtil.accountId(),
-            "rate": {...Rate.load(formParams) }
+            accountId: AccountUtil.accountId(),
+            rate: {...Rate.load(formParams) }
         };
         Meteor.call('accounts.updateRate', params);
         AccountUtil.unloadAccount();

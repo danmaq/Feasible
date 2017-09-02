@@ -4,7 +4,7 @@ import Model from './model.js';
 import { Exchange, ExchangeUtil } from '../enums/exchange.js';
 
 /** Structure data. */
-const structure = Object.freeze({ "_long": Number, "_short": Number });
+const structure = Object.freeze({ _long: Number, _short: Number });
 
 /** Swap point data. */
 export default class Swap extends Model {

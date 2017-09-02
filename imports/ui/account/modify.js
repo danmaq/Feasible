@@ -19,8 +19,8 @@ import './modify.html';
 Template.accountModify.onCreated(AccountUtil.subscribe);
 Template.accountModify.onDestroyed(AccountUtil.unloadAccount);
 Template.accountModify.helpers({
-    "defaultAccount": AccountUtil.loadAccount,
-    "strPair": () =>
+    defaultAccount: AccountUtil.loadAccount,
+    strPair: () =>
         PairUtil.toStr(AccountUtil.tryGet(0, a => a.preference.pair)),
 });
 Template.accountModify.events({

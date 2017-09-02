@@ -7,12 +7,12 @@ import Model from './model.js';
 /** Structure data. */
 const structure =
     Object.freeze({
-        "_pair": Number,
-        "_column": Number,
-        "_lot": Number,
-        "_multiply": Number,
-        "_step": Number,
-        "_martingale": Number
+        _pair: Number,
+        _column: Number,
+        _lot: Number,
+        _multiply: Number,
+        _step: Number,
+        _martingale: Number
     });
 
 /** Account preference model. */

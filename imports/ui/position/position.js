@@ -16,14 +16,14 @@ const getData = () => Template.instance().data;
 const getPosition = () => Position.load(getData()['position']);
 
 Template.position.helpers({
-    "strExchange": () => ExchangeUtil.toStr(getPosition().exchange),
+    strExchange: () => ExchangeUtil.toStr(getPosition().exchange),
 });
 Template.position.events({
     "click .fe-delete": event => {
         event.preventDefault();
         const params = {
-            "accountId": getData()['accountId'],
-            "positionId": getPosition().id
+            accountId: getData()['accountId'],
+            positionId: getPosition().id
         };
         Meteor.call('accounts.removePosition', params);
         AccountUtil.unloadAccount();

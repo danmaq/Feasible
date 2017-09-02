@@ -23,13 +23,13 @@ const data = () => Template.instance().data;
 const direction = () => Direction.load(data());
 
 Template.direction.helpers({
-    "strOperation": () => {
+    strOperation: () => {
         return OperationUtil.toStr(direction().operation)
     },
-    "isPosition": () => !!direction().position,
-    "strExchange": ExchangeUtil.toStr,
-    "strLimit": () => LimitUtil.toStr(direction().order.limit),
-    "price": () => {
+    isPosition: () => !!direction().position,
+    strExchange: ExchangeUtil.toStr,
+    strLimit: () => LimitUtil.toStr(direction().order.limit),
+    price: () => {
         const price = Order.limitPrice(direction().order);
         return Number.isNaN(price) ? '' : price.toString();
     },

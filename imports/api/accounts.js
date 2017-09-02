@@ -35,14 +35,13 @@ Meteor.methods({
         check(preference, Preference.structure);
         check(swap, Swap.structure);
         Context.checkSignIn();
-        const params = { "preference": preference, "swap": swap };
-        ctx.insertCollection(Account.load(params));
+        ctx.insertCollection(Account.load({ preference, swap }));
     },
     "accounts.updatePreference": ({ accountId, preference, swap }) => {
         check(accountId, String);
         check(preference, Preference.structure);
         check(swap, Swap.structure);
-        const params = { "swap": swap, "preference": preference };
+        const params = { preference, swap };
         ctx.updateCollection(getAccount(accountId).clone(params));
     },
     "accounts.updateRate": ({ accountId, rate }) => {
@@ -67,7 +66,7 @@ Meteor.methods({
         Context.checkSignIn();
         const account = getAccount(accountId);
         const next = IdModel.remove(positionId, account.positions);
-        ctx.updateCollection(account.clone({ "positions": next }));
+        ctx.updateCollection(account.clone({ positions: next }));
     },
     "accounts.removeUser": () => {
         Context.checkSignIn();

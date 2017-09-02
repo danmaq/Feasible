@@ -15,6 +15,6 @@ const next = () => AI.next(AccountUtil.loadAccount());
 
 Template.directions.onCreated(AccountUtil.subscribe);
 Template.directions.helpers({
-    "directionLength": () => next().length,
-    "directions": next,
+    directionLength: () => next().length,
+    directions: next,
 });

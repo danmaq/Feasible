@@ -9,10 +9,10 @@ import { Pair } from '../enums/pair.js';
 const structure =
     Object.freeze({
         ...IdModel.structure,
-        "_pair": Number,
-        "_tick": Date,
-        "_ask": Number,
-        "_bid": Number
+        _pair: Number,
+        _tick: Date,
+        _ask: Number,
+        _bid: Number
     });
 
 /** Exchange rate data. */
@@ -79,5 +79,5 @@ export default class Rate extends IdModel {
 
     /** Get price and tick by exchange type. */
     static priceAndTick = (src = new Rate(), exchange = Exchange.BUY) =>
-        ({ "price": Rate.orderPrice(src, exchange), "tick": src.tick });
+        ({ price: Rate.orderPrice(src, exchange), tick: src.tick });
 }

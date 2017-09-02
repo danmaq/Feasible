@@ -3,9 +3,9 @@
 /** Object list of parser by type string key. */
 export const to =
     Object.freeze({
-        "int": Number.parseInt,
-        "float": Number.parseFloat,
-        "string": (x = '') => x,
+        int: Number.parseInt,
+        float: Number.parseFloat,
+        string: (x = '') => x,
     });
 
 /**

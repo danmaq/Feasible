@@ -10,11 +10,11 @@ import { Exchange } from '../enums/exchange.js';
 const structure =
     Object.freeze({
         ...IdModel.structure,
-        "_tick": Date,
-        "_price": Number,
-        "_quantity": Number,
-        "_exchange": Number,
-        "_takeProfit": Number
+        _tick: Date,
+        _price: Number,
+        _quantity: Number,
+        _exchange: Number,
+        _takeProfit: Number
     });
 
 /** Position model. */
@@ -76,7 +76,9 @@ export default class Position extends IdModel {
      * @return {Position} Position object.
      */
     innerClone(override = {}) {
-        const keys = ['tick', 'price', 'quantity', 'exchange', 'takeProfit'];
+        const keys = [
+            'tick', 'price', 'quantity', 'exchange', 'takeProfit'
+        ];
         return new Position(this.getValues(keys, override));
     }
 
@@ -87,13 +89,11 @@ export default class Position extends IdModel {
 
     /** Load from de-serialized object. */
     static load = (raw = {}) =>
-        new Position({ "id": IdModel.randomId() }).clone(raw);
+        new Position({ id: IdModel.randomId() }).clone(raw);
 
     /** Get gain point. */
     static gain = ({
-        src = new Position(),
-        rate = new Rate(),
-        swap = new Swap(),
+        src = new Position(), rate = new Rate(), swap = new Swap(),
     } = {}) => {
         const gap = rate.tick.getTime() - src.tick.getTime();
         const days = (gap / 86400000) >> 0;
@@ -107,6 +107,7 @@ export default class Position extends IdModel {
         const ex = src.exchange;
         const sp = Rate.stopPrice(rate, ex);
         const tp = src.takeProfit;
-        return !Number.isNaN(tp) && ex === Exchange.BUY ? sp >= tp : sp <= tp;
+        const predicate = !Number.isNaN(tp) && ex === Exchange.BUY;
+        return predicate ? sp >= tp : sp <= tp;
     };
 }

@@ -18,7 +18,7 @@ const getAccount = () => Account.load(getData());
 /** Stringed currency pair. */
 const strPair = () => PairUtil.toStr(getAccount().preference.pair);
 
-Template.account.helpers({ "strPair": strPair, });
+Template.account.helpers({ strPair: strPair, });
 Template.account.events({
     "click .fe-delete": event => {
         event.preventDefault();

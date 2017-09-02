@@ -22,17 +22,16 @@ const DEFAULT_ACCOUNT = new Account();
 
 Template.accounts.onCreated(AccountUtil.subscribe);
 Template.accounts.helpers({
-    "defaultAccount": DEFAULT_ACCOUNT,
-    "accounts": () => Accounts.find(),
-    "accountLength": () => Accounts.find().count(),
-    "pairs": Array.from(PairUtil.iterkv()),
+    defaultAccount: DEFAULT_ACCOUNT,
+    accounts: () => Accounts.find(),
+    accountLength: () => Accounts.find().count(),
+    pairs: Array.from(PairUtil.iterkv()),
 });
 Template.accounts.events({
     "submit #fe-add-account": event => {
         event.preventDefault();
         const paramsTemplate = {
-            "pair": formUtil.to.int,
-            ...AccountFormUtil.paramsTemplate
+            pair: formUtil.to.int, ...AccountFormUtil.paramsTemplate
         };
         const params =
             AccountFormUtil.params(event.target, paramsTemplate);

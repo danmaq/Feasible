@@ -5,7 +5,7 @@ import { Mongo } from 'meteor/mongo';
 import Model from './model.js';
 
 /** Structure data. */
-const structure = Object.freeze({ "_id": String });
+const structure = Object.freeze({ _id: String });
 
 /** Mongo model data. */
 export default class IdModel extends Model {

@@ -9,9 +9,9 @@ import Order from './order.js';
 /** Structure data. */
 const structure =
     Object.freeze({
-        "_operation": Number,
-        "_position": Position.structure,
-        "_order": Order.structure,
+        _operation: Number,
+        _position: Position.structure,
+        _order: Order.structure,
     });
 
 /** Direction data. */
@@ -53,9 +53,9 @@ export default class Direction extends Model {
         const srcOrder = this.getValue('order', override);
         const result =
             new Direction({
-                "operation": this.getValue('operation', override),
-                "position": srcPosition ? Position.load(srcPosition) : null,
-                "order": srcOrder ? Order.load(srcOrder) : null
+                operation: this.getValue('operation', override),
+                position: srcPosition ? Position.load(srcPosition) : null,
+                order: srcOrder ? Order.load(srcOrder) : null
             });
         return result;
     }
@@ -66,7 +66,7 @@ export default class Direction extends Model {
     }
 
     /** Create empty object. */
-    static empty = () => new Direction({ "position": null, "order": null });
+    static empty = () => new Direction({ position: null, order: null });
 
     /** Load from de-serialized object. */
     static load = (raw = {}) => Direction.empty().clone(raw);

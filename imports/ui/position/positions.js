@@ -29,13 +29,13 @@ const positions = () => AccountUtil.tryGet([], a => a.positions);
 
 Template.positions.onCreated(AccountUtil.subscribe);
 Template.positions.helpers({
-    "accountId": () => AccountUtil.tryGet('', a => a.id),
-    "positions": positions,
-    "rate": () => AccountUtil.tryGet(new Rate(), a => a.rate),
-    "positionLength": () => positions().length,
-    "price": () => AccountUtil.tryGet(0, a => a.rate.ask),
-    "quantity": DEFAULT_POSITION.quantity,
-    "exchanges": ExchangeKV,
+    accountId: () => AccountUtil.tryGet('', a => a.id),
+    positions: positions,
+    rate: () => AccountUtil.tryGet(new Rate(), a => a.rate),
+    positionLength: () => positions().length,
+    price: () => AccountUtil.tryGet(0, a => a.rate.ask),
+    quantity: DEFAULT_POSITION.quantity,
+    exchanges: ExchangeKV,
 });
 Template.positions.events({
     "submit #fe-add-position": event => {
@@ -43,15 +43,15 @@ Template.positions.events({
         const formParams =
             formUtil.parse(
                 event.target, {
-                    "price": TO_FLOAT,
-                    "quantity": TO_INT,
-                    "exchange": TO_INT,
-                    "takeProfit": TO_FLOAT,
+                    price: TO_FLOAT,
+                    quantity: TO_INT,
+                    exchange: TO_INT,
+                    takeProfit: TO_FLOAT,
                 });
         const next = [Position.load(formParams), ...positions()];
         const params = {
-            "accountId": AccountUtil.accountId(),
-            "positions": next.map(p => ({...p}))
+            accountId: AccountUtil.accountId(),
+            positions: next.map(p => ({...p}))
         };
         Meteor.call('accounts.updatePositions', params);
         AccountUtil.unloadAccount();

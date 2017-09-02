@@ -11,11 +11,11 @@ import { Limit } from '../enums/limit.js';
 const structure =
     Object.freeze({
         ...IdModel.structure,
-        "_exchange": Number,
-        "_limit": Number,
-        "_price": Number,
-        "_quantity": Number,
-        "_takeProfit": Number
+        _exchange: Number,
+        _limit: Number,
+        _price: Number,
+        _quantity: Number,
+        _takeProfit: Number
     });
 
 /** Order model. */
@@ -90,7 +90,7 @@ export default class Order extends IdModel {
 
     /** Load from de-serialized object. */
     static load = (raw = {}) =>
-        new Order({ "id": IdModel.randomId() }).clone(raw);
+        new Order({ id: IdModel.randomId() }).clone(raw);
 
     /** Get price when limit order. */
     static limitPrice = (source = new Order()) =>
@@ -115,8 +115,8 @@ export default class Order extends IdModel {
     static toPosition = (source = new Order(), rate = new Rate()) =>
         new Position({
             ...Rate.priceAndTick(rate),
-            "quantity": source.quantity,
-            "exchange": source.exchange,
-            "takeProfit": source.takeProfit
+            quantity: source.quantity,
+            exchange: source.exchange,
+            takeProfit: source.takeProfit
         });
 }
