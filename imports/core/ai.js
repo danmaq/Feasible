@@ -52,25 +52,25 @@ export const next =
 export const commit =
     (account = new Account(), direction = new Direction()) => {
         switch (direction.operation) {
-            case Operation.ORDER:
-                [ direction.order, ...account.orders ];
-                break;
-            case Operation.MODIFY:
-                if (!!direction.order) {
-                    account.orders.map(o => o.id === direction.order.id ? direction.order : o);
-                }
-                if (!!direction.position) {
-                    account.positions.map(p => p.id === direction.position.id ? direction.position : p);
-                }
-                break;
-            case Operation.CANCEL:
-                account.orders.filter(o => o.id !== direction.order.id);
-                break;
-            case Operation.CLOSE:
-                account.positions.filter(p => p.id !== direction.position.id);
-                break;
-            default:
-                throw new Error(`Unknown operation: ${direction.operation}`);
+        case Operation.ORDER:
+            [direction.order, ...account.orders];
+            break;
+        case Operation.MODIFY:
+            if (!!direction.order) {
+                account.orders.map(o => o.id === direction.order.id ? direction.order : o);
+            }
+            if (!!direction.position) {
+                account.positions.map(p => p.id === direction.position.id ? direction.position : p);
+            }
+            break;
+        case Operation.CANCEL:
+            account.orders.filter(o => o.id !== direction.order.id);
+            break;
+        case Operation.CLOSE:
+            account.positions.filter(p => p.id !== direction.position.id);
+            break;
+        default:
+            throw new Error(`Unknown operation: ${direction.operation}`);
         }
         return { "positions": account.positions, "orders": account.orders };
     };

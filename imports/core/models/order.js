@@ -70,7 +70,7 @@ export default class Order extends IdModel {
     clone(override = {}) {
         return super.clone(override);
     }
-    
+
     /**
      * Clone object.
      * @param {object} override Override object.

@@ -56,7 +56,7 @@ Template.accountDetail.events({
                 event.target, { "ask": TO_FLOAT, "bid": TO_FLOAT });
         const params = {
             accountId: AccountUtil.accountId(),
-            rate: {...Rate.load(formParams) }
+            rate: { ...Rate.load(formParams) }
         };
         Meteor.call('accounts.updateRate', params);
         AccountUtil.unloadAccount();

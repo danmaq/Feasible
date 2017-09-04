@@ -13,12 +13,12 @@ export class LimitUtil {
     /** Get stringed value. */
     static toStr = (limit = Limit.NONE) => {
         switch (limit) {
-            case Limit.STOP:
-                return 'Stop';
-            case Limit.LIMIT:
-                return 'Limit';
-            default:
-                return '';
+        case Limit.STOP:
+            return 'Stop';
+        case Limit.LIMIT:
+            return 'Limit';
+        default:
+            return '';
         }
     }
 }

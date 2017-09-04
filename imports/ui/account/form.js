@@ -29,9 +29,9 @@ const paramsTemplate =
 export class AccountFormUtil {
     /** Template for parsing. */
     static get paramsTemplate() {
-            return paramsTemplate;
-        }
-        /** Create parameters. */
+        return paramsTemplate;
+    }
+    /** Create parameters. */
     static params =
         (target, template = paramsTemplate, preference = new Preference()) => {
             const formParams = formUtil.parse(event.target, template);
@@ -40,8 +40,8 @@ export class AccountFormUtil {
                 short: formParams['swap-short']
             };
             const result = {
-                preference: {...preference.clone(formParams) },
-                swap: {...Swap.load(swapParams) },
+                preference: { ...preference.clone(formParams) },
+                swap: { ...Swap.load(swapParams) },
             };
             return result;
         };

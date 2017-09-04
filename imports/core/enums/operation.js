@@ -14,16 +14,16 @@ export class OperationUtil {
     /** Get stringed value. */
     static toStr = (operation = Operation.ORDER) => {
         switch (operation) {
-            case Operation.ORDER:
-                return 'Order';
-            case Operation.CANCEL:
-                return 'Cancel';
-            case Operation.CLOSE:
-                return 'Close';
-            case Operation.MODIFY:
-                return 'Modify';
-            default:
-                return '';
+        case Operation.ORDER:
+            return 'Order';
+        case Operation.CANCEL:
+            return 'Cancel';
+        case Operation.CLOSE:
+            return 'Close';
+        case Operation.MODIFY:
+            return 'Modify';
+        default:
+            return '';
         }
     }
 }

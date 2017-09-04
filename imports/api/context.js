@@ -31,7 +31,7 @@ export class Context {
      * @return {object} Inserted object.
      */
     insertCollection(model = new IdModel(), additional = {}) {
-        const record = {...Context.recordData(model), ...additional };
+        const record = { ...Context.recordData(model), ...additional };
         this.collection.insert(record);
         return record;
     }
@@ -43,7 +43,7 @@ export class Context {
      * @return {object} Inserted object.
      */
     updateCollection(model = new IdModel(), additional = {}) {
-        const record = {...Context.recordData(model), ...additional };
+        const record = { ...Context.recordData(model), ...additional };
         this.collection.update(model.id, record);
         return record;
     }
@@ -54,7 +54,7 @@ export class Context {
      * @return {object} record data.
      */
     static recordData(model = new IdModel()) {
-        return {...model.exportWithoutId(), ...Context.uidData() };
+        return { ...model.exportWithoutId(), ...Context.uidData() };
     }
 
     /**

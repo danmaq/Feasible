@@ -93,7 +93,9 @@ export default class Position extends IdModel {
 
     /** Get gain point. */
     static gain = ({
-        src = new Position(), rate = new Rate(), swap = new Swap(),
+        src = new Position(),
+        rate = new Rate(),
+        swap = new Swap(),
     } = {}) => {
         const gap = rate.tick.getTime() - src.tick.getTime();
         const days = (gap / 86400000) >> 0;

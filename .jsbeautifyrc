@@ -1,0 +1,7 @@
+{
+    "brace_style": "collapse,preserve-inline",
+    "e4x": true,
+    "jslint_happy": true,
+    "max_preserve_newlines": 2,
+    "wrap_line_length": 120
+}

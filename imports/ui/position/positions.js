@@ -51,7 +51,7 @@ Template.positions.events({
         const next = [Position.load(formParams), ...positions()];
         const params = {
             accountId: AccountUtil.accountId(),
-            positions: next.map(p => ({...p}))
+            positions: next.map(p => ({ ...p }))
         };
         Meteor.call('accounts.updatePositions', params);
         AccountUtil.unloadAccount();
